@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffd6e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Trinity Budget">
+<title>Trinity’s UofT Budget · 多倫多大學生活預算</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M26,3 L31,3 L27.5,17 L23.5,17 Z' fill='%23ff8fb8'/%3E%3Cpath d='M11,18 Q24,7 37,18 Z' fill='%23fff' stroke='%235b4a5e' stroke-width='2'/%3E%3Cpath d='M12,20 L36,20 L33,43 Q24,46 15,43 Z' fill='%23f7dcc2' stroke='%235b4a5e' stroke-width='2'/%3E%3Ccircle cx='19' cy='38' r='2.6' fill='%235a3a35'/%3E%3Ccircle cx='25' cy='40' r='2.6' fill='%235a3a35'/%3E%3Ccircle cx='30' cy='36' r='2.6' fill='%235a3a35'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#3e3242;--muted:#86788a;--glass:rgba(255,255,255,.8);--glass2:rgba(255,255,255,.62);--line:rgba(120,80,120,.13);--pri:#d4578f;--pri2:#ec8db6;--acc:#9b7bea;--acc2:#b9a2f3;--mint:#5fbf9a;--amber:#d98b06;--amberbg:#fff3d6;--red:#e04a5f;--redbg:#ffe3e8;--green:#2f9e7a;--greenbg:#ddf5ea;--lav:#efe8ff;--pink:#ffe6f0;--r:22px;--shadow:0 8px 26px rgba(150,80,130,.13);--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Nunito","Avenir Next",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Heiti TC","Microsoft JhengHei","Noto Sans CJK TC","Noto Sans TC",sans-serif;color:var(--ink);background:linear-gradient(180deg,#ffe3ef 0%,#f1eaff 40%,#e6f7f0 100%) fixed;min-height:100vh;-webkit-tap-highlight-color:transparent;font-size:15px;line-height:1.42;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(155,123,234,.55);outline-offset:2px}
+.en{color:var(--muted);font-weight:500;font-size:.86em}
+.zh{color:var(--muted);font-weight:400;font-size:.88em}
+.muted{color:var(--muted)}
+.small{font-size:12.5px}
+.neg{color:var(--red)!important}
+.pos{color:var(--green)}
+.warnc{color:#a96a00}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ico{display:inline-block;vertical-align:middle;flex-shrink:0}
+/* hero */
+.hero{position:relative;height:calc(250px + var(--sat));overflow:hidden;border-radius:0 0 30px 30px;box-shadow:0 10px 30px rgba(160,90,140,.18)}
+.hero svg.scene{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.fx{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.topbar{position:absolute;top:calc(10px + var(--sat));left:10px;right:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;z-index:5}
+.brand{background:var(--glass2);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:6px 12px 7px;border-radius:16px;border:1px solid rgba(255,255,255,.7);min-width:0}
+.brand h1{font-size:16px;margin:0;line-height:1.2;letter-spacing:.2px;color:#b03f76}
+.brand .sub{font-size:11.5px;color:var(--muted)}
+.scenechip{display:inline-block;margin-top:3px;font-size:11px;background:rgba(255,255,255,.9);border-radius:10px;padding:1px 8px}
+.monthsel{display:flex;align-items:center;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;padding:2px;border:1px solid rgba(255,255,255,.7);flex-shrink:0}
+.monthsel button{background:none;border:0;width:36px;height:40px;font-size:20px;border-radius:12px;color:var(--pri)}
+.monthsel button:hover{background:rgba(212,87,143,.08)}
+.monthsel label{position:relative;display:block;text-align:center;min-width:78px;font-weight:800;font-size:14px;line-height:1.1;padding:3px 2px}
+.monthsel label small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+.monthsel input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+main{padding:12px 12px calc(98px + var(--sab));position:relative;z-index:4;max-width:1500px;margin:0 auto}
+.card{background:var(--glass);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(255,255,255,.85);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}
+.card h2,.card h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;color:#6b3f6a}
+.card h3 .right,.card h2 .right{margin-left:auto}
+.linkbtn{background:none;border:0;color:var(--pri);font-weight:700;padding:6px 4px;font-size:13.5px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:14px;padding:10px 14px;min-height:44px;font-weight:700;background:#fff;box-shadow:0 1px 3px rgba(120,60,100,.08);border:1px solid var(--line)}
+.btn:hover{border-color:var(--pri2)}
+.btn.pri{background:linear-gradient(135deg,var(--pri),#e77fae);color:#fff;border-color:transparent}
+.btn.acc{background:linear-gradient(135deg,var(--acc),#c0a6f7);color:#fff;border-color:transparent}
+.btn.danger{background:#fff;color:var(--red);border-color:#f6c0c9}
+.btn.dangerfill{background:var(--red);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{min-height:34px;padding:6px 10px;font-size:13px;border-radius:11px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.btn-add{width:100%;margin-top:12px;min-height:56px;font-size:18px;letter-spacing:.5px;border-radius:18px;background:linear-gradient(135deg,#f06aa5,#b98cf2);color:#fff;border:0;font-weight:900;box-shadow:0 8px 18px rgba(212,87,143,.33)}
+.btn-add:active,.qchip:active,.cchip:active{transform:scale(.97)}
+/* hello card */
+.hello-top{display:flex;align-items:flex-end;gap:10px}
+.mbox{flex-shrink:0;line-height:0}
+.mascot{display:block}
+.bubble{position:relative;background:#fff;border:1.5px solid #f4c6dc;border-radius:18px;padding:10px 12px;font-size:13.5px;font-weight:600;margin-bottom:26px;box-shadow:0 3px 10px rgba(212,87,143,.1)}
+.bubble::before{content:"";position:absolute;left:-9px;bottom:14px;width:14px;height:14px;background:#fff;border-left:1.5px solid #f4c6dc;border-bottom:1.5px solid #f4c6dc;transform:rotate(45deg)}
+.leftbig{margin-top:2px}
+.leftbig label{font-size:13px;color:var(--muted);font-weight:700}
+.leftbig .big{font-size:40px;font-weight:900;letter-spacing:-.5px;line-height:1.1;color:var(--pri)}
+.leftbig .sub{font-size:12px;color:var(--muted)}
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.tile{background:rgba(255,255,255,.78);border-radius:16px;padding:9px 12px;border:1px solid var(--line);text-align:left;width:100%}
+.tile label{display:block;font-size:12px;color:var(--muted);cursor:inherit}
+.tile b{font-size:19px;display:block}
+.tile small{font-size:11.5px;color:var(--muted)}
+button.tile:hover{border-color:var(--pri2)}
+.rentinfo{display:flex;align-items:center;gap:10px;margin-top:10px;background:linear-gradient(135deg,#fff4fa,#f4efff);border:1px dashed #e7b6d2;border-radius:16px;padding:9px 12px;font-size:13.5px}
+.bar{height:10px;background:#f1e6ef;border-radius:8px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,#8fd8b8,#5fbf9a);max-width:100%}
+.bar.fat{height:16px;margin-top:8px}
+.bar.warn i{background:linear-gradient(90deg,#ffd27a,#f5a524)}
+.bar.over i{background:linear-gradient(90deg,#ff8fa0,#e04a5f)}
+/* quick chips */
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.qchip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 7px;background:#fff;border:1px solid var(--line);border-radius:16px;font-weight:800;font-size:12.5px;line-height:1.15;min-height:78px}
+.qchip small{font-weight:500;font-size:10px;color:var(--muted)}
+.qchip:hover{border-color:var(--pri2);background:#fff7fb}
+.qchip.boba{grid-column:span 2;flex-direction:row;justify-content:center;gap:10px;background:linear-gradient(135deg,#fff1e4,#ffe6f0);border-color:#f3c9a6;font-size:15px}
+.qchip.boba .ico{width:44px;height:44px}
+/* boba */
+.bobacard{background:linear-gradient(160deg,rgba(255,241,228,.95),rgba(255,230,240,.9));border-color:#f7d7bf}
+.boba-row{display:flex;align-items:center;gap:10px}
+.cups{font-size:15px;font-weight:800;color:#8a5a3c}
+.cups b{font-size:44px;line-height:1;color:#b0623b}
+.bobaamt{font-size:13px;color:var(--muted)}.bobaamt b{color:var(--ink);font-size:17px}
+.mom{font-size:12.5px;margin-top:4px}
+.cupline{display:flex;flex-wrap:wrap;gap:2px;margin:8px 0 4px;min-height:28px;align-items:center}
+.cupline .more{font-weight:800;color:#b0623b;margin-left:4px}
+.boba-add{width:100%;background:#fff;border-color:#f3c9a6;color:#a0522d;font-size:16px;min-height:48px}
+/* status */
+.totrow{display:flex;justify-content:space-between;font-weight:800;padding:4px 0 8px;border-bottom:1px solid var(--line)}
+.alert{border-radius:14px;padding:9px 12px;font-weight:700;font-size:13.5px;margin:8px 0}
+.alert.over{background:var(--redbg);color:#b3263c;border:1px solid #f6b9c3}
+.alert.warn{background:var(--amberbg);color:#94600a}
+.alert.ok{background:var(--greenbg);color:var(--green)}
+.prow{padding:9px 0;border-bottom:1px dashed var(--line)}
+.prow:last-child{border-bottom:0}
+.prow .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px}
+.prow .top .n{font-weight:700;display:flex;align-items:center;gap:7px;min-width:0}
+.prow .top .n>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prow .bot{display:flex;justify-content:space-between;gap:6px;font-size:11.5px;color:var(--muted);margin-top:4px;flex-wrap:wrap}
+.note{font-size:12px;color:#6b5a70;background:rgba(239,232,255,.7);border-radius:10px;padding:5px 9px;margin-top:6px;display:flex;align-items:center;gap:6px}
+.subchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.subchip{display:inline-flex;align-items:center;gap:3px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:2px 8px 2px 4px;font-size:12px}
+.subchip.zero{opacity:.55}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:4px 10px;font-size:12.5px;font-weight:700}
+.chip.warn{background:var(--amberbg);border-color:#f3d48f}
+.chip.over{background:var(--redbg);border-color:#f2b6b0}
+.badge{display:inline-block;font-size:10.5px;font-weight:800;border-radius:7px;padding:1px 6px;vertical-align:middle;line-height:1.5}
+.badge.ok{background:var(--greenbg);color:var(--green)}
+.badge.warn{background:var(--amberbg);color:#9a6200}
+.badge.over{background:var(--redbg);color:var(--red)}
+.badge.inc{background:#ddf5ea;color:#24785c}
+.badge.kind{background:var(--lav);color:#6b4fb8}
+/* jar */
+.jarcard{background:linear-gradient(160deg,rgba(255,250,228,.95),rgba(239,232,255,.92));border-color:#efe0a9}
+.jar-row{display:flex;align-items:center;gap:6px}
+.jar{flex-shrink:0}
+.big2{font-size:30px;font-weight:900;color:#a0791a;line-height:1.1}
+/* lists */
+.elist{list-style:none;margin:0;padding:0}
+.eitem{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:12px}
+.eitem:hover{background:rgba(255,255,255,.7)}
+.eitem:last-child{border-bottom:0}
+.icw{width:40px;height:40px;border-radius:13px;background:#fff;display:grid;place-items:center;border:1px solid var(--line)}
+.eitem .m{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.eitem .s{font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.eitem .a{font-weight:900;text-align:right}
+.empty{color:var(--muted);text-align:center;padding:18px 8px;font-size:13.5px}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:4px 10px 4px 5px;font-size:12.5px;font-weight:700;min-height:34px}
+.fchip.on{background:var(--pink);border-color:var(--pri2);color:#a8326b}
+/* nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:4px 4px calc(4px + var(--sab))}
+.nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:56px;font-size:11px;color:var(--muted);border-radius:14px;font-weight:700}
+.nav button .i{line-height:0}
+.nav button.on{color:var(--pri)}
+.nav button.on .i{transform:scale(1.1)}
+.nav button.addnav .i{width:56px;height:56px;margin-top:-24px;border-radius:50%;background:linear-gradient(135deg,#f06aa5,#b98cf2);color:#fff;display:grid;place-items:center;font-size:32px;line-height:1;box-shadow:0 6px 14px rgba(212,87,143,.4);border:3px solid #fff}
+.nav button.addnav{color:var(--pri)}
+.fab{display:none;position:fixed;right:28px;bottom:28px;z-index:41;border:0;border-radius:30px;height:60px;padding:0 24px;font-size:17px;font-weight:900;color:#fff;background:linear-gradient(135deg,#f06aa5,#b98cf2);box-shadow:0 10px 24px rgba(212,87,143,.4)}
+/* forms */
+.field{display:block;margin-bottom:10px}
+.field>span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:700}
+.inp,select.inp,textarea.inp{width:100%;min-height:44px;border:1px solid #e3d2df;border-radius:13px;padding:9px 12px;background:#fff;font-size:16px;outline:none}
+.inp:focus{border-color:var(--pri2);box-shadow:0 0 0 3px rgba(236,141,182,.22)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.amtwrap{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid #ead3e2;border-radius:18px;padding:4px 14px;margin:2px 0 8px}
+.amtwrap:focus-within{border-color:var(--pri)}
+.amtwrap .cur{font-size:28px;font-weight:800;color:var(--muted)}
+.amtwrap input{border:0;outline:none;font-size:34px;font-weight:900;width:100%;min-width:0;background:transparent;padding:4px 0}
+.amtwrap .code{font-size:13px;color:var(--muted);font-weight:800}
+.seg{display:flex;background:#f6eaf2;border-radius:14px;padding:3px;gap:3px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;border-radius:11px;min-height:40px;font-size:13.5px;padding:4px 6px;line-height:1.15;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px}
+.seg button.on{background:#fff;box-shadow:0 1px 4px rgba(150,60,110,.15);color:var(--pri)}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.cchip{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 2px 6px;background:#fff;border:2px solid #f0e3ec;border-radius:16px;font-weight:800;font-size:12px;line-height:1.15;min-height:72px}
+.cchip small{font-weight:500;font-size:9.5px;color:var(--muted)}
+.cchip.on{border-color:var(--pri);background:#fff0f7;box-shadow:0 0 0 3px rgba(212,87,143,.15)}
+.cchip.boba{background:linear-gradient(160deg,#fff6ee,#fff)}
+.cchip.boba.on{background:#fff0f7}
+.qamts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.qa{border:1px solid #ead3e2;background:#fff;border-radius:14px;padding:6px 12px;font-weight:800;min-height:36px}
+.qa:hover{border-color:var(--pri)}
+.check{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:13px;background:#fff;border:1px solid #e3d2df;min-height:44px;cursor:pointer;font-size:13.5px}
+.check input{width:20px;height:20px;accent-color:var(--pri)}
+.live{border-radius:16px;padding:10px;margin:8px 0 12px;background:#fbf6fa;border:1px solid var(--line)}
+.live:empty{display:none}
+.live .g{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.live .g div{background:#fff;border-radius:11px;padding:6px 10px}
+.live .g label{display:block;font-size:11px;color:var(--muted)}
+.live .g b{font-size:16px}
+.status{margin-top:8px;border-radius:13px;padding:9px 12px;font-weight:800;font-size:14px;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+.status.ok{background:var(--greenbg);color:var(--green)}
+.status.warn{background:var(--amberbg);color:#9a6200}
+.status.over{background:var(--red);color:#fff}
+.status.info{background:#ddf5ea;color:#24785c;font-weight:700}
+.err{color:var(--red);font-size:13px;font-weight:700;min-height:18px;margin:2px 0}
+/* modal */
+.modal-back{position:fixed;inset:0;z-index:60;background:rgba(60,30,60,.38);display:flex;align-items:flex-end;justify-content:center;animation:fade .15s}
+.sheet{background:#fffafd;width:100%;max-width:620px;max-height:94vh;overflow:auto;border-radius:24px 24px 0 0;padding:14px 16px calc(18px + var(--sab));box-shadow:0 -8px 30px rgba(0,0,0,.2);animation:up .2s ease-out;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sheet .sh{display:flex;align-items:center;justify-content:space-between;position:sticky;top:-14px;background:#fffafd;margin:-14px -16px 10px;padding:14px 16px 8px;z-index:3;border-bottom:1px solid var(--line)}
+.sheet .sh h2{margin:0;font-size:17px;color:#6b3f6a}
+.xbtn{width:40px;height:40px;border-radius:50%;border:0;background:#f6e6ef;font-size:20px}
+.sheet .foot{position:sticky;bottom:calc(-18px - var(--sab));background:#fffafd;padding:10px 0 4px;margin-top:6px;display:flex;gap:8px;border-top:1px solid var(--line)}
+.sheet .foot .btn{flex:1;min-height:52px;font-size:16px}
+#confirmLayer .modal-back{z-index:80;align-items:center;padding:20px}
+.dialog{background:#fff;border-radius:22px;padding:18px;max-width:420px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.dialog h3{margin:0 0 8px}
+.dialog p{margin:0 0 14px;color:var(--muted);white-space:pre-line}
+.dialog .btnrow .btn{flex:1}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+.toast{position:fixed;left:50%;bottom:calc(88px + var(--sab));transform:translateX(-50%);background:#5b3a5e;color:#fff;padding:10px 16px;border-radius:16px;z-index:90;font-size:14px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.25);max-width:92vw;text-align:center;animation:pop .25s}
+@keyframes pop{from{transform:translate(-50%,10px) scale(.95);opacity:0}}
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:700;padding:6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl td.r,.tbl th.r{text-align:right}
+.tbl tr.tot td{font-weight:900;border-top:2px solid var(--line)}
+.tbl tr.proj td{background:rgba(239,232,255,.5);font-style:italic}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+/* budget editor */
+.bl{border-bottom:1px solid var(--line);padding:10px 0}
+.bl:last-of-type{border-bottom:0}
+.bl .r1{display:grid;grid-template-columns:34px 1fr 104px;grid-template-areas:"ic zh amt" "ic en amt";gap:6px 8px;align-items:center}
+.bl .r1 .ico{grid-area:ic}
+.bl .r1 [data-lf=zh]{grid-area:zh}.bl .r1 [data-lf=en]{grid-area:en;min-height:36px;font-size:13.5px;color:var(--muted)}.bl .r1 [data-lf=amount]{grid-area:amt;text-align:right;font-weight:800}
+.bl .r1 .inp{min-height:40px;font-size:15px;padding:7px 10px}
+.bl .r2{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+.bl .r2 .bar{flex:1;min-width:80px;margin:0}
+.iconpick{display:flex;gap:3px;flex-wrap:wrap}
+.ipk{border:1px solid var(--line);background:#fff;border-radius:9px;padding:2px;line-height:0}
+.ipk.on{border-color:var(--pri);background:#fff0f7}
+.stats4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:16px;padding:9px 12px}
+.stat label{display:block;font-size:11.5px;color:var(--muted)}
+.stat b{font-size:18px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font-size:11px;fill:#86788a;font-family:inherit}
+@media (max-width:700px){.chart text{font-size:17px}}
+.reptools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.reptools select{max-width:260px}
+.rh{margin:16px 0 6px!important;font-size:15px!important}
+.rstats{margin-top:12px}
+.hbars{display:flex;flex-direction:column;gap:6px}
+.hb{display:grid;grid-template-columns:28px minmax(90px,1.1fr) 2fr auto;gap:8px;align-items:center;font-size:13px}
+.hb .hl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.ht{height:12px;background:#f3e8f0;border-radius:7px;overflow:hidden}
+.ht i{display:block;height:100%;background:linear-gradient(90deg,#ffb3c8,#c7a6ff);border-radius:7px}
+textarea.summary{width:100%;white-space:pre-wrap;font-family:inherit;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;min-height:320px;line-height:1.5}
+.about{display:block}.about .mascot{float:right;margin-left:8px}
+.view{display:none}
+.view.on{display:block}
+#printArea{display:none}
+.home-grid>.col{min-width:0}
+@media (min-width:700px){
+  .stats4{grid-template-columns:repeat(4,1fr)}
+  .modal-back{align-items:center;padding:20px}
+  .sheet{border-radius:24px;max-height:90vh}
+  .sheet .foot{bottom:-18px}
+  .cgrid{grid-template-columns:repeat(6,1fr)}
+}
+@media (min-width:760px){
+  .hero{height:300px}
+  .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .reports-grid,.budget-grid,.more-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  .span2,.span3{grid-column:1/-1}
+  .bl .r1{grid-template-columns:34px 1fr 1fr 120px;grid-template-areas:"ic zh en amt"}
+  .bl .r1 [data-lf=en]{min-height:40px}
+}
+@media (min-width:1024px){
+  .hero{height:360px;border-radius:0 0 38px 38px}
+  .topbar{left:24px;right:24px;top:18px}
+  .brand{padding:10px 16px}
+  .brand h1{font-size:22px}
+  .brand .sub{font-size:13px}
+  .nav{top:18px;bottom:auto;left:50%;right:auto;transform:translateX(-50%);width:auto;display:flex;gap:2px;border-radius:20px;border:1px solid rgba(255,255,255,.8);padding:4px;background:rgba(255,255,255,.82);box-shadow:var(--shadow)}
+  .nav button{flex-direction:row;gap:6px;min-height:42px;padding:0 14px;font-size:14px}
+  .nav button .i .ico{width:24px;height:24px}
+  .nav button.addnav{display:none}
+  .fab{display:block}
+  main{padding:18px 24px 40px;margin-top:-40px}
+  .home-grid{grid-template-columns:minmax(320px,1fr) minmax(340px,1.1fr) minmax(300px,1fr);gap:16px}
+  .reports-grid{grid-template-columns:2fr 1fr;gap:16px}
+  .reports-grid .span2{grid-column:span 1}
+  .budget-grid{grid-template-columns:1.6fr 1fr;gap:16px}
+  .more-grid{grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .toast{bottom:30px}
+  .qgrid{grid-template-columns:repeat(4,1fr)}
+}
+/* scene animations */
+.anim-bob{animation:bob 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.anim-ripple{animation:ripple 6s linear infinite}
+.anim-cloud{animation:cloud 60s linear infinite}
+.anim-twinkle{animation:twinkle 1.8s ease-in-out infinite}
+.anim-burst{animation:burst 2.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.anim-sway{animation:sway 3.5s ease-in-out infinite;transform-box:fill-box;transform-origin:top center}
+.anim-tail{animation:tail 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:0% 10%}
+.mascot-cheer .tri{animation:hop 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px)}}
+@keyframes ripple{0%{transform:translateX(0)}100%{transform:translateX(-60px)}}
+@keyframes cloud{0%{transform:translateX(0)}100%{transform:translateX(-200px)}}
+@keyframes twinkle{50%{opacity:.25}}
+@keyframes burst{0%{transform:scale(.1);opacity:0}10%{opacity:1}60%{transform:scale(1);opacity:.9}100%{transform:scale(1.15);opacity:0}}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes tail{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(5deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.flake{position:absolute;top:-12px;border-radius:50%;background:#fff;opacity:.9;box-shadow:0 0 3px rgba(255,255,255,.8);animation:fall linear infinite}
+.leaf,.heart,.petal{position:absolute;top:-30px;animation:fallspin linear infinite}
+@keyframes fall{to{transform:translate(30px,400px)}}
+@keyframes fallspin{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(-30px,200px) rotate(200deg)}100%{transform:translate(20px,420px) rotate(400deg)}}
+.heart{animation-name:floatup;top:auto;bottom:-30px}
+@keyframes floatup{0%{transform:translateY(0) scale(.8);opacity:0}15%{opacity:.9}100%{transform:translateY(-330px) scale(1.1);opacity:0}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.flake,.leaf,.heart,.petal{display:none}}
+/* print → PDF report */
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff!important;font-size:12px}
+  body>*:not(#printArea){display:none!important}
+  #printArea{display:block!important;color:#3e3242}
+  #printArea .phead{display:flex;align-items:center;gap:14px;border-bottom:3px solid #ffc2d9;padding-bottom:8px;margin-bottom:10px}
+  #printArea .phead h1{margin:0;font-size:22px;color:#b03f76}
+  #printArea .phead>.ico{margin-left:auto}
+  #printArea .stats4{grid-template-columns:repeat(4,1fr)}
+  #printArea .stat{border:1px solid #eadbe5;background:#fff}
+  #printArea .tbl{font-size:11.5px}
+  #printArea .tbl tr{break-inside:avoid}
+  #printArea .hb{grid-template-columns:24px 160px 1fr 80px}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<header class="hero" id="hero">
+  <div id="sceneHost"></div>
+  <div class="fx" id="fx"></div>
+  <div class="topbar">
+    <div class="brand"><h1>Trinity’s UofT Budget</h1><div class="sub">Trinity 的多倫多生活預算 · CAD</div><div id="sceneChip"></div></div>
+    <div class="monthsel" role="group" aria-label="Month 月份">
+      <button data-act="month-prev" aria-label="Previous month 上個月">‹</button>
+      <label><span id="monthLabel">—</span><small id="monthLabelZh"></small><input type="month" id="monthPicker" aria-label="Pick month 選月份"></label>
+      <button data-act="month-next" aria-label="Next month 下個月">›</button>
+    </div>
+  </div>
+</header>
+<nav class="nav" id="nav" aria-label="Main">
+  <button data-act="nav" data-v="home" class="on"><span class="i" id="navI1"></span>首頁 Home</button>
+  <button data-act="nav" data-v="budget"><span class="i" id="navI2"></span>預算 Budget</button>
+  <button data-act="add-exp" class="addnav" aria-label="Add 記一筆"><span class="i">+</span>記一筆</button>
+  <button data-act="nav" data-v="reports"><span class="i" id="navI3"></span>報表 Reports</button>
+  <button data-act="nav" data-v="more"><span class="i" id="navI4"></span>更多 More</button>
+</nav>
+<main id="main">
+  <section class="view on" id="v-home"></section>
+  <section class="view" id="v-budget"></section>
+  <section class="view" id="v-reports"></section>
+  <section class="view" id="v-more"></section>
+  <section class="view" id="v-entries"></section>
+</main>
+<button class="fab" data-act="add-exp" title="Shortcut: N">＋ 記一筆 Add</button>
+<div id="printArea"></div>
+<div id="modalLayer"></div>
+<div id="confirmLayer"></div>
+<div id="toastLayer"></div>
+<input type="file" id="importFile" accept="application/json,.json,text/plain" hidden>
+<script>
+/* ===================== ART: Toronto scene, Trinity mascot, kawaii icons (inline SVG) ===================== */
+var Art = (function(){
+  'use strict';
+  var NAMES={christmas:'🎄 Merry Christmas 聖誕快樂',newyear:'🎆 Happy New Year 新年快樂',canadaday:'🇨🇦 Happy Canada Day 加拿大日快樂',thanksgiving:'🦃 Happy Thanksgiving 感恩節快樂',halloween:'🎃 Happy Halloween 萬聖節快樂',valentine:'💕 Valentine’s Day 情人節快樂',lunarnewyear:'🧧 Happy Lunar New Year 新年快樂',midautumn:'🥮 Mid-Autumn Festival 中秋節快樂',victoriaday:'🌸 Victoria Day 維多利亞日',familyday:'💗 Family Day 家庭日',none:''};
+  function pad(n){return (n<10?'0':'')+n;}
+  function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+  function addDays(d,k){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()+k);return x;}
+  function between(t,a,b){return t>=ymd(a)&&t<=ymd(b);}
+  function nthWeekday(y,m0,wd,n){var d=new Date(y,m0,1);var off=(wd-d.getDay()+7)%7;return new Date(y,m0,1+off+(n-1)*7);}
+  function victoriaDay(y){var d=new Date(y,4,24);while(d.getDay()!==1)d.setDate(d.getDate()-1);return d;}
+  function pd(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+  var LUNAR_NY={2025:'2025-01-29',2026:'2026-02-17',2027:'2027-02-06',2028:'2028-01-26',2029:'2029-02-13',2030:'2030-02-03'};
+  var MID_AUTUMN={2025:'2025-10-06',2026:'2026-09-25',2027:'2027-09-15',2028:'2028-10-03',2029:'2029-09-22',2030:'2030-09-12'};
+  var LIST=Object.keys(NAMES);
+  function detect(d){
+    var y=d.getFullYear(),md=(d.getMonth()+1)*100+d.getDate(),t=ymd(d);
+    if(LUNAR_NY[y]){var l=pd(LUNAR_NY[y]);if(between(t,addDays(l,-1),addDays(l,3)))return 'lunarnewyear';}
+    if(md>=1227||md<=103)return 'newyear';
+    if(md>=1125&&md<=1226)return 'christmas';
+    if(md>=1030&&md<=1031)return 'halloween';
+    var tg=nthWeekday(y,9,1,2);if(between(t,addDays(tg,-1),tg))return 'thanksgiving';
+    if(MID_AUTUMN[y]){var m=pd(MID_AUTUMN[y]);if(between(t,addDays(m,-1),addDays(m,1)))return 'midautumn';}
+    if(md>=630&&md<=701)return 'canadaday';
+    if(md>=213&&md<=214)return 'valentine';
+    var vd=victoriaDay(y);if(between(t,addDays(vd,-1),vd))return 'victoriaday';
+    var fd=nthWeekday(y,1,1,3);if(between(t,addDays(fd,-1),fd))return 'familyday';
+    return 'none';
+  }
+  function current(){
+    var q={};try{q=Object.fromEntries(new URLSearchParams(location.search));}catch(e){}
+    if(q.scene&&LIST.indexOf(q.scene)>=0)return q.scene; // hidden dev override
+    var d=new Date();
+    if(q.date&&/^\d{4}-\d{2}-\d{2}$/.test(q.date))d=pd(q.date); // hidden dev override (scene only)
+    return detect(d);
+  }
+  // seeded random for deterministic layout
+  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}
+  function star(cx,cy,r,f){var p='';for(var i=0;i<10;i++){var a=Math.PI/5*i-Math.PI/2,rr=i%2?r*0.45:r;p+=(i?'L':'M')+(cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1);}return '<path d="'+p+'Z" fill="'+f+'"/>';}
+  function maple(cx,cy,s,f){ // simple maple leaf shape
+    var d='M0,-10 L2,-5 5,-7 4,-2 9,-3 7,1 10,3 4,4 5,8 1,6 1,10 -1,10 -1,6 -5,8 -4,4 -10,3 -7,1 -9,-3 -4,-2 -5,-7 -2,-5Z';
+    return '<path d="'+d+'" fill="'+f+'" transform="translate('+cx+','+cy+') scale('+s+')"/>';
+  }
+  function pumpkin(x,y,s,face){
+    var g='<g transform="translate('+x+','+y+') scale('+s+')"><path d="M0,-22 q2,-8 7,-9" stroke="#3f6b2a" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    g+='<ellipse cx="-9" cy="-10" rx="10" ry="11" fill="#e8761f"/><ellipse cx="9" cy="-10" rx="10" ry="11" fill="#e8761f"/><ellipse cx="0" cy="-10" rx="11" ry="12" fill="#f28c28"/>';
+    if(face)g+='<path d="M-8,-14l3,-4 3,4zM2,-14l3,-4 3,4zM-8,-6 q8,6 16,0 l-3,1 -2,-2 -2,2 -2,-2 -2,2 -2,-2z" fill="#4a2a0a"/>';
+    return g+'</g>';
+  }
+  function lantern(x,y,s){return '<g class="anim-sway" transform="translate('+x+','+y+') scale('+s+')"><path d="M0,-30 v10" stroke="#7a3b1a" stroke-width="1.5"/><rect x="-7" y="-21" width="14" height="4" rx="1" fill="#f5c542"/><ellipse cx="0" cy="-6" rx="13" ry="13" fill="#e63a2e"/><path d="M-6,-17 q-4,11 0,22 M6,-17 q4,11 0,22 M0,-19v26" stroke="#c22a20" stroke-width="1" fill="none"/><rect x="-7" y="5" width="14" height="4" rx="1" fill="#f5c542"/><path d="M-3,9v9M0,9v11M3,9v9" stroke="#f5c542" stroke-width="1.2"/></g>';}
+  function burst(cx,cy,r,col,delay){
+    var s='<g class="anim-burst" style="animation-delay:'+delay+'s">';
+    for(var i=0;i<14;i++){var a=i/14*Math.PI*2;s+='<line x1="'+(cx+Math.cos(a)*r*0.3).toFixed(1)+'" y1="'+(cy+Math.sin(a)*r*0.3).toFixed(1)+'" x2="'+(cx+Math.cos(a)*r).toFixed(1)+'" y2="'+(cy+Math.sin(a)*r).toFixed(1)+'" stroke="'+col+'" stroke-width="2.4" stroke-linecap="round"/><circle cx="'+(cx+Math.cos(a)*r*1.08).toFixed(1)+'" cy="'+(cy+Math.sin(a)*r*1.08).toFixed(1)+'" r="2" fill="'+col+'"/>';}
+    return s+'</g>';
+  }
+  function heart(x,y,s,f){return '<path transform="translate('+x+','+y+') scale('+s+')" d="M0,6 C-8,-1 -10,-6 -6,-9 C-3,-11 0,-8 0,-6 C0,-8 3,-11 6,-9 C10,-6 8,-1 0,6Z" fill="'+f+'"/>';}
+  function gift(x,y,w,c1,c2){return '<g><rect x="'+(x-w/2)+'" y="'+(y-w*0.8)+'" width="'+w+'" height="'+(w*0.8)+'" rx="2" fill="'+c1+'"/><rect x="'+(x-w/2-2)+'" y="'+(y-w*0.95)+'" width="'+(w+4)+'" height="'+(w*0.2)+'" rx="2" fill="'+c1+'"/><rect x="'+(x-2.5)+'" y="'+(y-w*0.95)+'" width="5" height="'+(w*0.95)+'" fill="'+c2+'"/><path d="M'+x+','+(y-w*0.95)+' q-9,-9 -10,0 z M'+x+','+(y-w*0.95)+' q9,-9 10,0 z" fill="'+c2+'"/></g>';}
+  function fx(scene){
+    var h='',i;
+    var leafSVG=function(c){return '<svg width="18" height="18" viewBox="-11 -11 22 22">'+maple(0,0,1,c)+'</svg>';};
+    if(scene==='christmas'||scene==='lunarnewyear'&&false){for(i=0;i<46;i++){var sz=2+Math.random()*4;h+='<i class="flake" style="left:'+(Math.random()*100).toFixed(1)+'%;width:'+sz.toFixed(1)+'px;height:'+sz.toFixed(1)+'px;animation-duration:'+(6+Math.random()*8).toFixed(1)+'s;animation-delay:-'+(Math.random()*12).toFixed(1)+'s"></i>';}}
+    if(scene==='thanksgiving'||scene==='halloween'){var cols=['#e2572f','#f08a2c','#d63a2a','#f5b041'];for(i=0;i<(scene==='halloween'?8:16);i++){h+='<span class="leaf" style="left:'+(Math.random()*100).toFixed(1)+'%;animation-duration:'+(8+Math.random()*8).toFixed(1)+'s;animation-delay:-'+(Math.random()*14).toFixed(1)+'s;transform:scale('+(0.7+Math.random()*0.8).toFixed(2)+')">'+leafSVG(cols[i%4])+'</span>';}}
+    if(scene==='valentine'||scene==='familyday'){for(i=0;i<12;i++){h+='<span class="heart" style="left:'+(Math.random()*100).toFixed(1)+'%;animation-duration:'+(6+Math.random()*6).toFixed(1)+'s;animation-delay:-'+(Math.random()*10).toFixed(1)+'s"><svg width="18" height="18" viewBox="-11 -11 22 18">'+heart(0,0,1.3,['#ff6fa3','#ff8fb1','#e5466e'][i%3])+'</svg></span>';}}
+    if(scene==='victoriaday'){for(i=0;i<12;i++){h+='<span class="petal" style="left:'+(Math.random()*100).toFixed(1)+'%;animation-duration:'+(8+Math.random()*6).toFixed(1)+'s;animation-delay:-'+(Math.random()*10).toFixed(1)+'s"><svg width="10" height="10" viewBox="0 0 10 10"><ellipse cx="5" cy="5" rx="5" ry="3" fill="#ffb3c8"/></svg></span>';}}
+    return h;
+  }
+  /* ---------- kawaii icons (48x48) ---------- */
+  var OL='#5b4a5e';
+  function face(cx,cy,k){k=k||1;return '<g stroke="none"><circle cx="'+(cx-4.6*k)+'" cy="'+cy+'" r="'+(1.7*k)+'" fill="'+OL+'"/><circle cx="'+(cx+4.6*k)+'" cy="'+cy+'" r="'+(1.7*k)+'" fill="'+OL+'"/><ellipse cx="'+(cx-7.6*k)+'" cy="'+(cy+3*k)+'" rx="'+(2.2*k)+'" ry="'+(1.4*k)+'" fill="#ff8fb1" opacity=".75"/><ellipse cx="'+(cx+7.6*k)+'" cy="'+(cy+3*k)+'" rx="'+(2.2*k)+'" ry="'+(1.4*k)+'" fill="#ff8fb1" opacity=".75"/></g><path d="M'+(cx-2*k)+','+(cy+2.4*k)+' q'+(2*k)+','+(2.2*k)+' '+(4*k)+',0" fill="none" stroke="'+OL+'" stroke-width="1.4"/>';}
+  function spark(x,y,r,f){return '<path d="M'+x+','+(y-r)+' Q'+x+','+y+' '+(x+r)+','+y+' Q'+x+','+y+' '+x+','+(y+r)+' Q'+x+','+y+' '+(x-r)+','+y+' Q'+x+','+y+' '+x+','+(y-r)+'Z" fill="'+(f||'#ffd84d')+'" stroke="none"/>';}
+  var ICONS={
+    boba:'<path d="M26,3 L31,3 L27.5,17 L23.5,17 Z" fill="#ff8fb8"/><path d="M11,18 Q24,7 37,18 Z" fill="#fff"/><rect x="9.5" y="16.5" width="29" height="4.5" rx="2.2" fill="#ffc2d9"/><path d="M12,21 L36,21 L33,42 Q24,45.5 15,42 Z" fill="#f7dcc2"/>'+[[18,38],[23,40.5],[28.5,38.5],[31,34.5],[16.5,33.5],[25,35.5],[20.5,35]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="2.3" fill="#5a3a35" stroke="none"/>';}).join('')+face(24,28,.85),
+    groc:'<circle cx="31" cy="13" r="7" fill="#9bd88f"/><path d="M31,6 v-3 M28,7 l-2,-3" fill="none"/><circle cx="17" cy="15" r="6.5" fill="#ff8a8a"/><path d="M17,8.5 l-2,-2 M17,8.5 l2,-2" stroke="#4f9a54" fill="none"/><path d="M22,5 L28,20 L19,20 Z" fill="#ffb86b"/><path d="M12,20 Q24,1 36,20" fill="none"/><path d="M5,20 H43 L38,42 Q24,45 10,42 Z" fill="#f5d3a8"/><path d="M8,26 H40 M9.5,32 H38.5" fill="none" stroke="#d8ad7c" stroke-width="1.2"/>'+face(24,33,.85),
+    eat:'<path d="M17,10 q-3,-3 0,-6 M24,10 q-3,-3 0,-6 M31,10 q-3,-3 0,-6" fill="none" stroke="#c9bfe0"/><path d="M30,4 L40,20 M35,3 L43,19" fill="none" stroke="#c4955f" stroke-width="2.2"/><path d="M8,22 q4,-6 8,0 t8,0 t8,0 t8,0" fill="#ffe39a"/><path d="M5,21 H43 Q41,41 24,43 Q7,41 5,21 Z" fill="#ffb3c8"/>'+face(24,31,.9),
+    ttc:'<path d="M18,4 L25,11" fill="none" stroke-width="2"/><rect x="4" y="11" width="40" height="25" rx="8" fill="#ff6b7a"/><rect x="8" y="15" width="8.5" height="7" rx="2" fill="#fff"/><rect x="19.8" y="15" width="8.5" height="7" rx="2" fill="#fff"/><rect x="31.5" y="15" width="8.5" height="7" rx="2" fill="#fff"/><path d="M5,26 H43" stroke="#fff" stroke-width="1.6" fill="none"/><circle cx="14" cy="38" r="3.6" fill="'+OL+'"/><circle cx="34" cy="38" r="3.6" fill="'+OL+'"/><path d="M2,43 H46" fill="none" stroke="#c9bfe0"/>'+face(24,30.5,.7),
+    util:'<circle cx="19" cy="18" r="12" fill="#ffe58a"/><rect x="14" y="29" width="10" height="7" rx="2" fill="#d4cce6"/><path d="M15,39 h8" fill="none"/>'+face(19,17,.85)+'<path d="M37,21 C37,21 30,30 30,34.5 A7,7 0 0 0 44,34.5 C44,30 37,21 37,21Z" fill="#9fd4ff"/><circle cx="34.5" cy="33" r="1.4" fill="#fff" stroke="none"/>',
+    ins:'<rect x="31" y="9" width="5" height="9" rx="1" fill="#ffb3c8"/><path d="M5,24 L24,7.5 L43,24 Z" fill="#c7b5ff"/><rect x="9.5" y="22" width="29" height="20" rx="3" fill="#b8ead2"/><path d="M24,39 C17,34 16,30.5 18.5,28.5 C20.5,27 23,28 24,30 C25,28 27.5,27 29.5,28.5 C32,30.5 31,34 24,39Z" fill="#ff7aa2"/>',
+    fun:'<path d="M5,13 H43 V20 A4,4 0 0 0 43,28 V35 H5 V28 A4,4 0 0 0 5,20 Z" fill="#ffc2d9"/><path d="M15,14 V34" fill="none" stroke="#fff" stroke-dasharray="2.5 2.5" stroke-width="1.6"/><path d="M29,15 L31.6,21 L38,21.4 L33,25.4 L34.6,31.6 L29,28 L23.4,31.6 L25,25.4 L20,21.4 L26.4,21 Z" fill="#ffe066"/>'+face(29,24.5,.5),
+    shop:'<path d="M24,2 v3 q4,0 4,3" fill="none" stroke="#a495b9"/><path d="M18,7 L30,7 L32,14 L28.5,18 L38,41 Q24,45.5 10,41 L19.5,18 L16,14 Z" fill="#d9c4ff"/><path d="M19.5,18 H28.5" fill="none"/><path d="M20,18 l-4,-3 v6 z M28,18 l4,-3 v6 z" fill="#ff9fc2"/><circle cx="24" cy="18" r="1.8" fill="#ff9fc2"/>'+face(24,29,.75),
+    book:'<path d="M7,11 H29 a3,3 0 0 1 3,3 V41 H10 a3,3 0 0 1 -3,-3Z" fill="#a8d8ff"/><path d="M10,41 V36 H32" fill="none"/><path d="M11,37 H31" stroke="#fff" stroke-width="2" fill="none"/>'+face(19.5,23,.8)+'<path d="M37,6 L43,8 L35,38 L31,41 L30.5,36 Z" fill="#ffe066"/><path d="M37,6 L43,8 L42,11.5 L36,9.5 Z" fill="#ff9fc2"/>',
+    daily:'<path d="M15,22 Q17,6 24,13 Q30,5 33,22 Z" fill="#fff"/><rect x="7" y="21" width="34" height="21" rx="5" fill="#b8ead2"/><path d="M17,21 Q24,25 31,21" fill="none"/>'+face(24,32,.85)+'<circle cx="41" cy="11" r="3" fill="#e0f4ff"/><circle cx="36.5" cy="6" r="2" fill="#e0f4ff"/>',
+    other:'<rect x="9" y="21" width="30" height="21" rx="3" fill="#ffc2d9"/><rect x="7" y="15.5" width="34" height="7" rx="3" fill="#ff9fc2"/><rect x="22" y="15.5" width="4" height="26.5" fill="#c7b5ff"/><path d="M24,15 C16,6 12,14 24,15 C36,14 32,6 24,15Z" fill="#c7b5ff"/>'+spark(41,8,5)+spark(7,8,3.5,'#9fe0c5')+face(15.5,31,.55),
+    flex:'<path d="M16,14 Q16,5 24,5 Q32,5 32,14" fill="none" stroke-width="2"/><path d="M7,16 Q7,13 10,13 H38 Q41,13 41,16 L39,39 Q38.5,43 34.5,43 H13.5 Q9.5,43 9,39 Z" fill="#ffb3c8"/><path d="M24,25 C19,21 18,18.5 20,17 C21.6,16 23.3,16.7 24,18 C24.7,16.7 26.4,16 28,17 C30,18.5 29,21 24,25Z" fill="#fff" stroke="none"/>'+face(24,32,.8)+spark(42,7,4),
+    buf:'<path d="M24,24 V38 q0,5 -5,5 q-4,0 -4,-4" fill="none" stroke-width="2.2"/><path d="M5,24 Q24,1 43,24 Q38.5,19.5 33.5,24 Q29,19.5 24,24 Q19,19.5 14.5,24 Q9.5,19.5 5,24Z" fill="#c7b5ff"/>'+face(24,16.5,.75)+'<path d="M38,31 q-2,4 0,5 q2,-1 0,-5Z M42,36 q-1.5,3 0,4 q1.5,-1 0,-4Z" fill="#9fd4ff"/>',
+    save:'<circle cx="24" cy="8" r="5.5" fill="#ffe066"/><path d="M22,8 h4" fill="none"/><path d="M14,18 L12,11 L19,15.5" fill="#ff9fc2"/><ellipse cx="23" cy="29" rx="16.5" ry="12.5" fill="#ffb3c8"/><rect x="11" y="37" width="5" height="7" rx="2" fill="#ffb3c8"/><rect x="28" y="37" width="5" height="7" rx="2" fill="#ffb3c8"/><path d="M19,19 h8" fill="none" stroke-width="2.2"/><ellipse cx="39.5" cy="29" rx="4.5" ry="4" fill="#ff9fbf"/><circle cx="38.3" cy="29" r=".9" fill="'+OL+'" stroke="none"/><circle cx="40.8" cy="29" r=".9" fill="'+OL+'" stroke="none"/><circle cx="31" cy="24.5" r="1.7" fill="'+OL+'" stroke="none"/><ellipse cx="31" cy="30" rx="2.2" ry="1.4" fill="#ff7aa2" stroke="none" opacity=".7"/><path d="M6.5,28 q-4,-1 -3,-5" fill="none"/>',
+    income:'<circle cx="22" cy="25" r="16" fill="#ffe58a"/><circle cx="22" cy="25" r="11.5" fill="none" stroke="#e6b94a" stroke-width="1.4"/>'+face(22,25,.85)+spark(41,9,5,'#ffb3c8')+spark(42,38,3.5,'#9fe0c5'),
+    rent:'<path d="M5,23 L24,7 L43,23 Z" fill="#ffd1e3"/><rect x="9.5" y="21" width="29" height="21" rx="3" fill="#fff6fb"/><rect x="20" y="29" width="8" height="13" rx="2" fill="#c7b5ff"/>'+face(24,24.5,.6),
+    heart:'<path d="M24,42 C10,32 5,24 8,16 C11,9 20,9 24,16 C28,9 37,9 40,16 C43,24 38,32 24,42Z" fill="#ff8fb1"/>'+face(24,24,.8),
+    star:'<path d="M24,5 L29.5,17.5 L43,18.5 L32.5,27.5 L36,41 L24,33.5 L12,41 L15.5,27.5 L5,18.5 L18.5,17.5 Z" fill="#ffe066"/>'+face(24,25,.8)
+  };
+  var ICACHE={};
+  function icon(name,size,cls){name=ICONS[name]?name:'other';size=size||28;var k=name;if(!ICACHE[k])ICACHE[k]='<g fill="none" stroke="'+OL+'" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">'+ICONS[name]+'</g>';
+    return '<svg class="ico '+(cls||'')+'" viewBox="0 0 48 48" width="'+size+'" height="'+size+'" aria-hidden="true" focusable="false">'+ICACHE[k]+'</svg>';}
+
+  /* ---------- Trinity mascot (hand-drawn style) ---------- */
+  var MO='#3b2b35',SK='#fde4d2',SK2='#f5cdb5',HAIR='#2a2128',TEE='#25222b',JN='#aac4e8',JN2='#86a5d1';
+  function limb(d,w){return '<path d="'+d+'" fill="none" stroke="'+MO+'" stroke-width="'+(w+3.4)+'"/><path d="'+d+'" fill="none" stroke="'+SK+'" stroke-width="'+w+'"/>';}
+  function sleeve(x,y,a){return '<g transform="translate('+x+','+y+') rotate('+a+')"><path d="M-7,-4 Q0,-7 7,-4 L6,9 Q0,11 -6,9 Z" fill="'+TEE+'"/></g>';}
+  function peace(x,y,a){return '<g transform="translate('+x+','+y+') rotate('+(a||0)+')"><rect x="-5.6" y="-17" width="4.6" height="14" rx="2.3" transform="rotate(-14 -3.3 -3)" fill="'+SK+'"/><rect x="1" y="-17" width="4.6" height="14" rx="2.3" transform="rotate(14 3.3 -3)" fill="'+SK+'"/><circle cx="0" cy="0" r="6" fill="'+SK+'"/><path d="M-3,1.5 q3,2 6,0" fill="none" stroke-width="1.3"/></g>';}
+  function fist(x,y){return '<circle cx="'+x+'" cy="'+y+'" r="6" fill="'+SK+'"/><path d="M'+(x-3)+','+(y-1)+' h6" fill="none" stroke-width="1.2"/>';}
+  function mascotG(pose,hatKind){
+    pose=pose||'happy';
+    var s='<g class="tri" stroke="'+MO+'" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">';
+    s+='<ellipse cx="0" cy="1" rx="32" ry="5" fill="#5b4a5e" opacity=".14" stroke="none"/>';
+    // ponytail (behind) — sways
+    s+='<g class="anim-tail"><path d="M10,-126 C42,-136 52,-108 42,-84 C38,-74 28,-70 31,-82 C35,-98 31,-110 13,-114 Z" fill="'+HAIR+'"/><path d="M28,-112 q8,10 4,24" fill="none" stroke="#4a3d46" stroke-width="1.3"/></g>';
+    // legs: light-wash wide jeans
+    s+='<path d="M-21,-42 L21,-42 L27,-7 L4,-7 L0,-31 L-4,-7 L-27,-7 Z" fill="'+JN+'"/><path d="M-12,-38 L-15,-10 M12,-38 L15,-10" fill="none" stroke="'+JN2+'" stroke-width="1.3"/><path d="M-21,-42 H21" fill="none" stroke="'+JN2+'" stroke-width="1.4"/>';
+    s+='<ellipse cx="-15" cy="-4" rx="12" ry="5" fill="#2b272e"/><ellipse cx="15" cy="-4" rx="12" ry="5" fill="#2b272e"/>';
+    // arms (behind body for some poses)
+    var arms='',front='';
+    if(pose==='happy'){arms+=limb('M-22,-70 Q-38,-66 -38,-84',7)+limb('M22,-70 Q38,-66 38,-84',7);front+=peace(-38,-86,-12)+peace(38,-86,12);}
+    else if(pose==='worried'){arms+=limb('M-22,-70 Q-34,-58 -22,-84',7)+limb('M22,-70 Q34,-58 22,-84',7);}
+    else if(pose==='boba'){arms+=limb('M-22,-70 Q-38,-66 -38,-84',7)+limb('M22,-70 Q34,-60 27,-50',7);front+=peace(-38,-86,-12);}
+    else if(pose==='cheer'){arms+=limb('M-22,-70 Q-38,-88 -32,-116',7)+limb('M22,-70 Q38,-88 32,-116',7);front+=fist(-32,-119)+fist(32,-119);}
+    s+=arms;
+    // tee
+    s+='<path d="M-20,-77 Q0,-81 20,-77 L21,-58 L21,-41 Q0,-38 -21,-41 L-21,-58 Z" fill="'+TEE+'"/>';
+    s+=sleeve(-23,-71,pose==='cheer'?40:pose==='worried'?20:28)+sleeve(23,-71,pose==='cheer'?-40:pose==='worried'?-20:-28);
+    s+='<path d="M-7,-63 q2,-4 4,0 t4,0 t4,0" fill="none" stroke="#f3eef5" stroke-width="1.4"/><path d="M-5,-58 h8" fill="none" stroke="#f3eef5" stroke-width="1.1"/>';
+    // neck + head
+    s+='<rect x="-5" y="-82" width="10" height="7" fill="'+SK2+'" stroke="none"/>';
+    s+='<circle cx="-25" cy="-99" r="5" fill="'+SK2+'"/><circle cx="25" cy="-99" r="5" fill="'+SK2+'"/>';
+    s+='<ellipse cx="0" cy="-101" rx="25" ry="23.5" fill="'+SK+'"/>';
+    // hair cap pulled back + side wisps
+    s+='<path d="M-25,-99 Q-25,-128 0,-128 Q25,-128 25,-99 Q22,-113 8,-116 Q-6,-118 -14,-113 Q-22,-108 -25,-99 Z" fill="'+HAIR+'"/>';
+    s+='<path d="M-24,-98 q-3,10 -1,18 M24,-98 q3,10 1,18" fill="none" stroke="'+HAIR+'" stroke-width="2"/>';
+    s+='<path d="M-10,-121 q8,-4 16,-1" fill="none" stroke="#5a4b55" stroke-width="1.3"/>';
+    s+='<path d="M9,-127 q6,-3 10,1 q-3,6 -9,4 Z" fill="#ff8fb8"/>';
+    // face
+    var eyes,mouth,brows='';
+    if(pose==='worried'){eyes='<ellipse cx="-9" cy="-99" rx="3" ry="3.6" fill="'+MO+'" stroke="none"/><ellipse cx="9" cy="-99" rx="3" ry="3.6" fill="'+MO+'" stroke="none"/><circle cx="-8" cy="-100.5" r="1.1" fill="#fff" stroke="none"/><circle cx="10" cy="-100.5" r="1.1" fill="#fff" stroke="none"/>';
+      brows='<path d="M-14,-106 L-6,-109 M14,-106 L6,-109" fill="none" stroke-width="1.8"/>';mouth='<path d="M-6,-87 q3,-3 6,0 t6,0" fill="none" stroke-width="1.8"/>';
+      brows+='<path d="M29,-118 C29,-118 24,-111 24,-108 A5,5 0 0 0 34,-108 C34,-111 29,-118 29,-118Z" fill="#a9dcff" stroke-width="1.4"/>';}
+    else if(pose==='boba'){eyes='<ellipse cx="-9" cy="-99" rx="3.2" ry="3.9" fill="'+MO+'" stroke="none"/><ellipse cx="9" cy="-99" rx="3.2" ry="3.9" fill="'+MO+'" stroke="none"/><circle cx="-8" cy="-100.7" r="1.2" fill="#fff" stroke="none"/><circle cx="10" cy="-100.7" r="1.2" fill="#fff" stroke="none"/>';mouth='<path d="M-6,-89 Q0,-82 6,-89 Z" fill="#e0607a" stroke-width="1.6"/>';}
+    else {eyes='<path d="M-13,-98 q4,-6 8,0 M5,-98 q4,-6 8,0" fill="none" stroke-width="2.4"/>';mouth=pose==='cheer'?'<path d="M-7,-90 Q0,-79 7,-90 Z" fill="#e0607a" stroke-width="1.6"/><path d="M-3.5,-85.5 q3.5,2.5 7,0" fill="none" stroke="#ff9fb3" stroke-width="1.6"/>':'<path d="M-6,-90 Q0,-82 6,-90 Z" fill="#e0607a" stroke-width="1.6"/>';}
+    s+=eyes+brows+mouth;
+    s+='<ellipse cx="-15.5" cy="-91" rx="4.2" ry="2.6" fill="#ff9fb6" opacity=".6" stroke="none"/><ellipse cx="15.5" cy="-91" rx="4.2" ry="2.6" fill="#ff9fb6" opacity=".6" stroke="none"/>';
+    if(pose==='worried')s+=fist(-21,-87)+fist(21,-87);
+    s+=front;
+    if(pose==='boba')s+='<g transform="translate(19,-74) scale(.62)">'+ICACHE_boba()+'</g>'+'<circle cx="27" cy="-51" r="6" fill="'+SK+'"/>';
+    if(pose==='cheer')s+='<g stroke="none">'+spark(-46,-128,6)+spark(46,-132,7,'#ff9fc2')+spark(-50,-100,4,'#9fe0c5')+spark(50,-104,4,'#c7b5ff')+'</g>';
+    if(hatKind)s+=hatG(hatKind);
+    return s+'</g>';
+  }
+  function ICACHE_boba(){icon('boba');return ICACHE.boba;}
+  function hatG(k){
+    if(k==='santa')return '<path d="M-22,-119 Q0,-150 26,-128 Q34,-122 36,-112" fill="#e84d5b"/><circle cx="37" cy="-110" r="5" fill="#fff"/><rect x="-25" y="-124" width="50" height="9" rx="4.5" fill="#fff"/>';
+    if(k==='party')return '<path d="M-10,-124 L-2,-152 L10,-125 Z" fill="#c7b5ff"/><circle cx="-2" cy="-153" r="4" fill="#ffe066"/><path d="M-7,-133 h9 M-5,-141 h6" fill="none" stroke="#ff8fb8" stroke-width="2.2"/>';
+    if(k==='witch')return '<ellipse cx="0" cy="-123" rx="32" ry="6" fill="#4b3a6b"/><path d="M-16,-124 L4,-160 Q8,-150 16,-124 Z" fill="#4b3a6b"/><rect x="-15" y="-130" width="31" height="5" fill="#ff9f43"/>';
+    if(k==='maple')return '<g transform="translate(-14,-125) scale(.8)"><path d="M0,-10 L2,-5 5,-7 4,-2 9,-3 7,1 10,3 4,4 5,8 1,6 1,10 -1,10 -1,6 -5,8 -4,4 -10,3 -7,1 -9,-3 -4,-2 -5,-7 -2,-5Z" fill="#e84d5b"/></g>';
+    if(k==='flower')return '<g transform="translate(-16,-122)"><circle r="4" cx="0" cy="-5" fill="#ffb3c8"/><circle r="4" cx="5" cy="0" fill="#ffb3c8"/><circle r="4" cx="0" cy="5" fill="#ffb3c8"/><circle r="4" cx="-5" cy="0" fill="#ffb3c8"/><circle r="3" fill="#ffe066"/></g>';
+    return '';
+  }
+  function mascot(pose,size,label){size=size||120;return '<svg class="mascot mascot-'+(pose||'happy')+'" viewBox="-62 -142 124 150" width="'+size+'" height="'+(size*150/124).toFixed(0)+'" role="img" aria-label="'+(label||'Trinity cartoon 卡通Trinity')+'"><g filter="url(#handdrawn)">'+mascotG(pose,null)+'</g></svg>';}
+
+  /* ---------- Toronto hero scene ---------- */
+  var PAL={
+    day:{t:'#ffd6e8',b:'#e9e4ff',sun:'#fff1b8',lake1:'#a8d8f0',lake2:'#7fb6e0',city:['#c9b8e8','#b7c9ee','#d9c2e6','#a9bde6','#e3cdee'],win:'#fff9e8',grass1:'#bfe8c9',grass2:'#93d3ac',tower:'#efe7f7',tower2:'#cbbfe0',tree:['#8fd0a5','#a8dcb3','#7cc496']},
+    autumn:{t:'#ffd9c9',b:'#f5e6ff',sun:'#ffe1a1',lake1:'#a9d2ec',lake2:'#83b0d8',city:['#d2b8e4','#bfc6ec','#e3c3d9','#b2b9e3','#ecd0e6'],win:'#fff6dd',grass1:'#cfe5b8',grass2:'#a8cf9a',tower:'#f3e9f3',tower2:'#d1bdd8',tree:['#f4a86b','#f28d8d','#f6c56b']},
+    winter:{t:'#dfe6ff',b:'#fbefff',sun:'#fff6d6',lake1:'#c3dcf2',lake2:'#9fc2e4',city:['#cdc4ea','#bcd0ef','#dccbea','#b4c6ea','#e6d6f0'],win:'#fffbe8',grass1:'#f4f6ff',grass2:'#e3e8f8',tower:'#f6f2fb',tower2:'#cfc6e2',tree:['#9fcfb7','#b5dcc6','#8cc4aa']},
+    night:{t:'#2c2457',b:'#7a5aa6',sun:'#fff3c9',lake1:'#4a4c8a',lake2:'#2f3166',city:['#4b437f','#3f4a86','#5a4a8c','#38407a','#625296'],win:'#ffe08a',grass1:'#4f6d73',grass2:'#3c5560',tower:'#8e86c2',tower2:'#6c64a3',tree:['#3f6a62','#4c7a6e','#355d57']}
+  };
+  function skyFor(s){
+    if(s==='newyear'||s==='midautumn')return 'night';
+    if(s==='christmas'||s==='lunarnewyear'||s==='familyday'||s==='valentine')return 'winter';
+    if(s==='thanksgiving'||s==='halloween')return 'autumn';
+    if(s==='canadaday'||s==='victoriaday')return 'day';
+    var m=new Date().getMonth()+1;return (m>=9&&m<=11)?'autumn':(m===12||m<=2)?'winter':'day';
+  }
+  function tree(x,by,h,c){return '<g><rect x="'+(x-3)+'" y="'+(by-h*0.35)+'" width="6" height="'+(h*0.35)+'" rx="2" fill="#b48a6a"/><circle cx="'+x+'" cy="'+(by-h*0.62)+'" r="'+(h*0.3)+'" fill="'+c+'"/><circle cx="'+(x-h*0.2)+'" cy="'+(by-h*0.45)+'" r="'+(h*0.22)+'" fill="'+c+'"/><circle cx="'+(x+h*0.2)+'" cy="'+(by-h*0.45)+'" r="'+(h*0.22)+'" fill="'+c+'"/></g>';}
+  function build(scene){
+    seed=7;var sk=skyFor(scene),P=PAL[sk],night=sk==='night',i;
+    var s='<svg class="scene" viewBox="0 0 1440 480" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Toronto skyline with the CN Tower, Lake Ontario, UofT and Trinity">';
+    s+='<defs><linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+P.t+'"/><stop offset="1" stop-color="'+P.b+'"/></linearGradient><linearGradient id="gLake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+P.lake1+'"/><stop offset="1" stop-color="'+P.lake2+'"/></linearGradient><linearGradient id="gGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+P.grass1+'"/><stop offset="1" stop-color="'+P.grass2+'"/></linearGradient><radialGradient id="gSun"><stop offset="0" stop-color="'+P.sun+'"/><stop offset=".6" stop-color="'+P.sun+'" stop-opacity=".5"/><stop offset="1" stop-color="'+P.sun+'" stop-opacity="0"/></radialGradient></defs>';
+    s+='<rect width="1440" height="480" fill="url(#gSky)"/>';
+    if(night){for(i=0;i<60;i++)s+='<circle cx="'+(rnd()*1440).toFixed(0)+'" cy="'+(rnd()*240).toFixed(0)+'" r="'+(0.6+rnd()*1.3).toFixed(1)+'" fill="#fff" '+(i%4===0?'class="anim-twinkle" style="animation-delay:'+(rnd()*2).toFixed(1)+'s"':'opacity=".8"')+'/>';}
+    s+='<circle cx="600" cy="190" r="'+(scene==='midautumn'?95:70)+'" fill="url(#gSun)"/><circle cx="600" cy="190" r="'+(scene==='midautumn'?40:28)+'" fill="'+P.sun+'"/>';
+    if(!night){s+='<g class="anim-cloud" opacity=".9">';[[420,150,1],[820,115,1.3],[1180,160,1.1],[1520,130,1.2],[160,135,1]].forEach(function(c){s+='<g transform="translate('+c[0]+','+c[1]+') scale('+c[2]+')" fill="#fff"><ellipse cx="0" cy="0" rx="40" ry="13"/><ellipse cx="-18" cy="-8" rx="18" ry="13"/><ellipse cx="12" cy="-12" rx="22" ry="16"/></g>';});s+='</g>';}
+    // skyline
+    var bx=380,heights=[40,66,52,96,74,120,60,88,132,70,104,78,146,62,110,84,56,94,68,48,80,58];
+    for(i=0;bx<1110;i++){var bw=24+Math.round(rnd()*22),bh=heights[i%heights.length],col=P.city[i%P.city.length];
+      if(bx>860&&bx<940){bx+=6;continue;}
+      s+='<rect x="'+bx+'" y="'+(330-bh)+'" width="'+bw+'" height="'+bh+'" fill="'+col+'" rx="3"/>';
+      for(var wy=330-bh+8;wy<324;wy+=10){for(var wx=bx+4;wx<bx+bw-4;wx+=7){if(rnd()>(night?0.45:0.62))s+='<rect x="'+wx+'" y="'+wy+'" width="3" height="4" rx="1" fill="'+P.win+'"/>';}}
+      bx+=bw+2;}
+    // Rogers Centre dome
+    s+='<path d="M940,330 Q940,288 1000,286 Q1060,288 1060,330 Z" fill="'+P.tower+'" stroke="'+P.tower2+'" stroke-width="2"/><path d="M960,312 Q1000,300 1040,312 M952,322 H1048" stroke="'+P.tower2+'" stroke-width="1.6" fill="none"/>';
+    // CN Tower
+    var T=P.tower,T2=P.tower2;
+    s+='<g><path d="M893,330 L898,190 L904,190 L909,330 Z" fill="'+T+'" stroke="'+T2+'" stroke-width="1.5"/><path d="M886,330 L896,250 M916,330 L906,250" stroke="'+T2+'" stroke-width="3" fill="none"/>';
+    s+='<ellipse cx="901" cy="196" rx="20" ry="7" fill="'+T2+'"/><rect x="883" y="182" width="36" height="14" rx="7" fill="'+T+'" stroke="'+T2+'" stroke-width="1.5"/><path d="M886,189 H916" stroke="'+(night?'#ffe08a':'#a9b8e6')+'" stroke-width="2.5" stroke-dasharray="3 2"/>';
+    s+='<rect x="897" y="140" width="8" height="42" rx="3" fill="'+T+'" stroke="'+T2+'" stroke-width="1.4"/><ellipse cx="901" cy="146" rx="7" ry="3" fill="'+T2+'"/><path d="M901,140 V86" stroke="'+T2+'" stroke-width="2.4"/><circle cx="901" cy="85" r="2.6" fill="#ff7aa2" class="anim-twinkle"/></g>';
+    // lake
+    s+='<rect x="0" y="328" width="1440" height="62" fill="url(#gLake)"/><g class="anim-ripple" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".5">';
+    for(i=0;i<34;i++){var rx=(i*53)%1500,ry=338+(i*13)%46;s+='<path d="M'+rx+','+ry+' h'+(14+(i%4)*6)+'"/>';}
+    s+='</g>';
+    // ferry
+    s+='<g class="anim-bob"><path d="M1060,362 h70 l-8,12 h-54z" fill="#fff" stroke="#c9bfe0" stroke-width="1.4"/><rect x="1074" y="350" width="40" height="12" rx="3" fill="#ffd1e3"/><path d="M1094,350 v-10" stroke="#a495b9" stroke-width="2"/></g>';
+    // grass foreground
+    s+='<path d="M0,392 Q360,382 720,392 T1440,388 V480 H0 Z" fill="url(#gGrass)"/>';
+    for(i=0;i<46;i++){var fx2=(i*37+rnd()*20)%1440,fy=410+rnd()*60;if(sk==='winter')s+='<ellipse cx="'+fx2.toFixed(0)+'" cy="'+fy.toFixed(0)+'" rx="6" ry="2" fill="#fff" opacity=".9"/>';else s+='<circle cx="'+fx2.toFixed(0)+'" cy="'+fy.toFixed(0)+'" r="2.6" fill="'+['#ffb3c8','#fff','#d9c4ff','#ffe58a'][i%4]+'"/>';}
+    // UofT University College (left)
+    var st=night?'#8a7aa8':'#e9d7c6',st2=night?'#6a5c8a':'#cdb49f',rf=night?'#5a4d7a':'#b89fc7';
+    s+='<g transform="translate(470,420)"><rect x="-120" y="-60" width="240" height="60" fill="'+st+'" stroke="'+st2+'" stroke-width="2"/><path d="M-126,-60 L-100,-78 H100 L126,-60 Z" fill="'+rf+'"/>';
+    for(i=0;i<9;i++){if(i===4)continue;s+='<path d="M'+(-108+i*26)+',-12 v-26 a6,6 0 0 1 12,0 v26 z" fill="'+(night?'#ffe08a':'#fff8f0')+'" stroke="'+st2+'" stroke-width="1.4"/>';}
+    s+='<rect x="-22" y="-120" width="44" height="120" fill="'+st+'" stroke="'+st2+'" stroke-width="2"/><path d="M-26,-120 L0,-150 L26,-120 Z" fill="'+rf+'"/><path d="M-10,0 v-28 a10,10 0 0 1 20,0 v28 z" fill="'+(night?'#4a3d6a':'#a88a76')+'"/><circle cx="0" cy="-96" r="9" fill="#fff" stroke="'+st2+'" stroke-width="1.6"/><path d="M0,-96 v-5 M0,-96 h4" stroke="'+st2+'" stroke-width="1.4"/>';
+    s+='<path d="M-22,-112 h44" stroke="'+st2+'" stroke-width="1.3"/></g>';
+    s+='<text x="470" y="436" text-anchor="middle" font-size="11" font-weight="800" fill="'+(night?'#d9d0ff':'#8a6d9e')+'" font-family="Arial,sans-serif" letter-spacing="2">UNIVERSITY OF TORONTO</text>';
+    // trees
+    var tc=P.tree;s+=tree(318,446,120,tc[0])+tree(372,452,86,tc[1])+tree(620,446,92,tc[2])+tree(1260,446,130,tc[0])+tree(1350,452,96,tc[1])+tree(120,452,110,tc[2]);
+    // TTC streetcar on tracks (right)
+    s+='<path d="M780,470 H1440" stroke="#b7aacb" stroke-width="3"/><g class="anim-tram" transform="translate(1000,466)"><path d="M18,-58 L32,-74" stroke="#5b4a5e" stroke-width="2.5"/><rect x="0" y="-58" width="150" height="52" rx="16" fill="#ff6b7a" stroke="#5b4a5e" stroke-width="2.2"/><path d="M2,-26 H148" stroke="#fff" stroke-width="3"/>';
+    for(i=0;i<5;i++)s+='<rect x="'+(12+i*27)+'" y="-50" width="20" height="17" rx="4" fill="#fff" stroke="#5b4a5e" stroke-width="1.6"/>';
+    s+='<text x="75" y="-12" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" font-family="Arial,sans-serif">TTC 506</text><circle cx="30" cy="-4" r="7" fill="#5b4a5e"/><circle cx="120" cy="-4" r="7" fill="#5b4a5e"/></g>';
+    // ---- holiday decorations ----
+    var hk=null;
+    if(scene==='christmas'){hk='santa';s+=gift(560,470,26,'#ff8fb1','#fff')+gift(600,472,20,'#c7b5ff','#fff')+gift(840,474,18,'#9fe0c5','#fff');}
+    if(scene==='newyear'){hk='party';s+=burst(760,170,46,'#ffd84d',0)+burst(1000,130,38,'#ff8fb8',.8)+burst(500,160,34,'#9fe0ff',1.5)+burst(1180,190,42,'#c7b5ff',.4);
+      s+='<text x="720" y="268" text-anchor="middle" font-size="28" font-weight="800" fill="#ffe9a8" font-family="Arial,sans-serif">HAPPY NEW YEAR '+((new Date().getMonth()===11)?new Date().getFullYear()+1:new Date().getFullYear())+'</text>';}
+    if(scene==='canadaday'){hk='maple';s+=burst(780,160,36,'#e84d5b',0)+burst(1040,140,30,'#fff',1.1)+burst(520,160,30,'#e84d5b',1.8);}
+    if(scene==='thanksgiving'){s+=pumpkin(820,462,1.1,false)+pumpkin(850,466,.8,false);}
+    if(scene==='halloween'){hk='witch';s+=pumpkin(820,462,1.3,true)+pumpkin(855,468,.9,true)+pumpkin(250,470,1,true);}
+    if(scene==='valentine'){for(i=0;i<8;i++)s+=heart(440+i*80,200+((i*37)%60),1.6+(i%3)*0.4,['#ff6fa3','#ff8fb1','#e5466e'][i%3]);}
+    if(scene==='lunarnewyear'||scene==='midautumn'){s+='<path d="M380,240 Q720,290 1080,240" stroke="#a0603a" stroke-width="1.6" fill="none"/>';for(i=0;i<6;i++){var lx=420+i*120,ly=248+Math.sin(i/5*Math.PI)*36;s+=lantern(lx,ly+28,1.2);}}
+    if(scene==='victoriaday'){hk='flower';s+=burst(800,180,32,'#ffd84d',0)+burst(1020,160,28,'#ff8fb1',1.2);}
+    if(scene==='familyday'){for(i=0;i<4;i++)s+=heart(820+i*30,300-i*14,1.2,'#ff8fb1');}
+    // Trinity mascot in the foreground
+    s+='<g transform="translate(730,474) scale(1.25)" filter="url(#handdrawn)">'+mascotG('happy',hk)+'</g>';
+    s+='</svg>';
+    return s;
+  }
+  var DEFS='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="handdrawn" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>';
+  return {current:current,detect:detect,build:build,fx:fx,names:NAMES,list:LIST,icon:icon,mascot:mascot,defs:DEFS,iconNames:Object.keys(ICONS)};
+})();
+
+/* ===================== APP: data & calculations ===================== */
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s);},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+var SCHEMA=1,KEY='trinityUofTBudget.data.v1',APP='TrinityUofTBudget';
+var SUBS=[['boba','奶茶','Bubble tea'],['eat','外食','Eating out'],['fun','娛樂社交','Fun & social'],['shop','購物服裝','Shopping & clothes'],['book','書本文具','Books & stationery'],['daily','生活用品','Daily essentials'],['other','其他','Other']];
+var SUB={};SUBS.forEach(function(s){SUB[s[0]]={id:s[0],zh:s[1],en:s[2],icon:s[0]};});
+var SRCS=[['job','打工','Part-time job'],['tutor','家教','Tutoring'],['gift','紅包禮金','Gift / red pocket'],['award','獎學金','Scholarship'],['other','其他','Other']];
+var SRC={};SRCS.forEach(function(s){SRC[s[0]]={id:s[0],zh:s[1],en:s[2]};});
+var DEFAULT_LINES=[
+ {id:'L_ins',zh:'房屋保險',en:'Home insurance',amount:28,kind:'fixed',icon:'ins'},
+ {id:'L_util',zh:'水電',en:'Utilities',amount:122,kind:'var',icon:'util'},
+ {id:'L_buf',zh:'水電緩衝',en:'Utilities buffer',amount:35,kind:'reserve',icon:'buf'},
+ {id:'L_ttc',zh:'TTC 學生月票',en:'TTC student pass',amount:128,kind:'fixed',icon:'ttc'},
+ {id:'L_groc',zh:'買菜',en:'Groceries',amount:150,kind:'var',icon:'groc'},
+ {id:'L_flex',zh:'靈活資金',en:'Flexible',amount:515,kind:'flex',icon:'flex'}];
+var CORE={L_ins:1,L_util:1,L_buf:1,L_ttc:1,L_groc:1,L_flex:1};
+var KIND={fixed:'固定 Fixed',var:'日常 Variable',reserve:'儲備 Reserve',flex:'靈活 Flexible'};
+var QUICK={boba:[6.5,7,7.5,8.5],eat:[12,15,18,25],fun:[10,20,30],shop:[20,40,60],book:[10,25,60],daily:[8,15,25],other:[5,10,20],L_groc:[20,35,50],L_ttc:[128],L_ins:[28],L_util:[60,122],L_buf:[10,20,35]};
+var MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var MNF=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function pad(n){return (n<10?'0':'')+n;}
+function todayStr(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function curMonth(){return todayStr().slice(0,7);}
+function monthOf(d){return String(d||'').slice(0,7);}
+function addMonths(m,k){var p=m.split('-'),y=+p[0],mo=+p[1]+k;y+=Math.floor((mo-1)/12);mo=((mo-1)%12+12)%12+1;return y+'-'+pad(mo);}
+function mLabel(m){var p=m.split('-');return MN[+p[1]-1]+' '+p[0];}
+function mLabelFull(m){var p=m.split('-');return MNF[+p[1]-1]+' '+p[0];}
+function mZh(m){var p=m.split('-');return p[0]+'年'+(+p[1])+'月';}
+function dLabel(d){var p=String(d).split('-');if(p.length<3)return d;return MN[+p[1]-1]+' '+(+p[2]);}
+function cents(n){return Math.round((+n||0)*100);}
+function r2(n){return Math.round((+n||0)*100)/100;}
+function sum(a){var c=0;for(var i=0;i<a.length;i++)c+=cents(a[i]);return c/100;}
+function fmt(n){n=r2(n);var neg=n<0;var s=Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});return (neg?'−':'')+'$'+s;}
+function fmt0(n){n=r2(n);return (n<0?'−':'')+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});}
+function pct(x){if(!isFinite(x))return '—';return Math.round(x*100)+'%';}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function uid(p){return (p||'x')+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function clone(o){return JSON.parse(JSON.stringify(o));}
+function parseAmt(v){if(typeof v==='number')return v;v=String(v==null?'':v).trim().replace(/[$\s,]/g,'');if(!v)return NaN;if(!/^-?\d*\.?\d+$/.test(v))return NaN;return parseFloat(v);}
+var ic=function(n,s,c){return Art.icon(n,s,c);};
+function lineName(l){return l?l.zh+' '+l.en:'(已刪除 deleted)';}
+function lineNameH(l){return l?esc(l.zh)+' <span class="en">'+esc(l.en)+'</span>':'(已刪除 deleted)';}
+
+/* ---------- storage ---------- */
+function defaultLines(){return clone(DEFAULT_LINES);}
+function freshData(){var m=curMonth();var o={schema:SCHEMA,app:APP,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),settings:{allowance:978,rent:1900,incomeToJar:false},template:{allowance:978,rent:1900,lines:defaultLines()},months:{},expenses:[],incomes:[]};o.months[m]={allowance:978,rent:1900,lines:defaultLines()};return o;}
+function validate(d){
+  var errs=[];
+  if(!d||typeof d!=='object'||Array.isArray(d))return {ok:false,errors:['Not a JSON object 不是有效的備份']};
+  if(d.app&&d.app!==APP)errs.push('Unknown app 不是這個 App 的備份: '+d.app);
+  if(typeof d.schema!=='number')errs.push('Missing schema version 缺少版本號');
+  else if(d.schema>SCHEMA)errs.push('Backup is from a newer version 備份版本較新');
+  if(!d.months||typeof d.months!=='object'||Array.isArray(d.months))errs.push('Missing "months" 缺少月份資料');
+  else Object.keys(d.months).forEach(function(k){var m=d.months[k];if(!/^\d{4}-\d{2}$/.test(k))errs.push('Bad month key '+k);else if(!m||!Array.isArray(m.lines))errs.push('Month '+k+' has no budget lines');else m.lines.forEach(function(l){if(!l||typeof l.id!=='string'||!isFinite(+l.amount))errs.push('Bad line in '+k);});});
+  if(!Array.isArray(d.expenses))errs.push('Missing "expenses" 缺少支出資料');
+  else d.expenses.forEach(function(e,i){if(!e||typeof e.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(e.date||'')||!isFinite(+e.amount))errs.push('Bad expense #'+(i+1));});
+  if(d.incomes!=null&&!Array.isArray(d.incomes))errs.push('"incomes" must be a list');
+  if(errs.length>8)errs=errs.slice(0,8).concat(['…']);
+  return {ok:errs.length===0,errors:errs,stats:{months:d.months?Object.keys(d.months).length:0,expenses:Array.isArray(d.expenses)?d.expenses.length:0,incomes:Array.isArray(d.incomes)?d.incomes.length:0}};
+}
+function migrate(d){
+  d.schema=SCHEMA;d.app=APP;d.settings=Object.assign({allowance:978,rent:1900,incomeToJar:false},d.settings||{});
+  d.incomes=Array.isArray(d.incomes)?d.incomes:[];
+  if(!d.template||!Array.isArray(d.template.lines))d.template={allowance:d.settings.allowance,rent:d.settings.rent,lines:defaultLines()};
+  Object.keys(d.months).forEach(function(k){var m=d.months[k];m.allowance=isFinite(+m.allowance)?r2(m.allowance):d.settings.allowance;m.rent=isFinite(+m.rent)?r2(m.rent):d.settings.rent;m.lines.forEach(function(l){l.amount=r2(l.amount);l.zh=l.zh||l.en||'項目';l.en=l.en||'';l.kind=KIND[l.kind]?l.kind:'var';l.icon=l.icon||'other';});});
+  d.expenses.forEach(function(e){e.amount=r2(e.amount);e.note=e.note||'';});
+  d.incomes.forEach(function(e){e.amount=r2(e.amount);e.note=e.note||'';e.source=SRC[e.source]?e.source:'other';});
+  return d;
+}
+var S;
+function load(){try{var raw=localStorage.getItem(KEY);if(raw){var d=JSON.parse(raw);if(validate(d).ok)return migrate(d);console.warn('Stored data invalid; starting fresh');}}catch(e){console.warn(e);}return freshData();}
+function save(){S.updatedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(S));return true;}catch(e){toast('⚠️ 儲存失敗 Could not save (storage full?)');return false;}}
+function latestMonth(){var k=Object.keys(S.months).sort();return k[k.length-1];}
+function ensureMonth(m){if(!S.months[m]){var t=S.template;S.months[m]={allowance:t.allowance,rent:t.rent,lines:clone(t.lines)};save();}return S.months[m];}
+function monthData(m){return S.months[m]||{allowance:S.template.allowance,rent:S.template.rent,lines:S.template.lines};}
+function findLine(m,id){var L=monthData(m).lines;for(var i=0;i<L.length;i++)if(L[i].id===id)return L[i];return null;}
+function touchTemplate(m){if(m>=latestMonth()){var M=S.months[m];S.template={allowance:M.allowance,rent:M.rent,lines:clone(M.lines)};}}
+function entryIcon(e){if(e.lineId==='L_flex')return e.sub||'other';var l=findLine(monthOf(e.date),e.lineId);return l?l.icon:'other';}
+function entryName(e){if(e.lineId==='L_flex'){var s=SUB[e.sub]||SUB.other;return s.zh+' '+s.en;}return lineName(findLine(monthOf(e.date),e.lineId));}
+function entryNameH(e){if(e.lineId==='L_flex'){var s=SUB[e.sub]||SUB.other;return esc(s.zh)+' <span class="en">'+esc(s.en)+'</span>';}return lineNameH(findLine(monthOf(e.date),e.lineId));}
+
+/* ---------- calculations ---------- */
+function status(b,a){if(b<=0)return a>0.004?'over':'none';var p=a/b;return a>b+0.004?'over':p>=0.999?'full':p>=0.8?'warn':'ok';}
+function calc(m){
+  var M=monthData(m);
+  var exps=S.expenses.filter(function(e){return monthOf(e.date)===m;}),incs=S.incomes.filter(function(e){return monthOf(e.date)===m;});
+  var by={};exps.forEach(function(e){by[e.lineId]=(by[e.lineId]||0)+cents(e.amount);});
+  var ids={};
+  var L=M.lines.map(function(l){ids[l.id]=1;return {id:l.id,zh:l.zh,en:l.en,kind:l.kind,icon:l.icon,budget:r2(l.amount),actual:(by[l.id]||0)/100,cover:0};});
+  var u=L.filter(function(x){return x.id==='L_util';})[0],b=L.filter(function(x){return x.id==='L_buf';})[0],cover=0;
+  if(u&&b){var over=r2(u.actual-u.budget);if(over>0)cover=r2(Math.min(over,Math.max(0,b.budget-b.actual)));u.cover=cover;}
+  L.forEach(function(x){x.used=r2(x.actual+(x.id==='L_buf'?cover:0)-(x.id==='L_util'?cover:0));x.remaining=r2(x.budget-x.used);x.pct=x.budget>0?x.used/x.budget:(x.used>0?Infinity:0);
+    x.st=status(x.budget,x.used);if(x.kind==='fixed'&&x.st==='full')x.st='paid';if(x.kind==='reserve'&&x.used===0)x.st='untouched';});
+  var unlinked=sum(exps.filter(function(e){return !ids[e.lineId];}).map(function(e){return e.amount;}));
+  var spent=sum(exps.map(function(e){return e.amount;})),budget=sum(L.map(function(x){return x.budget;}));
+  var bySub={};SUBS.forEach(function(s){bySub[s[0]]={amt:0,n:0};});
+  exps.filter(function(e){return e.lineId==='L_flex';}).forEach(function(e){var k=SUB[e.sub]?e.sub:'other';bySub[k].amt=r2(bySub[k].amt+e.amount);bySub[k].n++;});
+  var boba=exps.filter(function(e){return e.lineId==='L_flex'&&e.sub==='boba';});
+  var income=sum(incs.map(function(e){return e.amount;}));
+  var allowance=r2(M.allowance),remaining=r2(allowance-spent);
+  var overLines=L.filter(function(x){return x.st==='over';}),warnLines=L.filter(function(x){return x.st==='warn'||x.st==='full';});
+  var mood=(remaining<0||overLines.length)?'worried':'happy';
+  return {m:m,exists:!!S.months[m],allowance:allowance,rent:r2(M.rent),lines:L,exps:exps,incs:incs,spent:spent,budget:budget,unalloc:r2(allowance-budget),remaining:remaining,
+    unlinked:unlinked,bySub:bySub,bobaN:boba.length,bobaAmt:sum(boba.map(function(e){return e.amount;})),income:income,overLines:overLines,warnLines:warnLines,mood:mood,cover:cover,
+    hasData:exps.length>0||incs.length>0};
+}
+function jar(){
+  var cm=curMonth(),set={};Object.keys(S.months).forEach(function(k){set[k]=1;});S.expenses.forEach(function(e){set[monthOf(e.date)]=1;});S.incomes.forEach(function(e){set[monthOf(e.date)]=1;});
+  var ms=Object.keys(set).sort(),cum=0,rows=[];
+  ms.forEach(function(m){if(m>=cm)return;var c=calc(m);
+    if(!c.exps.length){var inc0=S.settings.incomeToJar?c.income:0;cum=r2(cum+inc0);rows.push({m:m,skip:true,rolled:0,deficit:0,inc:inc0,cum:cum,spent:0,allowance:c.allowance});return;}
+    var rolled=Math.max(0,c.remaining),deficit=Math.min(0,c.remaining),inc=S.settings.incomeToJar?c.income:0;cum=r2(cum+rolled+inc);
+    rows.push({m:m,rolled:r2(rolled),deficit:r2(deficit),inc:inc,cum:cum,spent:c.spent,allowance:c.allowance});});
+  var c=calc(cm);
+  return {rows:rows,total:cum,projected:Math.max(0,c.remaining),projDeficit:Math.min(0,c.remaining),projInc:S.settings.incomeToJar?c.income:0};
+}
+function jarAt(m){var J=jar(),t=0;J.rows.forEach(function(r){if(r.m<=m)t=r.cum;});return t;}
+
+/* ===================== UI: shared ===================== */
+var ui={view:'home',month:curMonth(),repMonth:null,entFilter:''};
+function toast(msg){var t=$('#toastLayer');t.innerHTML='<div class="toast" role="status">'+esc(msg)+'</div>';clearTimeout(toast._t);toast._t=setTimeout(function(){t.innerHTML='';},2600);}
+function askConfirm(title,msg,ok,danger){return new Promise(function(res){var L=$('#confirmLayer');L.innerHTML='<div class="modal-back"><div class="dialog" role="dialog" aria-modal="true"><h3>'+esc(title)+'</h3><p>'+esc(msg)+'</p><div class="btnrow"><button class="btn" id="cfNo">取消 Cancel</button><button class="btn '+(danger?'dangerfill':'pri')+'" id="cfYes">'+esc(ok||'確定 OK')+'</button></div></div></div>';
+  $('#cfNo').onclick=function(){L.innerHTML='';res(false);};$('#cfYes').onclick=function(){L.innerHTML='';res(true);};setTimeout(function(){var y=$('#cfYes');if(y)y.focus();},30);});}
+function promptAmount(title,msg,def){return new Promise(function(res){var L=$('#confirmLayer');L.innerHTML='<div class="modal-back"><div class="dialog"><h3>'+esc(title)+'</h3><p>'+esc(msg)+'</p><div class="amtwrap"><span class="cur">$</span><input id="pAmt" inputmode="decimal" value="'+esc(def)+'"><span class="code">CAD</span></div><div class="btnrow"><button class="btn" id="pNo">取消 Cancel</button><button class="btn pri" id="pYes">儲存 Save</button></div></div></div>';var i=$('#pAmt');i.focus();i.select();
+  function ok(){var v=parseAmt(i.value);if(!(v>=0)){i.parentNode.style.borderColor='red';return;}L.innerHTML='';res(r2(v));}
+  i.addEventListener('keydown',function(e){if(e.key==='Enter')ok();});$('#pNo').onclick=function(){L.innerHTML='';res(null);};$('#pYes').onclick=ok;});}
+function openModal(html,cls){$('#modalLayer').innerHTML='<div class="modal-back" data-back="1"><div class="sheet '+(cls||'')+'" role="dialog" aria-modal="true">'+html+'</div></div>';document.body.style.overflow='hidden';}
+function closeModal(){$('#modalLayer').innerHTML='';document.body.style.overflow='';F=null;}
+function barCls(st){return st==='over'?'over':st==='warn'||st==='full'?'warn':'';}
+function stBadge(x){
+  if(x.st==='paid')return '<span class="badge ok">已付 Paid ✓</span>';
+  if(x.st==='untouched')return '<span class="badge ok">未動用 Untouched ✓</span>';
+  if(x.st==='over')return '<span class="badge over">超支 Over '+fmt(-x.remaining)+'</span>';
+  if(x.st==='full')return '<span class="badge warn">剛好用完 100%</span>';
+  if(x.st==='warn')return '<span class="badge warn">'+pct(x.pct)+' 快用完囉</span>';return '';}
+function lineRow(x,c){
+  var w=x.budget>0?Math.min(100,x.pct*100):(x.used>0?100:0);
+  var h='<div class="prow" data-row="'+esc(x.id)+'"><div class="top"><span class="n">'+ic(x.icon,30)+'<span>'+lineNameH(x)+'</span></span><span class="num"><b>'+fmt(x.used)+'</b> <span class="muted">/ '+fmt(x.budget)+'</span></span></div>'+
+  '<div class="bar '+barCls(x.st)+'"><i style="width:'+w.toFixed(1)+'%"></i></div>'+
+  '<div class="bot"><span>'+(x.kind==='reserve'?'儲備金 Reserve · ':'')+(x.budget>0?pct(x.pct)+' used 已用':'—')+' '+stBadge(x)+'</span><span class="num '+(x.remaining<0?'neg':'')+'">'+(x.remaining<0?'超 Over ':'剩 Left ')+fmt(Math.abs(x.remaining))+'</span></div>';
+  if(x.id==='L_util'&&x.cover>0)h+='<div class="note">'+ic('buf',18)+' 超出的 '+fmt(x.cover)+' 由水電緩衝支付 — covered by the buffer</div>';
+  if(x.id==='L_buf'&&c&&c.cover>0)h+='<div class="note">Helping utilities 支援水電 '+fmt(c.cover)+'</div>';
+  if(x.kind==='flex'&&c){h+='<div class="subchips">'+SUBS.map(function(s){var v=c.bySub[s[0]];return '<span class="subchip'+(v.amt>0?'':' zero')+'">'+ic(s[0],20)+esc(s[1])+' <b class="num">'+fmt0(v.amt)+'</b></span>';}).join('')+'</div>';}
+  return h+'</div>';}
+function entryItem(e){
+  var inc=e._inc;
+  if(inc){var so=SRC[e.source]||SRC.other;return '<li class="eitem" data-act="edit-inc" data-id="'+esc(e.id)+'"><div class="icw">'+ic('income',34)+'</div><div style="min-width:0"><div class="m">'+esc(so.zh)+' <span class="en">'+esc(so.en)+'</span> <span class="badge inc">額外收入 Extra</span></div><div class="s">'+dLabel(e.date)+(e.note?' · '+esc(e.note):'')+'</div></div><div class="a num pos">+'+fmt(e.amount)+'</div></li>';}
+  return '<li class="eitem" data-act="edit-exp" data-id="'+esc(e.id)+'"><div class="icw">'+ic(entryIcon(e),34)+'</div><div style="min-width:0"><div class="m">'+entryNameH(e)+'</div><div class="s">'+dLabel(e.date)+(e.note?' · '+esc(e.note):'')+'</div></div><div class="a num">'+fmt(e.amount)+'</div></li>';}
+function monthEntries(m){var a=S.expenses.filter(function(e){return monthOf(e.date)===m;}).map(function(e){return Object.assign({_inc:false},e);}).concat(S.incomes.filter(function(e){return monthOf(e.date)===m;}).map(function(e){return Object.assign({_inc:true},e);}));
+  return a.sort(function(x,y){return x.date===y.date?((y.createdAt||'')>(x.createdAt||'')?1:-1):(x.date<y.date?1:-1);});}
+function chipKeys(m){var a=SUBS.map(function(s){return {k:s[0],lineId:'L_flex',sub:s[0],icon:s[0],zh:s[1],en:s[2],flex:true};});
+  var ord={L_groc:1,L_ttc:2,L_util:3,L_ins:4,L_buf:5};monthData(m).lines.filter(function(l){return l.kind!=='flex';}).slice().sort(function(x,y){return (ord[x.id]||9)-(ord[y.id]||9);}).forEach(function(l){a.push({k:l.id,lineId:l.id,sub:null,icon:l.icon,zh:l.zh,en:l.en});});return a;}
+function keyOf(e){return e.lineId==='L_flex'?(SUB[e.sub]?e.sub:'other'):e.lineId;}
+function greeting(c){
+  if(!c.exps.length)return 'Hi Trinity! 嗨～ 點下面的小圖示記第一筆吧 ✨ Tap a chip to log your first spend.';
+  if(c.remaining<0)return 'Oops，這個月超支 '+fmt(-c.remaining)+' — 沒關係，下個月再加油！💪 We bounce back next month.';
+  if(c.overLines.length)return c.overLines[0].zh+' 超了一點點，小調整就好～ A tiny tweak and you’re back on track 🌷';
+  if(c.spent/c.allowance>0.85)return '快到終點囉，慢慢花～ Almost there, easy does it 🌸';
+  return '做得超好！Doing great ✨ 還有 '+fmt(c.remaining)+' 可以好好享受。';}
+function bobaMoM(c,p){var d=c.bobaN-p.bobaN,da=r2(c.bobaAmt-p.bobaAmt);
+  if(!c.bobaN&&!p.bobaN)return '這個月還沒喝奶茶 No boba yet — saving it for a treat? 🧋';
+  var t='上月 Last month: '+p.bobaN+' 杯 · '+fmt(p.bobaAmt)+'<br>';
+  if(d<0)t+='<b class="pos">比上月少 '+(-d)+' 杯 '+fmt(Math.abs(da))+' — nice! 🎉</b>';
+  else if(d>0)t+='<b class="warnc">比上月多 '+d+' 杯 (+'+fmt(Math.abs(da))+') — enjoy, just peek at Flexible 👀</b>';
+  else t+='<b>跟上月一樣 Same cups as last month '+(da?'('+(da>0?'+':'−')+fmt(Math.abs(da)).replace('−','')+')':'')+'</b>';
+  return t;}
+function cupsRow(n){var h='';for(var i=0;i<Math.min(n,12);i++)h+=ic('boba',26,'cup');if(n>12)h+='<span class="more">+'+(n-12)+'</span>';return h||'<span class="muted small">0 杯 — 🫧</span>';}
+function niceMax(v){if(v<=0)return 10;var p=Math.pow(10,Math.floor(Math.log10(v))),n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;}
+function barChart(rows,series,id,isMoney,Wd){
+  var W=Wd||660,H=230,L=48,B=26,T=26,R=8,iw=W-L-R,ih=H-T-B,max=0;rows.forEach(function(r){r.vals.forEach(function(v){max=Math.max(max,v);});});max=niceMax(max);
+  var s='<svg class="chart" id="'+id+'" viewBox="0 0 '+W+' '+H+'" role="img">';
+  for(var g=0;g<=4;g++){var y=T+ih-ih*g/4,v=max*g/4;s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="#5b4a5e" stroke-opacity=".08"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+(isMoney?'$'+(v>=1000?(v/1000).toFixed(1)+'k':Math.round(v)):Math.round(v*10)/10)+'</text>';}
+  var gw=iw/Math.max(rows.length,1),bw=Math.min(24,gw*0.75/series.length);
+  rows.forEach(function(r,i){var x0=L+gw*i+gw/2;r.vals.forEach(function(v,j){var h=Math.max(0,v)/max*ih,x=x0-bw*series.length/2+bw*j;s+='<rect x="'+x.toFixed(1)+'" y="'+(T+ih-h).toFixed(1)+'" width="'+(bw-3).toFixed(1)+'" height="'+h.toFixed(1)+'" rx="5" fill="'+series[j].color+'"><title>'+esc(r.label)+' '+series[j].name+': '+(isMoney?fmt(v):v)+'</title></rect>';});
+    s+='<text x="'+x0.toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle">'+esc(r.label)+'</text>';});
+  var lx=L;series.forEach(function(se){s+='<rect x="'+lx+'" y="6" width="10" height="10" rx="3" fill="'+se.color+'"/><text x="'+(lx+14)+'" y="15">'+esc(se.name)+'</text>';lx+=se.name.length*7+34;});
+  return s+'</svg>';}
+function jarSVG(fill){fill=Math.max(0,Math.min(1,fill));var top=40+110*(1-fill);
+  return '<svg class="jar" viewBox="0 0 120 170" width="96" height="136" aria-hidden="true"><defs><clipPath id="jarClip"><path d="M22,40 Q14,44 14,60 V146 Q14,162 30,162 H90 Q106,162 106,146 V60 Q106,44 98,40 Z"/></clipPath></defs><g filter="url(#handdrawn)"><rect x="30" y="16" width="60" height="18" rx="6" fill="#ffc2d9" stroke="#5b4a5e" stroke-width="2.2"/><path d="M22,40 Q14,44 14,60 V146 Q14,162 30,162 H90 Q106,162 106,146 V60 Q106,44 98,40 Z" fill="#f3f7ff" stroke="#5b4a5e" stroke-width="2.4"/><g clip-path="url(#jarClip)"><rect x="0" y="'+top.toFixed(1)+'" width="120" height="170" fill="#ffe58a"/>'+[[36,150],[58,152],[80,150],[47,138],[70,139],[92,138],[38,126],[60,125],[84,126]].filter(function(p){return p[1]>top+6;}).map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="9" fill="#ffd34d" stroke="#e6b94a" stroke-width="1.6"/>';}).join('')+'</g><path d="M28,70 v50" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/><path d="M40,34 h40" stroke="#5b4a5e" stroke-width="2"/></g><path d="M60,112 C48,103 46,96 50,92 C53,89 58,90 60,94 C62,90 67,89 70,92 C74,96 72,103 60,112Z" fill="#ff8fb1" stroke="#5b4a5e" stroke-width="1.8"/></svg>';}
+
+/* ===================== HOME ===================== */
+function renderHome(){
+  var m=ui.month,c=calc(m),p=calc(addMonths(m,-1)),J=jar();
+  var used=c.allowance>0?c.spent/c.allowance:0,st=c.remaining<0?'over':used>=0.8?'warn':'';
+  var col1='<section class="card hello" id="helloCard"><div class="hello-top"><div class="mbox" id="moodBox" data-mood="'+c.mood+'">'+Art.mascot(c.mood,104,c.mood==='worried'?'Trinity looks a little worried 有點擔心':'Trinity is happy 開心')+'</div><div class="bubble" id="greet">'+greeting(c)+'</div></div>'+
+    '<div class="leftbig"><label>'+(c.remaining<0?'本月超支 Over budget':'本月還可以花 Left to spend')+'</label><div class="big num '+(c.remaining<0?'neg':'')+'" id="kpiLeft">'+fmt(c.remaining)+'</div><div class="sub">of 零用錢 allowance '+fmt(c.allowance)+' · '+mLabelFull(m)+' · '+mZh(m)+'</div></div>'+
+    '<div class="bar fat '+st+'"><i style="width:'+Math.min(100,used*100).toFixed(1)+'%"></i></div>'+
+    '<div class="kpi-row"><div class="tile"><label>已花 Spent</label><b class="num" id="kpiSpent">'+fmt(c.spent)+'</b><small>'+pct(used)+' · '+c.exps.length+' 筆</small></div>'+
+    '<button class="tile" data-act="edit-allow"><label>零用錢 Allowance ✎</label><b class="num" id="kpiAllow">'+fmt(c.allowance)+'</b><small>from Dad 爸爸給的 💌</small></button>'+
+    '<button class="tile" data-act="add-inc"><label>額外收入 Extra income ＋</label><b class="num pos" id="kpiInc">'+fmt(c.income)+'</b><small>separate 另計</small></button>'+
+    '<button class="tile" data-act="nav" data-v="reports" data-scroll="jarHist"><label>存錢罐 Savings jar</label><b class="num" id="kpiJar">'+fmt(J.total)+'</b><small>累計 total saved</small></button></div>'+
+    '<div class="rentinfo" id="rentInfo">'+ic('rent',30)+'<div><b>房租 Rent '+fmt0(c.rent)+'</b> · 爸爸直接付 paid by Dad<br><span class="small muted">Info only — not taken from your budget 不從零用錢扣 💗</span></div></div>'+
+    '<button class="btn-add" data-act="add-exp" id="homeAdd">＋ 記一筆 Add spending</button></section>';
+  col1+='<section class="card" id="quickCard"><h3>'+ic('star',24)+' 快速記帳 Quick add <span class="right small muted">tap 點一下</span></h3><div class="qgrid">'+chipKeys(m).filter(function(k){return k.k!=='L_buf';}).map(function(k){return '<button class="qchip'+(k.k==='boba'?' boba':'')+'" data-act="quick" data-k="'+esc(k.k)+'">'+ic(k.icon,36)+'<span>'+esc(k.zh)+'</span><small>'+esc(k.en)+'</small></button>';}).join('')+'</div></section>';
+  // col2 boba + status
+  var last=S.expenses.filter(function(e){return e.lineId==='L_flex'&&e.sub==='boba';}).sort(function(a,b){return a.date<b.date?1:-1;})[0];
+  var col2='<section class="card bobacard" id="bobaCard"><h3>'+ic('boba',28)+' 奶茶計數器 Bubble Tea Counter</h3><div class="boba-row"><div class="mbox">'+Art.mascot('boba',92,'Trinity with bubble tea 喝奶茶')+'</div><div class="boba-stats"><div class="cups"><b class="num" id="bobaCount">'+c.bobaN+'</b> 杯 cups</div><div class="bobaamt"><b class="num" id="bobaAmt">'+fmt(c.bobaAmt)+'</b> 本月 this month</div><div class="mom" id="bobaMoM">'+bobaMoM(c,p)+'</div></div></div>'+
+    '<div class="cupline" id="cupLine">'+cupsRow(c.bobaN)+'</div><button class="btn boba-add" data-act="quick" data-k="boba" id="bobaPlus">＋1 杯 '+ic('boba',22)+' '+(last?'('+fmt(last.amount)+')':'')+'</button></section>';
+  col2+='<section class="card" id="statusCard"><h3>'+ic('flex',26)+' 本月預算 Monthly status <button class="linkbtn right" data-act="nav" data-v="budget">編輯 Edit →</button></h3>'+
+    '<div class="totrow"><span>總計 Total</span><span class="num"><b id="stTotal">'+fmt(c.spent)+'</b> / '+fmt(c.allowance)+'</span></div>';
+  if(c.remaining<0)col2+='<div class="alert over" id="overAlert">⚠️ 本月超支 '+fmt(-c.remaining)+' Over this month — 存錢罐不會被扣 your jar is safe; the deficit is shown in reports.</div>';
+  if(c.overLines.length||c.warnLines.length)col2+='<div class="chips" id="warnChips">'+c.overLines.map(function(x){return '<span class="chip over">🔴 '+esc(x.zh)+' 超 '+fmt(-x.remaining)+'</span>';}).join('')+c.warnLines.map(function(x){return '<span class="chip warn">🟠 '+esc(x.zh)+' '+pct(x.pct)+'</span>';}).join('')+'</div>';
+  col2+=c.lines.map(function(x){return lineRow(x,c);}).join('');
+  if(c.unlinked>0)col2+='<div class="note">未分類 Unlinked (deleted line): '+fmt(c.unlinked)+'</div>';
+  col2+='</section>';
+  // col3 jar + recent
+  var goal=Math.max(500,niceMax(J.total+J.projected));
+  var col3='<section class="card jarcard" id="jarCard"><h3>'+ic('save',28)+' 存錢罐 Savings Jar</h3><div class="jar-row"><div class="mbox">'+Art.mascot('cheer',86,'Trinity cheering 加油')+'</div>'+jarSVG((J.total)/goal)+'<div><div class="small muted">累計 Saved so far</div><div class="big2 num" id="jarTotal">'+fmt(J.total)+'</div>'+
+    (J.projDeficit<0?'<div class="small neg" id="jarProj">本月目前超支 '+fmt(-J.projDeficit)+' — nothing rolls in, jar stays safe</div>':'<div class="small pos" id="jarProj">月底預計存入 +'+fmt(J.projected)+' at month-end ✨</div>')+'</div></div>'+
+    '<div class="small muted" style="margin-top:6px">每月剩下的錢月底自動存進來；超支不會扣存錢罐。Leftover rolls in automatically at month-end; overspending never takes from the jar.</div>'+
+    (J.rows.length?'<table class="tbl" style="margin-top:8px">'+J.rows.slice(-4).reverse().map(function(r){return '<tr><td>'+mLabel(r.m)+'</td><td class="r num '+(r.deficit<0?'neg':'pos')+'">'+(r.skip?'<span class="muted">no records</span>':r.deficit<0?'超支 '+fmt(r.deficit):'+'+fmt(r.rolled))+'</td><td class="r num muted">'+fmt(r.cum)+'</td></tr>';}).join('')+'</table>':'')+'</section>';
+  var ents=monthEntries(m);
+  col3+='<section class="card" id="recentCard"><h3>'+ic('book',26)+' 最近記錄 Recent <button class="linkbtn right" data-act="nav" data-v="entries">全部 All '+ents.length+' →</button></h3>'+(ents.length?'<ul class="elist">'+ents.slice(0,8).map(entryItem).join('')+'</ul>':'<div class="empty">還沒有記錄 No entries yet.<br>點「＋ 記一筆」開始吧！</div>')+'</section>';
+  $('#v-home').innerHTML='<div class="home-grid"><div class="col">'+col1+'</div><div class="col">'+col2+'</div><div class="col">'+col3+'</div></div>';
+}
+
+/* ===================== BUDGET ===================== */
+function renderBudget(){
+  var m=ui.month;ensureMonth(m);var c=calc(m),M=S.months[m];
+  var h='<div class="budget-grid"><div class="col">';
+  h+='<section class="card"><h2>'+ic('flex',28)+' 預算設定 Budget · '+mLabel(m)+'</h2><div class="row2"><label class="field"><span>每月零用錢 Monthly allowance (CAD)</span><input class="inp num" data-fid="allow" data-mf="allowance" inputmode="decimal" value="'+M.allowance.toFixed(2)+'"></label><label class="field"><span>房租 Rent — 爸爸直接付 (info only)</span><input class="inp num" data-fid="rent" data-mf="rent" inputmode="decimal" value="'+M.rent.toFixed(2)+'"></label></div>'+
+    '<div class="stats4"><div class="stat"><label>零用錢 Allowance</label><b class="num" id="bAllow">'+fmt(c.allowance)+'</b></div><div class="stat"><label>預算合計 Total budget</label><b class="num" id="bTotal">'+fmt(c.budget)+'</b></div><div class="stat"><label>未分配 Unallocated</label><b class="num '+(c.unalloc<0?'neg':'')+'" id="bUnalloc">'+fmt(c.unalloc)+'</b></div><div class="stat"><label>已花 Spent</label><b class="num">'+fmt(c.spent)+'</b></div></div>'+
+    '<div class="alert '+(Math.abs(c.unalloc)<0.005?'ok':c.unalloc<0?'over':'warn')+'" id="allocMsg">'+(Math.abs(c.unalloc)<0.005?'✓ 每一塊錢都有安排 Every dollar has a job!':c.unalloc<0?'預算比零用錢多 '+fmt(-c.unalloc)+' — Budget is bigger than the allowance':'還有 '+fmt(c.unalloc)+' 沒分配 — unallocated money also rolls into savings 🐷')+'</div>'+
+    '<p class="small muted">修改後自動儲存，新的月份會沿用最新月份的預算。Changes save automatically; new months copy the latest budget.</p></section>';
+  h+='<section class="card" id="linesCard"><h3>'+ic('star',24)+' 預算項目 Budget lines <span class="right small muted num">'+fmt(c.spent)+' / '+fmt(c.budget)+'</span></h3>';
+  c.lines.forEach(function(x){var custom=!CORE[x.id];
+    h+='<div class="bl" data-line="'+esc(x.id)+'"><div class="r1">'+ic(x.icon,34)+'<input class="inp" data-fid="lz-'+esc(x.id)+'" data-lf="zh" value="'+esc(x.zh)+'" aria-label="中文名稱"><input class="inp" data-fid="le-'+esc(x.id)+'" data-lf="en" value="'+esc(x.en)+'" aria-label="English name"><input class="inp amt num" data-fid="la-'+esc(x.id)+'" data-lf="amount" inputmode="decimal" value="'+x.budget.toFixed(2)+'" aria-label="Budget amount"></div>'+
+      '<div class="r2"><span class="badge kind">'+KIND[x.kind]+'</span><div class="bar '+barCls(x.st)+'"><i style="width:'+(x.budget>0?Math.min(100,x.pct*100):(x.used>0?100:0)).toFixed(1)+'%"></i></div><span class="num">'+fmt(x.used)+' · '+(x.budget>0?pct(x.pct):'—')+'</span>'+stBadge(x)+
+      (custom?'<span class="iconpick">'+['other','fun','shop','book','daily','eat','star','income','save'].map(function(n){return '<button class="ipk'+(x.icon===n?' on':'')+'" data-act="line-icon" data-id="'+esc(x.id)+'" data-v="'+n+'" aria-label="icon '+n+'">'+ic(n,22)+'</button>';}).join('')+'</span><button class="btn sm danger" data-act="line-del" data-id="'+esc(x.id)+'">刪除 Delete</button>':'')+'</div>'+
+      (x.kind==='reserve'?'<div class="note">儲備金：平常不動用，水電超支時自動補上；沒用到就月底存進存錢罐。Untouched reserve — auto-covers utility overflow; unused money rolls to savings.</div>':'')+
+      (x.kind==='flex'?'<div class="note">靈活資金包含：'+SUBS.map(function(s){return s[1];}).join('、')+' — you pick the sub-category when logging.</div>':'')+'</div>';});
+  h+='<div class="btnrow" style="margin-top:10px"><button class="btn pri sm" data-act="line-add">＋ 新增項目 Add line</button><button class="btn sm" data-act="copy-prev">複製上月 Copy last month</button><button class="btn sm" data-act="reset-lines">恢復預設 Default lines</button></div></section>';
+  h+='</div><div class="col">';
+  h+='<section class="card"><h3>'+ic('flex',26)+' 靈活資金分類 Flexible sub-categories</h3><table class="tbl">'+SUBS.map(function(s){var v=c.bySub[s[0]];return '<tr><td>'+ic(s[0],26)+' '+esc(s[1])+' <span class="en">'+esc(s[2])+'</span></td><td class="r num">'+v.n+' 筆</td><td class="r num">'+fmt(v.amt)+'</td></tr>';}).join('')+'<tr class="tot"><td>合計 Total</td><td></td><td class="r num">'+fmt(sum(SUBS.map(function(s){return c.bySub[s[0]].amt;})))+'</td></tr></table></section>';
+  h+='<section class="card"><h3>'+ic('rent',26)+' 房租 Rent (info)</h3><p class="small" style="margin:0">'+fmt(M.rent)+' / month — 爸爸直接付給房東，不算在妳的預算裡。Paid by Dad directly; it never reduces your budget. 謝謝爸爸 💗</p></section>';
+  h+='</div></div>';
+  $('#v-budget').innerHTML=h;
+}
+
+/* ===================== REPORTS ===================== */
+function knownMonths(){var set={};Object.keys(S.months).forEach(function(k){set[k]=1;});S.expenses.forEach(function(e){set[monthOf(e.date)]=1;});S.incomes.forEach(function(e){set[monthOf(e.date)]=1;});set[curMonth()]=1;set[ui.month]=1;return Object.keys(set).sort();}
+function reportBody(m,forPrint){
+  var c=calc(m),p=calc(addMonths(m,-1)),J=jar(),row=J.rows.filter(function(r){return r.m===m;})[0],closed=m<curMonth();
+  var h='<div class="stats4 rstats"><div class="stat"><label>零用錢 Allowance</label><b class="num" id="'+(forPrint?'p':'r')+'Allow">'+fmt(c.allowance)+'</b></div><div class="stat"><label>已花 Spent</label><b class="num" id="'+(forPrint?'p':'r')+'Spent">'+fmt(c.spent)+'</b><div class="small muted">'+pct(c.allowance?c.spent/c.allowance:0)+' · '+c.exps.length+' 筆</div></div>'+
+   '<div class="stat"><label>'+(c.remaining<0?'超支 Deficit':'剩餘 Left')+'</label><b class="num '+(c.remaining<0?'neg':'pos')+'" id="'+(forPrint?'p':'r')+'Left">'+fmt(c.remaining)+'</b></div><div class="stat"><label>存入存錢罐 To savings</label><b class="num" id="'+(forPrint?'p':'r')+'Jar">'+(closed?(row?fmt(row.rolled):fmt(0)):fmt(Math.max(0,c.remaining))+'<small class="muted"> (預計 proj.)</small>')+'</b></div>'+
+   '<div class="stat"><label>額外收入 Extra income</label><b class="num pos" id="'+(forPrint?'p':'r')+'Inc">'+fmt(c.income)+'</b></div><div class="stat"><label>奶茶 Bubble tea</label><b class="num" id="'+(forPrint?'p':'r')+'Boba">'+c.bobaN+' 杯 · '+fmt(c.bobaAmt)+'</b><div class="small muted">上月 last: '+p.bobaN+' 杯</div></div><div class="stat"><label>存錢罐累計 Jar total</label><b class="num">'+fmt(closed?jarAt(m):J.total)+'</b></div><div class="stat"><label>房租 Rent (Dad)</label><b class="num">'+fmt(c.rent)+'</b><div class="small muted">not in budget</div></div></div>';
+  h+='<h3 class="rh">'+ic('flex',24)+' 各項預算 Budget vs actual</h3><div class="tblwrap"><table class="tbl" id="'+(forPrint?'p':'r')+'Lines"><tr><th>項目 Line</th><th class="r">預算 Budget</th><th class="r">實際 Actual</th><th class="r">剩 Left</th><th class="r">%</th></tr>'+c.lines.map(function(x){return '<tr><td>'+ic(x.icon,22)+' '+lineNameH(x)+'</td><td class="r num">'+fmt(x.budget)+'</td><td class="r num">'+fmt(x.used)+'</td><td class="r num '+(x.remaining<0?'neg':'')+'">'+fmt(x.remaining)+'</td><td class="r">'+(x.budget>0?pct(x.pct):'—')+'</td></tr>';}).join('')+
+   (c.unlinked?'<tr><td>未分類 Unlinked</td><td></td><td class="r num">'+fmt(c.unlinked)+'</td><td></td><td></td></tr>':'')+'<tr class="tot"><td>合計 Total</td><td class="r num">'+fmt(c.budget)+'</td><td class="r num">'+fmt(c.spent)+'</td><td class="r num '+(c.budget-c.spent<0?'neg':'')+'">'+fmt(c.budget-c.spent)+'</td><td class="r">'+(c.budget?pct(c.spent/c.budget):'')+'</td></tr></table></div>';
+  var flexTot=sum(SUBS.map(function(s){return c.bySub[s[0]].amt;})),mx=Math.max.apply(null,SUBS.map(function(s){return c.bySub[s[0]].amt;}).concat([1]));
+  h+='<h3 class="rh">'+ic('star',24)+' 靈活資金去哪了 Where Flexible went</h3><div class="hbars">'+SUBS.map(function(s){var v=c.bySub[s[0]];return '<div class="hb">'+ic(s[0],26)+'<span class="hl">'+esc(s[1])+' <span class="en">'+esc(s[2])+'</span></span><span class="ht"><i style="width:'+(v.amt/mx*100).toFixed(1)+'%"></i></span><b class="num">'+fmt(v.amt)+'</b></div>';}).join('')+'</div><div class="small muted">合計 '+fmt(flexTot)+' of '+fmt((c.lines.filter(function(x){return x.kind==='flex';})[0]||{budget:0}).budget)+'</div>';
+  return h;}
+function renderReports(){
+  var keys=knownMonths().reverse();if(!ui.repMonth||keys.indexOf(ui.repMonth)<0)ui.repMonth=keys.indexOf(ui.month)>=0?ui.month:keys[0];
+  var m=ui.repMonth,J=jar();
+  var h='<div class="reports-grid"><section class="card span3"><h2>'+ic('book',28)+' 月報 Monthly report</h2><div class="reptools"><select class="inp" id="repMonth" aria-label="Report month">'+keys.map(function(k){return '<option value="'+k+'"'+(k===m?' selected':'')+'>'+mLabelFull(k)+' · '+mZh(k)+'</option>';}).join('')+'</select>'+
+    '<button class="btn acc" data-act="gen-summary">💌 給爸爸的小結 Summary for Dad</button><button class="btn" data-act="xlsx-month">'+ic('book',20)+' Excel (本月 month)</button><button class="btn" data-act="xlsx-all">'+ic('book',20)+' Excel (全部 all)</button><button class="btn" data-act="print">🖨 PDF / 列印</button></div>'+
+    '<p class="small muted" style="margin:6px 0 0">PDF：按「PDF / 列印」後，在列印視窗選「另存為 PDF / Save as PDF」。Tip: choose “Save as PDF” as the printer.</p>'+reportBody(m,false)+'</section>';
+  var end=m,tr=[];for(var i=5;i>=0;i--)tr.push(addMonths(end,-i));var tcs=tr.map(calc);
+  h+='<section class="card span2"><h3>'+ic('flex',24)+' 六個月趨勢 6-month trend</h3>'+barChart(tr.map(function(mm,i){return {label:mLabel(mm).slice(0,3),vals:[(tcs[i].hasData||tcs[i].exists)?tcs[i].allowance:0,tcs[i].spent,tcs[i].income]};}),[{name:'零用錢 Allowance',color:'#d9c4ff'},{name:'已花 Spent',color:'#ff8fb1'},{name:'額外 Extra',color:'#8fd8b8'}],'chTrend',true)+'</section>';
+  h+='<section class="card"><h3>'+ic('boba',24)+' 奶茶趨勢 Boba cups</h3>'+barChart(tr.map(function(mm,i){return {label:mLabel(mm).slice(0,3),vals:[tcs[i].bobaN]};}),[{name:'杯 cups',color:'#e7b98f'}],'chBoba',false,380)+'<div class="small muted">本月 '+tcs[5].bobaN+' 杯 '+fmt(tcs[5].bobaAmt)+' · 上月 '+tcs[4].bobaN+' 杯 '+fmt(tcs[4].bobaAmt)+'</div></section>';
+  h+='<section class="card span3" id="jarHist"><h3>'+ic('save',26)+' 存錢罐紀錄 Savings jar history <span class="right num" id="rJarTotal">'+fmt(J.total)+'</span></h3><div class="tblwrap"><table class="tbl" id="jarTable"><tr><th>月份 Month</th><th class="r">零用錢</th><th class="r">已花 Spent</th><th class="r">存入 Rolled in</th><th class="r">超支 Deficit</th>'+(S.settings.incomeToJar?'<th class="r">額外收入</th>':'')+'<th class="r">累計 Total</th></tr>'+
+    J.rows.map(function(r){return '<tr data-m="'+r.m+'"><td>'+mLabel(r.m)+'</td><td class="r num">'+fmt(r.allowance)+'</td><td class="r num">'+(r.skip?'—':fmt(r.spent))+'</td><td class="r num pos">'+(r.skip?'<span class="muted small">no records 未記帳</span>':'+'+fmt(r.rolled))+'</td><td class="r num '+(r.deficit<0?'neg':'muted')+'">'+(r.deficit<0?fmt(r.deficit):'—')+'</td>'+(S.settings.incomeToJar?'<td class="r num">'+fmt(r.inc)+'</td>':'')+'<td class="r num"><b>'+fmt(r.cum)+'</b></td></tr>';}).join('')+
+    '<tr class="proj"><td>'+mLabel(curMonth())+' (進行中 in progress)</td><td></td><td class="r num">'+fmt(calc(curMonth()).spent)+'</td><td class="r num pos">'+(J.projDeficit<0?'—':'+'+fmt(J.projected)+' 預計')+'</td><td class="r num '+(J.projDeficit<0?'neg':'muted')+'">'+(J.projDeficit<0?fmt(J.projDeficit):'—')+'</td>'+(S.settings.incomeToJar?'<td class="r num">'+fmt(J.projInc)+'</td>':'')+'<td class="r num muted">'+fmt(r2(J.total+J.projected+J.projInc))+'</td></tr></table></div><p class="small muted">超支月份不會從存錢罐扣錢，只會顯示赤字。Deficit months never subtract from the jar — they are just shown here.</p></section>';
+  h+='</div>';
+  $('#v-reports').innerHTML=h;
+  renderPrint(m);
+}
+function renderPrint(m){
+  var c=calc(m);
+  $('#printArea').innerHTML='<div class="phead">'+Art.mascot(c.mood==='worried'?'worried':'happy',90)+'<div><h1>Trinity’s UofT Budget · 月報</h1><div>'+mLabelFull(m)+' · '+mZh(m)+' · CAD</div><div class="small">Generated 產生於 '+todayStr()+'</div></div>'+ic('save',60)+'</div>'+reportBody(m,true)+
+   '<h3 class="rh">'+ic('book',24)+' 明細 Entries</h3><table class="tbl"><tr><th>日期 Date</th><th>類別 Category</th><th class="r">金額 Amount</th><th>備註 Note</th></tr>'+monthEntries(m).slice().reverse().map(function(e){return '<tr><td>'+e.date+'</td><td>'+(e._inc?ic('income',18)+' 額外收入 '+esc((SRC[e.source]||SRC.other).zh):ic(entryIcon(e),18)+' '+entryNameH(e))+'</td><td class="r num">'+(e._inc?'+':'')+fmt(e.amount)+'</td><td>'+esc(e.note)+'</td></tr>';}).join('')+'</table>'+
+   '<p class="small" style="margin-top:14px">'+ic('heart',16)+' 房租 '+fmt(c.rent)+' 由爸爸直接支付，不計入預算。Rent is paid by Dad directly.</p>';
+}
+function summaryText(m){
+  var c=calc(m),p=calc(addMonths(m,-1)),J=jar(),closed=m<curMonth(),L=[];
+  L.push('🎓 Trinity’s UofT Budget — '+mZh(m)+' '+mLabelFull(m));
+  L.push('💌 爸爸好！這是我這個月的花費小結 Hi Dad, here’s my monthly summary:');
+  L.push('');
+  L.push('💵 零用錢 Allowance: $'+fmt(c.allowance).slice(1)+' CAD');
+  L.push('🧾 已花 Spent: '+fmt(c.spent)+' ('+pct(c.allowance?c.spent/c.allowance:0)+', '+c.exps.length+' 筆)');
+  L.push(c.remaining<0?'⚠️ 超支 Over budget: '+fmt(-c.remaining)+' — 下個月會調整 I’ll adjust next month':'✅ 剩餘 Left: '+fmt(c.remaining)+(closed?' → 已存進存錢罐 rolled into savings 🐷':' (月底存進存錢罐 rolls to savings at month-end)'));
+  L.push('🏠 房租 Rent '+fmt(c.rent)+' — 爸爸直接付，謝謝爸爸！Paid by Dad, thank you! 💗');
+  L.push('');
+  L.push('📋 各項 Budget lines:');
+  c.lines.forEach(function(x){L.push('  • '+x.zh+' '+x.en+': '+fmt(x.used)+' / '+fmt(x.budget)+(x.st==='over'?' ⚠️ 超 '+fmt(-x.remaining):x.st==='paid'?' ✓':x.st==='untouched'?' ✓ 未動用':''));
+    if(x.id==='L_util'&&x.cover>0)L.push('     (緩衝支援 buffer covered '+fmt(x.cover)+')');});
+  var subs=SUBS.filter(function(s){return c.bySub[s[0]].amt>0;});
+  if(subs.length){L.push('');L.push('✨ 靈活資金明細 Flexible breakdown:');subs.forEach(function(s){L.push('  • '+s[1]+' '+s[2]+': '+fmt(c.bySub[s[0]].amt));});}
+  L.push('');
+  L.push('🧋 奶茶 Bubble tea: '+c.bobaN+' 杯 cups · '+fmt(c.bobaAmt)+' (上月 last month '+p.bobaN+' 杯 · '+fmt(p.bobaAmt)+')');
+  if(c.income>0)L.push('💪 額外收入 Extra income: '+fmt(c.income)+' ('+c.incs.map(function(e){return (SRC[e.source]||SRC.other).zh;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join('、')+')');
+  L.push('🐷 存錢罐 Savings jar: '+fmt(closed?jarAt(m):J.total)+(closed?'':' (+'+fmt(J.projected)+' 預計 this month)'));
+  L.push('');
+  L.push('Love you, Dad! 愛你 ❤️ — Trinity');
+  return L.join('\n');
+}
+
+/* ===================== MORE & ENTRIES ===================== */
+function renderMore(){
+  var m=ui.month,c=calc(m);
+  var h='<div class="more-grid">';
+  h+='<section class="card" id="incCard"><h3>'+ic('income',28)+' 額外收入 Extra income · '+mLabel(m)+'</h3><p class="small muted" style="margin-top:0">打工、家教、紅包… 另外計算，不影響零用錢預算。Counted separately from your allowance budget.</p><div class="stat" style="margin-bottom:8px"><label>本月 This month</label><b class="num pos" id="incTotal">'+fmt(c.income)+'</b></div>'+
+    (c.incs.length?'<ul class="elist">'+c.incs.map(function(e){return entryItem(Object.assign({_inc:true},e));}).join('')+'</ul>':'<div class="empty">還沒有額外收入 None yet</div>')+
+    '<button class="btn pri" data-act="add-inc" style="margin-top:8px">＋ 記額外收入 Add extra income</button>'+
+    '<label class="check" style="margin-top:10px"><input type="checkbox" id="incToJar" '+(S.settings.incomeToJar?'checked':'')+'> 額外收入也存進存錢罐 Also add extra income to the savings jar</label></section>';
+  h+='<section class="card" id="dataCard"><h3>'+ic('save',28)+' 備份與還原 Backup & restore</h3><p class="small muted" style="margin-top:0">資料只存在這個瀏覽器 (localStorage)。記得定期備份！Data lives only in this browser — export a backup now and then.</p>'+
+    '<div class="btnrow"><button class="btn pri" data-act="export-dl">⬇️ 匯出備份 Export JSON</button><button class="btn" data-act="export-copy">📋 複製 JSON</button></div>'+
+    '<div class="btnrow" style="margin-top:8px"><button class="btn" data-act="import-file">📂 從檔案匯入 Import file</button><button class="btn" data-act="import-paste">📥 貼上匯入 Paste JSON</button></div>'+
+    '<div class="small muted" style="margin-top:8px">上次儲存 Last saved: '+esc(new Date(S.updatedAt).toLocaleString())+' · '+(JSON.stringify(S).length/1024).toFixed(1)+' KB</div></section>';
+  h+='<section class="card"><h3>'+ic('book',28)+' Excel & PDF</h3><p class="small muted" style="margin-top:0">匯出 Excel (.xlsx)：明細、月結、存錢罐。Sheets: entries, monthly summary, savings.</p><div class="btnrow"><button class="btn" data-act="xlsx-month">Excel · '+mLabel(m)+'</button><button class="btn" data-act="xlsx-all">Excel · 全部 All</button><button class="btn" data-act="nav" data-v="reports">🖨 PDF 月報 →</button></div></section>';
+  h+='<section class="card"><h3>'+ic('book',28)+' 明細 All entries</h3><button class="btn" data-act="nav" data-v="entries">打開 '+mLabel(m)+' 明細 Open list</button></section>';
+  h+='<section class="card"><h3>'+ic('other',28)+' 示範與重設 Demo & reset</h3><p class="small muted" style="margin-top:0">會覆蓋目前資料，請先備份。Both replace current data — export first!</p><div class="btnrow"><button class="btn" data-act="demo-load">✨ 載入示範 Load demo</button><button class="btn danger" data-act="reset-all">⟲ 全部重設 Reset all</button></div></section>';
+  var sc=Art.current();
+  h+='<section class="card about"><h3>'+ic('star',28)+' 關於 About</h3>'+Art.mascot('happy',70)+'<div class="small muted">Trinity’s UofT Budget · 單一檔案、離線、不需伺服器 single-file & offline. 加油 Trinity！Go Blues 💙<br>Today 今天: '+todayStr()+(sc!=='none'?' · '+esc(Art.names[sc]):'')+' · CAD</div></section>';
+  h+='</div>';$('#v-more').innerHTML=h;
+}
+function renderEntries(){
+  var m=ui.month,f=ui.entFilter,all=monthEntries(m);
+  var list=all.filter(function(e){if(!f)return true;if(f==='inc')return e._inc;return !e._inc&&keyOf(e)===f;});
+  var keys=chipKeys(m);
+  var h='<section class="card"><h2>'+ic('book',28)+' 明細 Entries · '+mLabel(m)+' <button class="linkbtn right" data-act="nav" data-v="home">← 首頁 Home</button></h2><div class="fchips"><button class="fchip'+(!f?' on':'')+'" data-act="ent-filter" data-v="">全部 All</button>'+keys.map(function(k){return '<button class="fchip'+(f===k.k?' on':'')+'" data-act="ent-filter" data-v="'+esc(k.k)+'">'+ic(k.icon,20)+esc(k.zh)+'</button>';}).join('')+'<button class="fchip'+(f==='inc'?' on':'')+'" data-act="ent-filter" data-v="inc">'+ic('income',20)+'額外收入</button></div>'+
+    '<div class="small muted" style="margin:8px 0" id="entCount">'+list.length+' 筆 · '+fmt(sum(list.filter(function(e){return !e._inc;}).map(function(e){return e.amount;})))+'</div>'+(list.length?'<ul class="elist">'+list.map(entryItem).join('')+'</ul>':'<div class="empty">沒有記錄 Nothing here yet</div>')+'</section>';
+  $('#v-entries').innerHTML=h;
+}
+
+/* ===================== ENTRY FORM (spending / extra income) ===================== */
+var F=null;
+function openEntry(mode,id,key){
+  var date=ui.month===curMonth()?todayStr():ui.month+'-01';
+  if(mode==='exp'&&id){var e=S.expenses.filter(function(x){return x.id===id;})[0];if(!e)return;F={mode:'exp',id:e.id,key:keyOf(e),amountStr:String(e.amount),date:e.date,note:e.note||'',createdAt:e.createdAt};}
+  else if(mode==='inc'&&id){var i=S.incomes.filter(function(x){return x.id===id;})[0];if(!i)return;F={mode:'inc',id:i.id,source:i.source,amountStr:String(i.amount),date:i.date,note:i.note||'',createdAt:i.createdAt};}
+  else F={mode:mode,id:null,key:key||null,source:'job',amountStr:'',date:date,note:''};
+  if(F.mode==='exp'&&!F.id&&F.key){var q=quickAmts(F.key);if(F.key==='boba'&&q.length)F.amountStr=String(q[0]);}
+  renderForm();
+}
+function recentAmts(k){var seen={},out=[];S.expenses.filter(function(e){return keyOf(e)===k;}).sort(function(a,b){return (a.date+(a.createdAt||''))<(b.date+(b.createdAt||''))?1:-1;}).forEach(function(e){if(!seen[e.amount]&&out.length<4){seen[e.amount]=1;out.push(e.amount);}});return out;}
+function quickAmts(k){var r=recentAmts(k),d=QUICK[k]||[5,10,20];var out=r.slice();d.forEach(function(v){if(out.length<5&&out.indexOf(v)<0)out.push(v);});return out;}
+function keyInfo(m,k){return chipKeys(m).filter(function(x){return x.k===k;})[0]||null;}
+function renderForm(){
+  var edit=!!F.id,m=monthOf(F.date),inc=F.mode==='inc';
+  var h='<div class="sh"><h2>'+(edit?'✏️ 修改 Edit':'＋ 記一筆 Add')+' '+(inc?'額外收入 Extra income':'支出 Spending')+'</h2><button class="xbtn" data-act="close-modal" aria-label="Close">×</button></div>';
+  if(!edit)h+='<div class="seg" id="fMode"><button type="button" data-act="f-mode" data-v="exp" class="'+(inc?'':'on')+'">'+ic('flex',20)+' 支出 Spending</button><button type="button" data-act="f-mode" data-v="inc" class="'+(inc?'on':'')+'">'+ic('income',20)+' 額外收入 Extra income</button></div>';
+  if(inc)h+='<div class="field"><span>來源 Source</span><div class="cgrid" id="srcChips">'+SRCS.map(function(s){return '<button type="button" class="cchip'+(F.source===s[0]?' on':'')+'" data-act="f-src" data-v="'+s[0]+'">'+ic(s[0]==='job'?'income':s[0]==='tutor'?'book':s[0]==='gift'?'other':s[0]==='award'?'star':'flex',30)+'<span>'+esc(s[1])+'</span><small>'+esc(s[2])+'</small></button>';}).join('')+'</div></div>';
+  else h+='<div class="field"><span>類別 Category — 點一下 tap one</span><div class="cgrid" id="catChips">'+chipKeys(m).map(function(k){return '<button type="button" class="cchip'+(F.key===k.k?' on':'')+(k.k==='boba'?' boba':'')+'" data-act="f-key" data-k="'+esc(k.k)+'">'+ic(k.icon,30)+'<span>'+esc(k.zh)+'</span><small>'+esc(k.en)+'</small></button>';}).join('')+'</div></div>';
+  h+='<div class="amtwrap"><span class="cur">$</span><input id="fAmt" inputmode="decimal" autocomplete="off" placeholder="0.00" value="'+esc(F.amountStr)+'" aria-label="Amount 金額"><span class="code">CAD</span></div><div class="qamts" id="qAmts"></div>'+
+    '<div id="fLive" class="live"></div>'+
+    '<div class="row2"><label class="field"><span>日期 Date</span><input type="date" class="inp" id="fDate" value="'+esc(F.date)+'"></label><label class="field"><span>備註 Note (optional 可不填)</span><input class="inp" id="fNote" maxlength="80" placeholder="'+(inc?'e.g. Robarts shift':'e.g. Chatime w/ friends')+'" value="'+esc(F.note)+'"></label></div>'+
+    '<div class="err" id="fErr"></div><div class="foot">'+(edit?'<button class="btn danger" data-act="f-del" style="flex:0 0 auto">🗑 刪除</button>':'<button class="btn" data-act="close-modal">取消 Cancel</button>')+'<button class="btn pri" id="fSave" data-act="f-save">'+(edit?'儲存修改 Save':'儲存 Save')+'</button></div>';
+  openModal(h,'entsheet');updateQuick();updateLive();
+  if(!edit&&(F.key||inc))setTimeout(function(){var a=$('#fAmt');if(a){a.focus();a.select();}},60);
+}
+function updateQuick(){var q=$('#qAmts');if(!q)return;var arr=F.mode==='inc'?[20,50,100,200]:(F.key?quickAmts(F.key):[]);q.innerHTML=arr.map(function(v){return '<button type="button" class="qa" data-act="f-quick" data-v="'+v+'">'+fmt0(v)+'</button>';}).join('');}
+function readForm(){if(!F||!$('#fAmt'))return;F.amountStr=$('#fAmt').value;F.date=$('#fDate').value||F.date;F.note=$('#fNote').value;}
+function lineCheck(m,lineId,amount,excludeId){
+  var l=findLine(m,lineId),budget=l?r2(l.amount):0,already=0;
+  S.expenses.forEach(function(e){if(e.id!==excludeId&&monthOf(e.date)===m&&e.lineId===lineId)already+=cents(e.amount);});already/=100;
+  var after=r2(budget-already-amount),used=already+amount;
+  return {line:l,budget:budget,already:already,after:after,pct:budget>0?used/budget:(used>0?Infinity:0),st:budget<=0?(used>0?'over':'ok'):(used>budget+0.004?'over':used/budget>=0.8?'warn':'ok')};}
+function updateLive(){
+  readForm();if(!F)return false;
+  var m=monthOf(F.date),amt=parseAmt(F.amountStr),a=amt>0?amt:0,ok=true,err='',live=$('#fLive'),h='';
+  if(!(amt>0)){ok=false;err=F.amountStr.trim()?'請輸入有效金額 Enter a valid amount':'';}
+  if(F.mode==='inc'){h='<div class="status info">'+ic('income',22)+' 額外收入另外計算 Counted separately — nice work! 💪</div>';}
+  else if(!F.key){ok=false;err=err||'';h='<div class="muted small">先點一個類別 Pick a category above 👆</div>';}
+  else{var k=keyInfo(m,F.key);if(!k){ok=false;err='This category is not in '+mLabel(m)+' 該月沒有此項目';}
+    else{var ck=lineCheck(m,k.lineId,a,F.id),c=calc(m),cur=0;S.expenses.forEach(function(e){if(e.id!==F.id&&monthOf(e.date)===m)cur+=cents(e.amount);});var monthLeft=r2(c.allowance-cur/100-a);
+      h='<div class="g"><div><label>'+esc(ck.line?ck.line.zh:'')+' 預算 Budget</label><b class="num">'+fmt(ck.budget)+'</b></div><div><label>已花 Already</label><b class="num">'+fmt(ck.already)+'</b></div><div><label>記後剩 Left after</label><b class="num '+(ck.after<0?'neg':'')+'" id="liveAfter">'+fmt(ck.after)+'</b></div><div><label>本月總剩 Month left</label><b class="num '+(monthLeft<0?'neg':'')+'" id="liveMonth">'+fmt(monthLeft)+'</b></div></div>';
+      if(k.lineId==='L_util'&&ck.after<0){var bl=findLine(m,'L_buf');h+='<div class="status warn">'+ic('buf',20)+' 超出部分由水電緩衝支援 Buffer will cover up to '+fmt(bl?bl.amount:0)+'</div>';}
+      else if(ck.st==='over')h+='<div class="status over" id="liveStatus">會超支 Over by '+fmt(-ck.after)+' — 沒關係，記下來最重要！Logging it is what matters 💗</div>';
+      else if(ck.st==='warn')h+='<div class="status warn" id="liveStatus">快用完囉 '+pct(ck.pct)+' used — still OK 🌷</div>';
+      else h+='<div class="status ok" id="liveStatus">✓ 預算內 Within budget ✨</div>';
+      if(F.key==='boba'){var n=S.expenses.filter(function(e){return e.id!==F.id&&monthOf(e.date)===m&&e.lineId==='L_flex'&&e.sub==='boba';}).length+1;h+='<div class="small" style="text-align:center;margin-top:6px">'+ic('boba',18)+' 這是本月第 <b>'+n+'</b> 杯 — cup #'+n+' this month</div>';}
+    }}
+  if(live)live.innerHTML=h;var e=$('#fErr');if(e)e.textContent=err;var sv=$('#fSave');if(sv)sv.disabled=!ok;return ok;
+}
+function saveEntry(){
+  if(!updateLive())return toast('請檢查 Please pick a category & amount');
+  var amt=r2(parseAmt(F.amountStr)),m=monthOf(F.date);ensureMonth(m);var now=new Date().toISOString(),msg;
+  if(F.mode==='inc'){var o={id:F.id||uid('i'),date:F.date,amount:amt,source:F.source,note:F.note.trim(),createdAt:F.createdAt||now,updatedAt:now};var ix=S.incomes.findIndex(function(x){return x.id===o.id;});if(ix>=0)S.incomes[ix]=o;else S.incomes.push(o);msg=(F.id?'已更新 Updated ✓ ':'已儲存 Saved ✓ ')+'+'+fmt(amt)+' 額外收入 💪';}
+  else{var k=keyInfo(m,F.key);var e={id:F.id||uid('e'),date:F.date,amount:amt,lineId:k.lineId,sub:k.sub,note:F.note.trim(),createdAt:F.createdAt||now,updatedAt:now};var i=S.expenses.findIndex(function(x){return x.id===e.id;});if(i>=0)S.expenses[i]=e;else S.expenses.push(e);
+    var c=calc(m),ln=c.lines.filter(function(x){return x.id===k.lineId;})[0];
+    msg=(F.id?'已更新 Updated ✓ ':'已儲存 Saved ✓ ')+k.zh+' '+fmt(amt)+(F.key==='boba'?' · 本月第 '+c.bobaN+' 杯 🧋':'')+(ln&&ln.st==='over'?' · ⚠️ '+ln.zh+' 超支 over':'');}
+  if(!save())return;closeModal();ui.month=m;render();toast(msg);
+}
+
+/* ===================== XLSX (self-written, offline) ===================== */
+var CRC=(function(){var t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}return t;})();
+function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CRC[(c^u[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+function zipStore(files){var enc=new TextEncoder(),parts=[],central=[],off=0;
+  files.forEach(function(f){var nm=enc.encode(f.name),d=enc.encode(f.text),crc=crc32(d);
+    var h=new DataView(new ArrayBuffer(30));h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(8,0,true);h.setUint16(10,0,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,d.length,true);h.setUint32(22,d.length,true);h.setUint16(26,nm.length,true);h.setUint16(28,0,true);
+    parts.push(new Uint8Array(h.buffer),nm,d);
+    var c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(10,0,true);c.setUint16(12,0,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,d.length,true);c.setUint32(24,d.length,true);c.setUint16(28,nm.length,true);c.setUint32(42,off,true);
+    central.push(new Uint8Array(c.buffer),nm);off+=30+nm.length+d.length;});
+  var csz=central.reduce(function(a,b){return a+b.length;},0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,csz,true);e.setUint32(16,off,true);
+  return new Blob(parts.concat(central,[new Uint8Array(e.buffer)]),{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});}
+function xesc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'');}
+function colName(i){var s='';i++;while(i>0){var r=(i-1)%26;s=String.fromCharCode(65+r)+s;i=Math.floor((i-1)/26);}return s;}
+function sheetXML(rows,widths){var x='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>';
+  if(widths)x+='<cols>'+widths.map(function(w,i){return '<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>';}).join('')+'</cols>';
+  x+='<sheetData>'+rows.map(function(r,ri){return '<row r="'+(ri+1)+'">'+r.map(function(v,ci){var ref=colName(ci)+(ri+1),st=ri===0?1:0,val=v;if(v&&typeof v==='object'){st=v.s;val=v.v;}
+    if(typeof val==='number'&&isFinite(val))return '<c r="'+ref+'" s="'+st+'"><v>'+val+'</v></c>';if(val==null||val==='')return '';return '<c r="'+ref+'" s="'+st+'" t="inlineStr"><is><t xml:space="preserve">'+xesc(val)+'</t></is></c>';}).join('')+'</row>';}).join('')+'</sheetData></worksheet>';return x;}
+function buildXlsx(sheets){
+  var STY='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="&quot;$&quot;#,##0.00"/></numFmts><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFBD3E4"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="164" fontId="1" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  var files=[{name:'[Content_Types].xml',text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>'+sheets.map(function(s,i){return '<Override PartName="/xl/worksheets/sheet'+(i+1)+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>';}).join('')+'</Types>'},
+   {name:'_rels/.rels',text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+   {name:'xl/workbook.xml',text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sheets.map(function(s,i){return '<sheet name="'+xesc(s.name)+'" sheetId="'+(i+1)+'" r:id="rId'+(i+1)+'"/>';}).join('')+'</sheets></workbook>'},
+   {name:'xl/_rels/workbook.xml.rels',text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sheets.map(function(s,i){return '<Relationship Id="rId'+(i+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+(i+1)+'.xml"/>';}).join('')+'<Relationship Id="rId'+(sheets.length+1)+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'},
+   {name:'xl/styles.xml',text:STY}];
+  sheets.forEach(function(s,i){files.push({name:'xl/worksheets/sheet'+(i+1)+'.xml',text:sheetXML(s.rows,s.widths)});});
+  return zipStore(files);}
+function xlsxSheets(scope){
+  var months=scope==='all'?knownMonths().filter(function(m){return calc(m).hasData||S.months[m];}):[scope];
+  var $m=function(v){return {v:r2(v),s:2};};
+  var ent=[['日期 Date','月份 Month','類別 Category','子類別 Sub-category','金額 Amount (CAD)','備註 Note']];
+  var exps=S.expenses.filter(function(e){return months.indexOf(monthOf(e.date))>=0;}).sort(function(a,b){return a.date<b.date?-1:1;});
+  exps.forEach(function(e){var l=findLine(monthOf(e.date),e.lineId),s=e.lineId==='L_flex'?(SUB[e.sub]||SUB.other):null;ent.push([e.date,monthOf(e.date),lineName(l),s?s.zh+' '+s.en:'',$m(e.amount),e.note||'']);});
+  ent.push(['','','合計 Total','',{v:sum(exps.map(function(e){return e.amount;})),s:3},'']);
+  var inc=[['日期 Date','月份 Month','來源 Source','金額 Amount (CAD)','備註 Note']];
+  S.incomes.filter(function(e){return months.indexOf(monthOf(e.date))>=0;}).sort(function(a,b){return a.date<b.date?-1:1;}).forEach(function(e){var so=SRC[e.source]||SRC.other;inc.push([e.date,monthOf(e.date),so.zh+' '+so.en,$m(e.amount),e.note||'']);});
+  var sm=[['月份 Month','零用錢 Allowance','預算 Budget','已花 Spent','剩餘/超支 Left (−deficit)','存入存錢罐 Rolled to savings','奶茶杯數 Boba cups','奶茶金額 Boba $','額外收入 Extra income','房租(爸爸付) Rent by Dad']];
+  var J=jar(),jm={};J.rows.forEach(function(r){jm[r.m]=r;});
+  months.forEach(function(m){var c=calc(m),r=jm[m];sm.push([m,$m(c.allowance),$m(c.budget),$m(c.spent),$m(c.remaining),r?$m(r.rolled):(m>=curMonth()?'(in progress)':$m(0)),c.bobaN,$m(c.bobaAmt),$m(c.income),$m(c.rent)]);});
+  var lines=[['月份 Month','項目 Line','English','預算 Budget','實際 Actual','剩 Left']];
+  months.forEach(function(m){calc(m).lines.forEach(function(x){lines.push([m,x.zh,x.en,$m(x.budget),$m(x.used),$m(x.remaining)]);});});
+  var sv=[['月份 Month','已花 Spent','存入 Rolled in','超支 Deficit (not deducted)','額外收入入罐 Income to jar','累計 Cumulative']];
+  J.rows.filter(function(r){return scope==='all'||r.m<=scope;}).forEach(function(r){sv.push([r.m,r.skip?'—':$m(r.spent),$m(r.rolled),$m(r.deficit),$m(r.inc),$m(r.cum)]);});
+  sv.push([curMonth()+' (projected 預計)','',$m(J.projected),$m(J.projDeficit),$m(J.projInc),$m(J.total+J.projected+J.projInc)]);
+  return [{name:'Entries 明細',rows:ent,widths:[12,10,24,22,16,30]},{name:'Monthly summary 月結',rows:sm,widths:[10,14,12,12,18,20,12,12,14,16]},{name:'Budget lines 預算',rows:lines,widths:[10,16,20,12,12,12]},{name:'Savings 存錢罐',rows:sv,widths:[22,12,14,22,20,14]},{name:'Extra income 額外收入',rows:inc,widths:[12,10,22,16,30]}];
+}
+function download(blob,name){var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1500);}
+function exportXlsx(scope){try{var name='Trinity-UofT-Budget-'+(scope==='all'?'all':scope)+'-'+todayStr()+'.xlsx';download(buildXlsx(xlsxSheets(scope)),name);toast('Excel 已匯出 Exported ⬇️ '+name);}catch(e){console.error(e);toast('Excel 匯出失敗 Export failed');}}
+window.__xlsx={build:function(scope){return buildXlsx(xlsxSheets(scope));}};
+
+/* ===================== DATA ===================== */
+function exportJSON(){return JSON.stringify(Object.assign({exportedAt:new Date().toISOString()},S),null,2);}
+function copyText(text,ta){
+  function fallback(){if(ta){ta.focus();ta.select();try{ta.setSelectionRange(0,text.length);}catch(e){}}var ok=false;try{ok=document.execCommand('copy');}catch(e){}toast(ok?'已複製 Copied ✓':'已選取，請手動複製 Selected — press Copy');}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){toast('已複製 Copied ✓ 可以貼給爸爸了');},fallback);}else fallback();}
+function showText(title,text,id,extra){openModal('<div class="sh"><h2>'+title+'</h2><button class="xbtn" data-act="close-modal" aria-label="Close">×</button></div>'+(extra||'')+'<textarea class="summary" id="'+id+'" readonly>'+esc(text)+'</textarea><div class="foot"><button class="btn" data-act="close-modal">關閉 Close</button><button class="btn pri" data-act="copy-ta" data-target="'+id+'">📋 複製 Copy</button></div>');}
+function doImport(text){
+  var d;try{d=JSON.parse(text);}catch(e){return askConfirm('匯入失敗 Import failed','不是有效的 JSON. Not valid JSON.\n'+e.message,'OK',false);}
+  var v=validate(d);if(!v.ok)return askConfirm('備份無效 Backup invalid',v.errors.join('\n'),'OK',false);
+  return askConfirm('覆蓋全部資料？Replace all data?','備份內有 '+v.stats.months+' 個月、'+v.stats.expenses+' 筆支出、'+v.stats.incomes+' 筆額外收入'+(d.exportedAt?'\nExported '+new Date(d.exportedAt).toLocaleString():'')+'.\n目前資料將被覆蓋 Current data will be overwritten.','匯入 Import',true).then(function(ok){
+    if(!ok)return;delete d.exportedAt;S=migrate(d);save();closeModal();ui.month=S.months[curMonth()]?curMonth():latestMonth()||curMonth();ensureMonth(ui.month);render();toast('匯入成功 Imported ✓');});}
+function buildDemo(){
+  var d=freshData(),cm=curMonth(),td=+todayStr().slice(8);d.months={};
+  var ms=[addMonths(cm,-3),addMonths(cm,-2),addMonths(cm,-1),cm];
+  ms.forEach(function(m){d.months[m]={allowance:978,rent:1900,lines:defaultLines()};});d.template=clone({allowance:978,rent:1900,lines:defaultLines()});
+  var n=0;function E(m,day,amt,line,sub,note){if(m===cm&&day>td)day=Math.max(1,td-((n*3)%Math.max(1,td)));d.expenses.push({id:'e_demo'+(n++),date:m+'-'+pad(day),amount:amt,lineId:line,sub:sub||null,note:note||'',createdAt:m+'-'+pad(day)+'T12:00:'+pad(n%60)+'Z'});}
+  function I(m,day,amt,src,note){if(m===cm&&day>td)day=td;d.incomes.push({id:'i_demo'+(n++),date:m+'-'+pad(day),amount:amt,source:src,note:note||'',createdAt:m+'-'+pad(day)+'T13:00:00Z'});}
+  var plan=[ // [util, groc[], eat[], boba[], fun[], shop[], book[], daily[], other[]]
+    {util:118.4,groc:[38.2,42.5,31.8,29.4],eat:[16.5,22,14.8,19.5,27],boba:[7.25,6.5,7.5,7.25,8.1,6.5,7],fun:[18,32.5],shop:[46.9],book:[64.5,8.9],daily:[14.2,9.8],other:[12]},
+    {util:131.6,groc:[44.1,39.9,36.4,33.2],eat:[18.2,24.5,16,31,21.4,26.8],boba:[7.5,7.25,6.5,8.1,7,7.5,6.5,7.25,8.5],fun:[45,28,60],shop:[89.9,54],book:[12.5],daily:[18.6,11.4],other:[25]},
+    {util:121.2,groc:[41.3,36.7,38.9,30.6],eat:[15.5,19.8,23.4,17.2],boba:[7.25,6.5,7.5,7,8.1],fun:[22,15],shop:[38.5],book:[9.5],daily:[12.9,8.6],other:[]},
+    {util:0,groc:[34.6,28.9],eat:[17.8,21.5],boba:[7.5,6.5,7.25],fun:[16],shop:[],book:[24.9],daily:[11.5],other:[]}];
+  var notes={boba:['Chatime','Coco 椰子','Tiger Sugar','The Alley','Gong Cha','Kung Fu Tea','Presotea','Chatime','Sharetea'],eat:['Pho w/ friends','Sansotei ramen','Banh mi','Hot pot 火鍋','Sushi','Burger'],groc:['T&T','No Frills','Loblaws','Metro'],fun:['Movie night','Karaoke KTV','AGO student','Escape room'],shop:['Uniqlo','Aritzia','Winners'],book:['UofT Bookstore','Muji pens','Course reader'],daily:['Shoppers','Dollarama'],other:['Birthday gift','Phone case']};
+  ms.forEach(function(m,mi){var P=plan[mi],cur=m===cm;
+    E(m,1,28,'L_ins','', 'Monthly premium');E(m,1,128,'L_ttc','','Post-secondary pass');
+    if(P.util)E(m,20,P.util,'L_util','','Toronto Hydro + Enbridge');
+    P.groc.forEach(function(v,i){E(m,3+i*7,v,'L_groc','',notes.groc[i%4]);});
+    ['eat','boba','fun','shop','book','daily','other'].forEach(function(k){P[k].forEach(function(v,i){E(m,2+((i*5+mi*3+k.length)%26),v,'L_flex',k,(notes[k]||[''])[i%(notes[k]||['']).length]);});});
+    if(mi===1){E(m,26,64,'L_flex','fun','Concert tickets 🎤');}
+    if(mi===0||mi===2)I(m,15,120,'job','Robarts library shift');if(mi===1)I(m,10,88,'gift','紅包 from 阿姨');if(cur)I(m,12,96,'tutor','Math tutoring');});
+  return d;}
+
+/* ===================== RENDER & EVENTS ===================== */
+function renderHeader(){
+  $('#monthLabel').textContent=mLabel(ui.month);$('#monthLabelZh').textContent=mZh(ui.month);$('#monthPicker').value=ui.month;
+  $$('#nav [data-v]').forEach(function(b){var on=b.getAttribute('data-v')===ui.view||(ui.view==='entries'&&b.getAttribute('data-v')==='home');b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+}
+function render(){
+  var ae=document.activeElement,fid=ae&&ae.getAttribute&&ae.getAttribute('data-fid'),sel=null;try{sel=fid?ae.selectionStart:null;}catch(e){}
+  renderHeader();
+  $$('.view').forEach(function(v){v.classList.toggle('on',v.id==='v-'+ui.view);});
+  if(ui.view==='home')renderHome();else if(ui.view==='budget')renderBudget();else if(ui.view==='reports')renderReports();else if(ui.view==='more')renderMore();else if(ui.view==='entries')renderEntries();
+  if(ui.view!=='reports')renderPrint(ui.repMonth||ui.month);
+  if(fid){var el=document.querySelector('[data-fid="'+fid+'"]');if(el){el.focus();try{if(sel!=null)el.setSelectionRange(sel,sel);}catch(e){}}}
+}
+function setMonth(m){if(!/^\d{4}-\d{2}$/.test(m))return;ui.month=m;ensureMonth(m);ui.repMonth=m;render();}
+function go(v,scrollId){ui.view=v;if(v==='reports')ui.repMonth=ui.month;render();if(scrollId){var el=document.getElementById(scrollId);if(el)el.scrollIntoView({block:'start'});}else window.scrollTo(0,0);}
+function lineIdx(id){var L=S.months[ui.month].lines;for(var i=0;i<L.length;i++)if(L[i].id===id)return i;return -1;}
+function lineChanged(msg){touchTemplate(ui.month);if(save())toast(msg||'已儲存 Saved ✓');}
+
+document.addEventListener('click',function(ev){
+  if(ev.target.getAttribute&&ev.target.getAttribute('data-back')){closeModal();return;}
+  var t=ev.target.closest('[data-act]');if(!t)return;
+  var act=t.getAttribute('data-act'),id=t.getAttribute('data-id'),v=t.getAttribute('data-v');
+  switch(act){
+    case 'nav':go(v,t.getAttribute('data-scroll'));break;
+    case 'month-prev':setMonth(addMonths(ui.month,-1));break;
+    case 'month-next':setMonth(addMonths(ui.month,1));break;
+    case 'add-exp':openEntry('exp',null,null);break;
+    case 'add-inc':openEntry('inc',null,null);break;
+    case 'quick':openEntry('exp',null,t.getAttribute('data-k'));break;
+    case 'edit-exp':openEntry('exp',id);break;
+    case 'edit-inc':openEntry('inc',id);break;
+    case 'close-modal':closeModal();break;
+    case 'f-mode':readForm();F.mode=v;F.key=null;renderForm();break;
+    case 'f-key':readForm();var prevKey=F.key;F.key=t.getAttribute('data-k');$$('#catChips .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===F.key);});
+      if(!F.amountStr&&F.key==='boba'){var q=quickAmts('boba');if(q.length){F.amountStr=String(q[0]);$('#fAmt').value=F.amountStr;}}updateQuick();updateLive();var a=$('#fAmt');if(a&&prevKey!==F.key){a.focus();}break;
+    case 'f-src':readForm();F.source=v;$$('#srcChips .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});updateLive();break;
+    case 'f-quick':$('#fAmt').value=v;updateLive();break;
+    case 'f-save':saveEntry();break;
+    case 'f-del':var isInc=F.mode==='inc';askConfirm('刪除這筆？Delete this entry?',fmt(parseAmt(F.amountStr)||0)+' · '+F.date,'刪除 Delete',true).then(function(ok){if(!ok)return;if(isInc)S.incomes=S.incomes.filter(function(x){return x.id!==F.id;});else S.expenses=S.expenses.filter(function(x){return x.id!==F.id;});save();closeModal();render();toast('已刪除 Deleted');});break;
+    case 'edit-allow':var c=calc(ui.month);promptAmount('💌 零用錢 Monthly allowance','爸爸每月給的零用錢 (CAD) — '+mLabel(ui.month),c.allowance).then(function(a){if(a==null)return;ensureMonth(ui.month).allowance=a;lineChanged('零用錢已更新 Allowance saved ✓ '+fmt(a));render();});break;
+    case 'line-add':ensureMonth(ui.month);var nl={id:uid('L'),zh:'新項目',en:'New line',amount:0,kind:'var',icon:'other'};S.months[ui.month].lines.push(nl);lineChanged('已新增項目 Line added ✓');render();var ni=$('[data-fid="lz-'+nl.id+'"]');if(ni){ni.focus();ni.select();ni.scrollIntoView({block:'center'});}break;
+    case 'line-icon':var li0=lineIdx(id);if(li0<0)break;S.months[ui.month].lines[li0].icon=v;lineChanged();render();break;
+    case 'line-del':var li=lineIdx(id),ln=S.months[ui.month].lines[li];var cnt=S.expenses.filter(function(e){return monthOf(e.date)===ui.month&&e.lineId===id;}).length;
+      askConfirm('刪除項目？Delete line?',ln.zh+' '+ln.en+(cnt?'\n本月有 '+cnt+' 筆記錄用這個項目 — they will show as “unlinked”.':''),'刪除 Delete',true).then(function(ok){if(!ok)return;S.months[ui.month].lines.splice(lineIdx(id),1);lineChanged('已刪除 Deleted');render();});break;
+    case 'copy-prev':var pm=addMonths(ui.month,-1);if(!S.months[pm]){toast(mLabel(pm)+' 沒有預算 No budget last month');break;}askConfirm('複製上月預算？Copy '+mLabel(pm)+' budget?','記錄不會被刪除 Entries are kept.','複製 Copy',false).then(function(ok){if(!ok)return;var P=S.months[pm];S.months[ui.month].lines=clone(P.lines);S.months[ui.month].allowance=P.allowance;lineChanged('已複製 Copied ✓');render();});break;
+    case 'reset-lines':askConfirm('恢復預設項目？Reset to default lines?','房屋保險 28 · 水電 122 · 緩衝 35 · TTC 128 · 買菜 150 · 靈活 515\n記錄不會被刪除 Entries are kept.','恢復 Reset',true).then(function(ok){if(!ok)return;S.months[ui.month].lines=defaultLines();S.months[ui.month].allowance=978;lineChanged('已恢復預設 Defaults restored ✓');render();});break;
+    case 'ent-filter':ui.entFilter=v||'';renderEntries();break;
+    case 'gen-summary':showText('💌 給爸爸的小結 Summary for Dad',summaryText(ui.repMonth||ui.month),'sumText','<p class="small muted" style="margin-top:0">複製後貼到微信、LINE 或簡訊給爸爸 Copy & paste into WeChat / iMessage.</p>');break;
+    case 'copy-ta':var ta=document.getElementById(t.getAttribute('data-target'));copyText(ta.value,ta);break;
+    case 'xlsx-month':exportXlsx(ui.view==='reports'?(ui.repMonth||ui.month):ui.month);break;
+    case 'xlsx-all':exportXlsx('all');break;
+    case 'print':renderPrint(ui.repMonth||ui.month);toast('在列印視窗選「另存為 PDF」Choose “Save as PDF”');setTimeout(function(){window.print();},250);break;
+    case 'export-dl':try{download(new Blob([exportJSON()],{type:'application/json'}),'Trinity-UofT-Budget-backup-'+todayStr()+'.json');toast('備份已下載 Backup downloaded ⬇️');}catch(err){toast('下載失敗，請用「複製 JSON」');}break;
+    case 'export-copy':showText('📋 備份 JSON Backup',exportJSON(),'jsonOut','<p class="small muted" style="margin-top:0">複製並存到備忘錄或寄給自己。Save it in Notes or email it to yourself.</p>');break;
+    case 'import-file':$('#importFile').value='';$('#importFile').click();break;
+    case 'import-paste':openModal('<div class="sh"><h2>📥 貼上備份 Paste backup</h2><button class="xbtn" data-act="close-modal">×</button></div><textarea class="summary" id="pasteIn" placeholder="在此貼上 JSON… Paste here"></textarea><div class="foot"><button class="btn" data-act="close-modal">取消</button><button class="btn pri" data-act="import-go">驗證並匯入 Validate & import</button></div>');break;
+    case 'import-go':doImport($('#pasteIn').value);break;
+    case 'demo-load':askConfirm('載入示範資料？Load demo data?','會用 4 個月的示範資料覆蓋全部資料。Replaces ALL data with 4 months of sample data.','載入 Load',true).then(function(ok){if(!ok)return;S=buildDemo();save();ui.month=curMonth();go('home');toast('示範資料已載入 Demo loaded ✨');});break;
+    case 'reset-all':askConfirm('全部重設？Reset everything?','所有記錄和設定都會刪除，請先備份！All entries & settings will be deleted.','重設 Reset',true).then(function(ok){if(!ok)return;S=freshData();save();ui.month=curMonth();go('home');toast('已重設 Reset ⟲');});break;
+  }
+});
+document.addEventListener('input',function(ev){var t=ev.target;if(F&&t.closest&&t.closest('.entsheet')&&(t.id==='fAmt'||t.id==='fNote'))updateLive();});
+document.addEventListener('change',function(ev){
+  var t=ev.target;
+  if(t.id==='monthPicker'&&t.value){setMonth(t.value);return;}
+  if(t.id==='importFile'&&t.files&&t.files[0]){var rd=new FileReader();rd.onload=function(){doImport(String(rd.result));};rd.readAsText(t.files[0]);return;}
+  if(t.id==='repMonth'){ui.repMonth=t.value;render();return;}
+  if(t.id==='incToJar'){S.settings.incomeToJar=t.checked;save();render();toast(t.checked?'額外收入會存進存錢罐 Extra income → jar ✓':'額外收入另計 Kept separate ✓');return;}
+  if(F&&t.closest&&t.closest('.entsheet')){if(t.id==='fDate'){readForm();renderForm();}else updateLive();return;}
+  var mf=t.getAttribute('data-mf');
+  if(mf){var a0=parseAmt(t.value),M=ensureMonth(ui.month);if(!(a0>=0)){toast('金額無效 Invalid amount');t.value=M[mf].toFixed(2);return;}M[mf]=r2(a0);lineChanged((mf==='rent'?'房租':'零用錢')+'已儲存 Saved ✓ '+fmt(a0));setTimeout(render,0);return;}
+  var lf=t.getAttribute('data-lf');
+  if(lf){var row=t.closest('[data-line]'),lid=row.getAttribute('data-line'),i=lineIdx(lid);if(i<0)return;var l=S.months[ui.month].lines[i];
+    if(lf==='amount'){var a=parseAmt(t.value);if(!(a>=0)){toast('金額無效 Invalid amount');t.value=l.amount.toFixed(2);return;}l.amount=r2(a);}
+    else{var nm=t.value.trim();if(!nm&&lf==='zh'){t.value=l.zh;return;}l[lf]=nm;}
+    lineChanged('已儲存 Saved ✓ '+l.zh+(lf==='amount'?' '+fmt(l.amount):''));setTimeout(render,0);return;}
+});
+document.addEventListener('keydown',function(ev){
+  if(ev.key==='Escape'){if($('#confirmLayer').innerHTML)return;if($('#modalLayer').innerHTML)closeModal();return;}
+  if(ev.key==='Enter'&&ev.target.getAttribute&&(ev.target.getAttribute('data-lf')||ev.target.getAttribute('data-mf'))){ev.target.blur();return;}
+  if(ev.key==='Enter'&&F&&(ev.target.id==='fAmt'||ev.target.id==='fNote')){ev.preventDefault();saveEntry();return;}
+  var tag=(ev.target.tagName||'').toLowerCase();if(tag==='input'||tag==='textarea'||tag==='select'||$('#modalLayer').innerHTML||$('#confirmLayer').innerHTML||ev.ctrlKey||ev.metaKey||ev.altKey)return;
+  if(ev.key==='n'||ev.key==='a'){ev.preventDefault();openEntry('exp',null,null);}
+  else if(ev.key==='b'){ev.preventDefault();openEntry('exp',null,'boba');}
+  else if(ev.key==='ArrowLeft')setMonth(addMonths(ui.month,-1));
+  else if(ev.key==='ArrowRight')setMonth(addMonths(ui.month,1));
+  else if(/^[1-4]$/.test(ev.key))go(['home','budget','reports','more'][+ev.key-1]);
+});
+window.addEventListener('storage',function(ev){if(ev.key===KEY){S=load();render();}});
+window.addEventListener('beforeprint',function(){renderPrint(ui.repMonth||ui.month);});
+
+/* ===================== INIT ===================== */
+function initScene(){var sc=Art.current();$('#sceneHost').innerHTML=Art.build(sc);$('#fx').innerHTML=Art.fx(sc);$('#sceneChip').innerHTML=sc!=='none'?'<span class="scenechip">'+esc(Art.names[sc])+'</span>':'';document.body.setAttribute('data-scene',sc);}
+document.body.insertAdjacentHTML('afterbegin',Art.defs);
+S=load();ensureMonth(ui.month);save();
+initScene();
+[['navI1','heart'],['navI2','flex'],['navI3','book'],['navI4','star']].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.innerHTML=Art.icon(x[1],26);});
+render();
+window.__app={get S(){return S;},calc:calc,jar:jar,summaryText:summaryText,validate:validate,ui:ui,buildDemo:buildDemo};
+})();
+
+</script>
+</body>
+</html>
