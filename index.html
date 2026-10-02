@@ -356,6 +356,15 @@ textarea.summary{width:100%;white-space:pre-wrap;font-family:inherit;font-size:1
 .hidden-amt{letter-spacing:1px;color:var(--muted)}
 .row2.dp{grid-template-columns:1fr 1.5fr}.row2.dp .inline .btn.sm{white-space:nowrap;padding:4px 8px;font-size:12px}
 @media(max-width:480px){.row2.dp{grid-template-columns:1fr}}
+.fileinp{position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0}
+label.btn{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.howto{margin:0 0 10px;padding:10px 12px 10px 30px;background:#fbf6fa;border:1px solid var(--line);border-radius:14px;font-size:13px;line-height:1.5}
+.howto li{margin:2px 0}.howto small{color:var(--muted)}
+.subhead{font-size:12px;font-weight:800;color:var(--muted);margin:12px 0 6px}
+.mpgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mp{display:flex;gap:8px;align-items:center;border-radius:14px;padding:8px 10px;border:1px solid var(--line)}
+.mp b{font-size:24px;min-width:30px;text-align:center}.mp span{font-size:13px;font-weight:700;line-height:1.25}.mp small{font-weight:500;color:var(--muted);font-size:10.5px}
+.mp.add{background:var(--greenbg)}.mp.upd{background:#eef4ff}.mp.skip{background:#f6f2f6}.mp.del{background:var(--redbg)}
 </style>
 </head>
 <body>
@@ -390,7 +399,10 @@ textarea.summary{width:100%;white-space:pre-wrap;font-family:inherit;font-size:1
 <div id="modalLayer"></div>
 <div id="confirmLayer"></div>
 <div id="toastLayer"></div>
-<input type="file" id="importFile" accept="application/json,.json,text/plain" hidden>
+<input type="file" class="fileinp" id="mergeFile" accept=".json,application/json,text/json,text/plain" tabindex="-1" aria-hidden="true">
+<input type="file" class="fileinp" id="mergeAny" tabindex="-1" aria-hidden="true">
+<input type="file" class="fileinp" id="importFile" accept=".json,application/json,text/json,text/plain" tabindex="-1" aria-hidden="true">
+<input type="file" class="fileinp" id="importAny" tabindex="-1" aria-hidden="true">
 <script>
 /* ===================== ART: Toronto scene, Trinity mascot, kawaii icons (inline SVG) ===================== */
 var Art = (function(){
@@ -640,7 +652,7 @@ var Art = (function(){
 (function(){
 'use strict';
 var $=function(s,r){return (r||document).querySelector(s);},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
-var SCHEMA=1,KEY='trinityUofTBudget.data.v1',APP='TrinityUofTBudget';
+var SCHEMA=2,KEY='trinityUofTBudget.data.v1',APP='TrinityUofTBudget';
 var SUBS=[['boba','奶茶','Bubble tea'],['eat','外食','Eating out'],['fun','娛樂社交','Fun & social'],['shop','購物服裝','Shopping & clothes'],['book','書本文具','Books & stationery'],['daily','生活用品','Daily essentials'],['other','其他','Other']];
 var SUB={};SUBS.forEach(function(s){SUB[s[0]]={id:s[0],zh:s[1],en:s[2],icon:s[0]};});
 var SRCS=[['job','打工','Part-time job'],['tutor','家教','Tutoring'],['gift','紅包禮金','Gift / red pocket'],['award','獎學金','Scholarship'],['other','其他','Other']];
@@ -693,7 +705,52 @@ function lineNameH(l){return l?esc(l.zh)+' <span class="en">'+esc(l.en)+'</span>
 /* ---------- storage ---------- */
 function defaultUTypes(since){return DEFAULT_UTYPES.map(function(t){var o=clone(t);o.since=since;return o;});}
 function defaultLines(){return clone(DEFAULT_LINES);}
-function freshData(){var m=curMonth();var o={schema:SCHEMA,app:APP,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),settings:{allowance:978,rent:1900,incomeToJar:false,hideMoney:false,stashInSummary:false,stashInPdf:false},template:{allowance:978,rent:1900,lines:defaultLines()},months:{},expenses:[],incomes:[],bills:[],withdrawals:[],stash:[],utilities:{types:defaultUTypes(m)}};o.months[m]={allowance:978,rent:1900,lines:defaultLines()};return o;}
+/* ---------- stable ids, timestamps, tombstones & merge ---------- */
+var EPOCH='1970-01-01T00:00:00.000Z';
+var LISTS=['expenses','incomes','bills','withdrawals','stash'];
+function hashStr(s){var h=0x811c9dc5;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h.toString(36);}
+function fixIds(arr,prefix){var used={};(arr||[]).forEach(function(r){if(r&&typeof r.id==='string'&&r.id)used[r.id]=(used[r.id]||0)+1;});var seen={};
+  (arr||[]).forEach(function(r){if(!r||typeof r!=='object')return;
+    if(typeof r.id!=='string'||!r.id){var c=clone(r);delete c.id;var base=prefix+'_m'+hashStr(prefix+JSON.stringify(c)),id=base,k=2;while(used[id]||seen[id])id=base+'_'+(k++);r.id=id;}
+    else if(seen[r.id]){var b2=r.id,k2=2;while(used[b2+'_'+k2]||seen[b2+'_'+k2])k2++;r.id=b2+'_'+k2;}
+    seen[r.id]=1;if(!r.updatedAt)r.updatedAt=r.createdAt||EPOCH;});return arr;}
+function ensureMeta(d){
+  LISTS.forEach(function(k){d[k]=Array.isArray(d[k])?d[k]:[];fixIds(d[k],k.slice(0,3));});
+  d.deleted=Array.isArray(d.deleted)?d.deleted.filter(function(t){return t&&typeof t.id==='string';}):[];d.deleted.forEach(function(t){t.deletedAt=t.deletedAt||EPOCH;});
+  if(d.utilities&&Array.isArray(d.utilities.types))fixIds(d.utilities.types,'ut');
+  Object.keys(d.months||{}).forEach(function(k){var M=d.months[k];if(!M.updatedAt)M.updatedAt=EPOCH;fixIds(M.lines,'ln'+k);});
+  if(d.template){if(!d.template.updatedAt)d.template.updatedAt=EPOCH;fixIds(d.template.lines,'lnT');}
+  d.settings=d.settings||{};if(!d.settings.updatedAt)d.settings.updatedAt=EPOCH;
+  return d;}
+function tomb(id){if(!id)return;S.deleted=S.deleted||[];var now=new Date().toISOString(),t=S.deleted.filter(function(x){return x.id===id;})[0];if(t)t.deletedAt=now;else S.deleted.push({id:id,deletedAt:now});}
+function touchSettings(){S.settings.updatedAt=new Date().toISOString();}
+function tsOf(x){return (x&&x.updatedAt)||EPOCH;}
+function pickNewer(a,b){if(!a)return b;if(!b)return a;var ta=tsOf(a),tb=tsOf(b);if(ta!==tb)return ta>tb?a:b;var ja=JSON.stringify(a),jb=JSON.stringify(b);return ja>=jb?a:b;}
+var UTORDER={U_hydro:1,U_gas:2,U_water:3,U_net:4};
+function mergeList(a,b,tm,sortFn){var m={};(a||[]).concat(b||[]).forEach(function(r){m[r.id]=pickNewer(m[r.id],r);});
+  return Object.keys(m).filter(function(id){var t=tm[id];return !(t&&t>=tsOf(m[id]));}).map(function(id){return clone(m[id]);}).sort(sortFn||function(x,y){return x.id<y.id?-1:x.id>y.id?1:0;});}
+function mergeData(A0,B0){
+  var A=migrate(clone(A0)),B=migrate(clone(B0)),tm={},out={schema:SCHEMA,app:APP};
+  A.deleted.concat(B.deleted).forEach(function(t){if(!tm[t.id]||t.deletedAt>tm[t.id])tm[t.id]=t.deletedAt;});
+  out.createdAt=[A.createdAt||'',B.createdAt||''].filter(Boolean).sort()[0]||new Date().toISOString();
+  out.updatedAt=[A.updatedAt||'',B.updatedAt||''].sort()[1]||out.createdAt;
+  out.settings=clone(pickNewer(A.settings,B.settings));out.template=clone(pickNewer(A.template,B.template));
+  out.months={};Object.keys(A.months).concat(Object.keys(B.months)).sort().forEach(function(k){if(!out.months[k])out.months[k]=clone(pickNewer(A.months[k],B.months[k]));});
+  LISTS.forEach(function(k){out[k]=mergeList(A[k],B[k],tm);});
+  out.utilities={types:mergeList(A.utilities.types,B.utilities.types,tm,function(x,y){var a=UTORDER[x.id]||9,b=UTORDER[y.id]||9;return a!==b?a-b:(x.id<y.id?-1:x.id>y.id?1:0);})};
+  out.deleted=Object.keys(tm).sort().map(function(id){return {id:id,deletedAt:tm[id]};});
+  return out;}
+function mergePreview(local,incoming){
+  var L=migrate(clone(local)),I=migrate(clone(incoming)),M=mergeData(L,I),st={add:0,upd:0,skip:0,del:0};
+  function lists(d){var o={};LISTS.forEach(function(k){o[k]=d[k];});o.ut=d.utilities.types;return o;}
+  var LL=lists(L),II=lists(I),MM=lists(M);
+  Object.keys(LL).forEach(function(k){var lm={},mm={};LL[k].forEach(function(r){lm[r.id]=r;});MM[k].forEach(function(r){mm[r.id]=r;});
+    II[k].forEach(function(r){if(mm[r.id]){if(!lm[r.id])st.add++;else if(JSON.stringify(mm[r.id])!==JSON.stringify(lm[r.id]))st.upd++;else st.skip++;}else st.skip++;});
+    LL[k].forEach(function(r){if(!mm[r.id])st.del++;});});
+  Object.keys(I.months).forEach(function(k){if(!L.months[k])st.add++;else if(JSON.stringify(M.months[k])!==JSON.stringify(L.months[k]))st.upd++;else st.skip++;});
+  if(JSON.stringify(M.settings)!==JSON.stringify(L.settings))st.upd++;
+  return {merged:M,stats:st,changed:st.add+st.upd+st.del>0||JSON.stringify(M.deleted)!==JSON.stringify(L.deleted)};}
+function freshData(){var m=curMonth();var o={schema:SCHEMA,app:APP,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),settings:{allowance:978,rent:1900,incomeToJar:false,hideMoney:false,stashInSummary:false,stashInPdf:false},template:{allowance:978,rent:1900,lines:defaultLines()},months:{},expenses:[],incomes:[],bills:[],withdrawals:[],stash:[],deleted:[],utilities:{types:defaultUTypes(m)}};o.months[m]={allowance:978,rent:1900,lines:defaultLines()};return ensureMeta(o);}
 function validate(d){
   var errs=[];
   if(!d||typeof d!=='object'||Array.isArray(d))return {ok:false,errors:['Not a JSON object 不是有效的備份']};
@@ -701,13 +758,14 @@ function validate(d){
   if(typeof d.schema!=='number')errs.push('Missing schema version 缺少版本號');
   else if(d.schema>SCHEMA)errs.push('Backup is from a newer version 備份版本較新');
   if(!d.months||typeof d.months!=='object'||Array.isArray(d.months))errs.push('Missing "months" 缺少月份資料');
-  else Object.keys(d.months).forEach(function(k){var m=d.months[k];if(!/^\d{4}-\d{2}$/.test(k))errs.push('Bad month key '+k);else if(!m||!Array.isArray(m.lines))errs.push('Month '+k+' has no budget lines');else m.lines.forEach(function(l){if(!l||typeof l.id!=='string'||!isFinite(+l.amount))errs.push('Bad line in '+k);});});
+  else Object.keys(d.months).forEach(function(k){var m=d.months[k];if(!/^\d{4}-\d{2}$/.test(k))errs.push('Bad month key '+k);else if(!m||!Array.isArray(m.lines))errs.push('Month '+k+' has no budget lines');else m.lines.forEach(function(l){if(!l||(l.id!=null&&typeof l.id!=='string')||!isFinite(+l.amount))errs.push('Bad line in '+k);});});
   if(!Array.isArray(d.expenses))errs.push('Missing "expenses" 缺少支出資料');
-  else d.expenses.forEach(function(e,i){if(!e||typeof e.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(e.date||'')||!isFinite(+e.amount))errs.push('Bad expense #'+(i+1));});
+  else d.expenses.forEach(function(e,i){if(!e||(e.id!=null&&typeof e.id!=='string')||!/^\d{4}-\d{2}-\d{2}$/.test(e.date||'')||!isFinite(+e.amount))errs.push('Bad expense #'+(i+1));});
   if(d.incomes!=null&&!Array.isArray(d.incomes))errs.push('"incomes" must be a list');
-  if(d.bills!=null&&(!Array.isArray(d.bills)||d.bills.some(function(b){return !b||typeof b.id!=='string'||!/^\d{4}-\d{2}$/.test(b.start||'')||!isFinite(+b.amount)||!(+b.months>=1);})))errs.push('Bad "bills" list 帳單資料有誤');
-  if(d.stash!=null&&(!Array.isArray(d.stash)||d.stash.some(function(x){return !x||typeof x.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!isFinite(+x.amount);})))errs.push('Bad "stash" list 私房錢資料有誤');
-  if(d.withdrawals!=null&&(!Array.isArray(d.withdrawals)||d.withdrawals.some(function(w){return !w||typeof w.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(w.date||'')||!isFinite(+w.amount);})))errs.push('Bad "withdrawals" list 取用資料有誤');
+  if(d.bills!=null&&(!Array.isArray(d.bills)||d.bills.some(function(b){return !b||(b.id!=null&&typeof b.id!=='string')||!/^\d{4}-\d{2}$/.test(b.start||'')||!isFinite(+b.amount)||!(+b.months>=1);})))errs.push('Bad "bills" list 帳單資料有誤');
+  if(d.stash!=null&&(!Array.isArray(d.stash)||d.stash.some(function(x){return !x||(x.id!=null&&typeof x.id!=='string')||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!isFinite(+x.amount);})))errs.push('Bad "stash" list 私房錢資料有誤');
+  if(d.withdrawals!=null&&(!Array.isArray(d.withdrawals)||d.withdrawals.some(function(w){return !w||(w.id!=null&&typeof w.id!=='string')||!/^\d{4}-\d{2}-\d{2}$/.test(w.date||'')||!isFinite(+w.amount);})))errs.push('Bad "withdrawals" list 取用資料有誤');
+  if(d.deleted!=null&&(!Array.isArray(d.deleted)||d.deleted.some(function(t){return !t||typeof t.id!=='string';})))errs.push('Bad "deleted" list 刪除紀錄有誤');
   if(errs.length>8)errs=errs.slice(0,8).concat(['…']);
   return {ok:errs.length===0,errors:errs,stats:{months:d.months?Object.keys(d.months).length:0,expenses:Array.isArray(d.expenses)?d.expenses.length:0,incomes:Array.isArray(d.incomes)?d.incomes.length:0,bills:Array.isArray(d.bills)?d.bills.length:0,withdrawals:Array.isArray(d.withdrawals)?d.withdrawals.length:0,stash:Array.isArray(d.stash)?d.stash.length:0}};
 }
@@ -723,16 +781,16 @@ function migrate(d){
   Object.keys(d.months).forEach(function(k){var m=d.months[k];m.allowance=isFinite(+m.allowance)?r2(m.allowance):d.settings.allowance;m.rent=isFinite(+m.rent)?r2(m.rent):d.settings.rent;m.lines.forEach(function(l){l.amount=r2(l.amount);l.zh=l.zh||l.en||'項目';l.en=l.en||'';l.kind=KIND[l.kind]?l.kind:'var';l.icon=l.icon||'other';});});
   d.expenses.forEach(function(e){e.amount=r2(e.amount);e.note=e.note||'';});
   d.incomes.forEach(function(e){e.amount=r2(e.amount);e.note=e.note||'';e.source=SRC[e.source]?e.source:'other';});
-  return d;
+  return ensureMeta(d);
 }
 var S;
 function load(){try{var raw=localStorage.getItem(KEY);if(raw){var d=JSON.parse(raw);if(validate(d).ok)return migrate(d);console.warn('Stored data invalid; starting fresh');}}catch(e){console.warn(e);}return freshData();}
 function save(){S.updatedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(S));return true;}catch(e){toast('⚠️ 儲存失敗 Could not save (storage full?)');return false;}}
 function latestMonth(){var k=Object.keys(S.months).sort();return k[k.length-1];}
-function ensureMonth(m){if(!S.months[m]){var t=S.template;S.months[m]={allowance:t.allowance,rent:t.rent,lines:clone(t.lines)};save();}return S.months[m];}
+function ensureMonth(m){if(!S.months[m]){var t=S.template;S.months[m]={allowance:t.allowance,rent:t.rent,lines:clone(t.lines),updatedAt:EPOCH};save();}return S.months[m];}
 function monthData(m){return S.months[m]||{allowance:S.template.allowance,rent:S.template.rent,lines:S.template.lines};}
 function findLine(m,id){var L=monthData(m).lines;for(var i=0;i<L.length;i++)if(L[i].id===id)return L[i];return null;}
-function touchTemplate(m){if(m>=latestMonth()){var M=S.months[m];S.template={allowance:M.allowance,rent:M.rent,lines:clone(M.lines)};}}
+function touchTemplate(m){var now=new Date().toISOString(),M=S.months[m];if(M)M.updatedAt=now;if(m>=latestMonth()){S.template={allowance:M.allowance,rent:M.rent,lines:clone(M.lines),updatedAt:now};}}
 function entryIcon(e){if(e.lineId==='L_flex')return e.sub||'other';var l=findLine(monthOf(e.date),e.lineId);return l?l.icon:'other';}
 function entryName(e){if(e.lineId==='L_flex'){var s=SUB[e.sub]||SUB.other;return s.zh+' '+s.en;}return lineName(findLine(monthOf(e.date),e.lineId));}
 function entryNameH(e){if(e.lineId==='L_flex'){var s=SUB[e.sub]||SUB.other;return esc(s.zh)+' <span class="en">'+esc(s.en)+'</span>';}return lineNameH(findLine(monthOf(e.date),e.lineId));}
@@ -1022,15 +1080,21 @@ function summaryText(m){
 function renderMore(){
   var m=ui.month,c=calc(m);
   var h='<div class="more-grid">';
+  h+='<section class="card span2" id="dataCard"><h3>'+ic('save',28)+' 📲 搬資料・備份 Move data & backup</h3>'+
+    '<p class="small muted" style="margin-top:0">資料只存在這個瀏覽器。換手機、或手機和電腦之間同步時，用匯出＋合併匯入。Data lives only in this browser — move it between phone and computer like this:</p>'+
+    '<ol class="howto" id="howTo"><li><b>匯出 Export</b>：在有資料的裝置按「⬇️ 匯出備份」。<small>Tap Export backup on the device that has the data.</small></li><li><b>傳給自己 Send to yourself</b>：用微信「檔案傳輸助手」、AirDrop 或 Email 把 .json 檔傳到另一台裝置。<small>Send the .json file via WeChat File Transfer, AirDrop or email.</small></li><li><b>合併匯入 Merge import</b>：在另一台裝置按「🔀 合併匯入」選那個檔案 → 看預覽 → 確認。重複的會自動略過。<small>On the other device, tap Merge import, pick the file, check the preview, confirm. Duplicates are skipped.</small></li></ol>'+
+    '<div class="btnrow"><button class="btn pri" data-act="export-dl" id="exportBtn">⬇️ 匯出備份 Export JSON</button><button class="btn" data-act="export-copy">📋 複製 JSON Copy</button></div>'+
+    '<div class="subhead">🔀 合併匯入 Merge import — 保留兩邊的資料 keeps both sides</div>'+
+    '<div class="btnrow"><label class="btn pri" for="mergeFile" id="mergeFileBtn" role="button" tabindex="0">🔀 合併匯入 Merge import (.json)</label><label class="btn sm" for="mergeAny" id="mergeAnyBtn" role="button" tabindex="0">選不到檔案？任何檔案 Any file type</label><button class="btn sm" data-act="import-paste" data-v="merge" id="mergePasteBtn">📥 貼上合併 Paste & merge</button></div>'+
+    '<div class="subhead">⚠️ 取代匯入 Replace import — 會覆蓋這裡全部資料 overwrites everything here</div>'+
+    '<div class="btnrow"><label class="btn sm danger" for="importFile" id="replaceFileBtn" role="button" tabindex="0">📂 取代匯入 Replace (.json)</label><label class="btn sm" for="importAny" id="replaceAnyBtn" role="button" tabindex="0">任何檔案 Any file</label><button class="btn sm" data-act="import-paste" data-v="replace" id="replacePasteBtn">📥 貼上取代 Paste & replace</button></div>'+
+    '<div class="small muted" style="margin-top:8px">iPhone：檔案在「檔案 Files」App 或微信裡，先「儲存到檔案」再選。Android：在「下載 Downloads」裡找 .json。· 上次儲存 Last saved: '+esc(new Date(S.updatedAt).toLocaleString())+' · '+(JSON.stringify(S).length/1024).toFixed(1)+' KB</div></section>';
   h+='<section class="card" id="incCard"><h3>'+ic('income',28)+' 額外收入 Extra income · '+mLabel(m)+'</h3><p class="small muted" style="margin-top:0">打工、家教、紅包… 另外計算，不影響零用錢預算。Counted separately from your allowance budget.</p><div class="stat" style="margin-bottom:8px"><label>本月 This month</label><b class="num pos" id="incTotal">'+fmt(c.income)+'</b></div>'+
     (c.incs.length?'<ul class="elist">'+c.incs.map(function(e){return entryItem(Object.assign({_inc:true},e));}).join('')+'</ul>':'<div class="empty">還沒有額外收入 None yet</div>')+
     '<button class="btn pri" data-act="add-inc" style="margin-top:8px">＋ 記額外收入 Add extra income</button>'+
     '<label class="check" style="margin-top:10px"><input type="checkbox" id="incToJar" '+(S.settings.incomeToJar?'checked':'')+'> 額外收入也存進存錢罐 Also add extra income to the savings jar</label></section>';
   h+=renderStashCard();
-  h+='<section class="card" id="dataCard"><h3>'+ic('save',28)+' 備份與還原 Backup & restore</h3><p class="small muted" style="margin-top:0">資料只存在這個瀏覽器 (localStorage)。記得定期備份！Data lives only in this browser — export a backup now and then.</p>'+
-    '<div class="btnrow"><button class="btn pri" data-act="export-dl">⬇️ 匯出備份 Export JSON</button><button class="btn" data-act="export-copy">📋 複製 JSON</button></div>'+
-    '<div class="btnrow" style="margin-top:8px"><button class="btn" data-act="import-file">📂 從檔案匯入 Import file</button><button class="btn" data-act="import-paste">📥 貼上匯入 Paste JSON</button></div>'+
-    '<div class="small muted" style="margin-top:8px">上次儲存 Last saved: '+esc(new Date(S.updatedAt).toLocaleString())+' · '+(JSON.stringify(S).length/1024).toFixed(1)+' KB</div></section>';
+
   h+='<section class="card"><h3>'+ic('book',28)+' Excel & PDF</h3><p class="small muted" style="margin-top:0">匯出 Excel (.xlsx)：明細、月結、存錢罐。Sheets: entries, monthly summary, savings.</p><div class="btnrow"><button class="btn" data-act="xlsx-month">Excel · '+mLabel(m)+'</button><button class="btn" data-act="xlsx-all">Excel · 全部 All</button><button class="btn" data-act="nav" data-v="reports">🖨 PDF 月報 →</button></div></section>';
   h+='<section class="card"><h3>'+ic('book',28)+' 明細 All entries</h3><button class="btn" data-act="nav" data-v="entries">打開 '+mLabel(m)+' 明細 Open list</button></section>';
   h+='<section class="card"><h3>'+ic('other',28)+' 示範與重設 Demo & reset</h3><p class="small muted" style="margin-top:0">會覆蓋目前資料，請先備份。Both replace current data — export first!</p><div class="btnrow"><button class="btn" data-act="demo-load">✨ 載入示範 Load demo</button><button class="btn danger" data-act="reset-all">⟲ 全部重設 Reset all</button></div></section>';
@@ -1179,11 +1243,29 @@ function copyText(text,ta){
   function fallback(){if(ta){ta.focus();ta.select();try{ta.setSelectionRange(0,text.length);}catch(e){}}var ok=false;try{ok=document.execCommand('copy');}catch(e){}toast(ok?'已複製 Copied ✓':'已選取，請手動複製 Selected — press Copy');}
   if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){toast('已複製 Copied ✓ 可以貼給爸爸了');},fallback);}else fallback();}
 function showText(title,text,id,extra){openModal('<div class="sh"><h2>'+title+'</h2><button class="xbtn" data-act="close-modal" aria-label="Close">×</button></div>'+(extra||'')+'<textarea class="summary" id="'+id+'" readonly>'+esc(text)+'</textarea><div class="foot"><button class="btn" data-act="close-modal">關閉 Close</button><button class="btn pri" data-act="copy-ta" data-target="'+id+'">📋 複製 Copy</button></div>');}
-function doImport(text){
-  var d;try{d=JSON.parse(text);}catch(e){return askConfirm('匯入失敗 Import failed','不是有效的 JSON. Not valid JSON.\n'+e.message,'OK',false);}
+function parseBackup(text){return JSON.parse(String(text==null?'':text).replace(/^\uFEFF/,'').trim());}
+function doImport(text,mode){
+  if(mode==='merge')return doMerge(text);
+  var d;try{d=parseBackup(text);}catch(e){return askConfirm('匯入失敗 Import failed','不是有效的 JSON. Not valid JSON.\n'+e.message,'OK',false);}
   var v=validate(d);if(!v.ok)return askConfirm('備份無效 Backup invalid',v.errors.join('\n'),'OK',false);
   return askConfirm('覆蓋全部資料？Replace all data?','備份內有 '+v.stats.months+' 個月、'+v.stats.expenses+' 筆支出、'+v.stats.incomes+' 筆額外收入、'+v.stats.bills+' 張帳單、'+v.stats.withdrawals+' 筆取用、'+v.stats.stash+' 筆私房錢'+(d.exportedAt?'\nExported '+new Date(d.exportedAt).toLocaleString():'')+'.\n目前資料將被覆蓋 Current data will be overwritten.','匯入 Import',true).then(function(ok){
     if(!ok)return;delete d.exportedAt;S=migrate(d);save();closeModal();ui.month=S.months[curMonth()]?curMonth():latestMonth()||curMonth();ensureMonth(ui.month);render();toast('匯入成功 Imported ✓');});}
+function doMerge(text){
+  var d;try{d=parseBackup(text);}catch(e){return askConfirm('匯入失敗 Import failed','不是有效的 JSON. Not valid JSON.\n'+e.message,'OK',false);}
+  var v=validate(d);if(!v.ok)return askConfirm('備份無效 Backup invalid',v.errors.join('\n'),'OK',false);
+  delete d.exportedAt;var P;try{P=mergePreview(S,d);}catch(e){console.error(e);return askConfirm('合併失敗 Merge failed',String(e.message||e),'OK',false);}
+  var st=P.stats,L=$('#confirmLayer');
+  L.innerHTML='<div class="modal-back"><div class="dialog mergedlg" role="dialog" aria-modal="true" id="mergePreview"><h3>'+ic('save',26)+' 合併預覽 Merge preview</h3>'+
+    '<p>把備份合併進這台裝置的資料，兩邊的記錄都會保留；同一筆資料保留最新修改的版本。Both sides are kept; for the same record the newest edit wins.'+(d.exportedAt?'':'')+'</p>'+
+    '<div class="mpgrid"><div class="mp add"><b class="num" id="mpAdd">'+st.add+'</b><span>新增 '+st.add+' 筆<br><small>Added</small></span></div><div class="mp upd"><b class="num" id="mpUpd">'+st.upd+'</b><span>更新 '+st.upd+' 筆<br><small>Updated (newer)</small></span></div><div class="mp skip"><b class="num" id="mpSkip">'+st.skip+'</b><span>略過重複 '+st.skip+' 筆<br><small>Duplicates skipped</small></span></div><div class="mp del"><b class="num" id="mpDel">'+st.del+'</b><span>刪除 '+st.del+' 筆<br><small>Deleted (removed on the other device)</small></span></div></div>'+
+    (P.changed?'':'<div class="alert ok" id="mpNone">✓ 已經是最新，沒有要變更的 Already up to date</div>')+
+    '<div class="small muted" style="margin:8px 0 12px">備份內 In file: '+v.stats.months+' 個月 months · '+v.stats.expenses+' 支出 · '+v.stats.incomes+' 收入 · '+v.stats.bills+' 帳單 · '+v.stats.withdrawals+' 取用 · '+v.stats.stash+' 私房錢</div>'+
+    '<div class="btnrow"><button class="btn" id="mpCancel">取消 Cancel</button><button class="btn pri" id="mpOk">確認合併 Merge</button></div></div></div>';
+  return new Promise(function(res){
+    $('#mpCancel').onclick=function(){L.innerHTML='';res(false);toast('已取消，資料沒有變更 Cancelled — nothing changed');};
+    $('#mpOk').onclick=function(){L.innerHTML='';S=P.merged;save();closeModal();if(!S.months[ui.month])ui.month=S.months[curMonth()]?curMonth():latestMonth()||curMonth();ensureMonth(ui.month);render();
+      toast('合併完成 Merged ✓ +'+st.add+' · ↻'+st.upd+' · −'+st.del);res(true);};
+    setTimeout(function(){var y=$('#mpOk');if(y)y.focus();},30);});}
 function buildDemo(){
   var d=freshData(),cm=curMonth(),td=+todayStr().slice(8);d.months={};
   var ms=[addMonths(cm,-3),addMonths(cm,-2),addMonths(cm,-1),cm];
@@ -1211,8 +1293,9 @@ function buildDemo(){
   ms.forEach(function(m){Bl('U_net',24,m,1,m+'-05',cap(m+'-05'),'Internet (billed in advance)');});
   Bl('U_water',78.4,addMonths(cm,-4),4,addDays(tdy,6),'','City of Toronto · water + solid waste');
   d.stash=[{id:'s_demo1',type:'in',date:addMonths(cm,-3)+'-01',amount:1500,src:'bank',note:'TD savings — opening balance',createdAt:addMonths(cm,-3)+'-01T09:00:00Z'},{id:'s_demo2',type:'in',date:addMonths(cm,-2)+'-09',amount:200,src:'redpacket',note:'中秋紅包 from 外婆',createdAt:addMonths(cm,-2)+'-09T09:00:00Z'},{id:'s_demo3',type:'out',date:addMonths(cm,-1)+'-27',amount:85,src:'treat',note:'Concert merch 🎤',createdAt:addMonths(cm,-1)+'-27T09:00:00Z'}];
+  d.deleted=[];
   d.withdrawals.push({id:'w_demo1',date:addMonths(cm,-1)+'-14',amount:60,reason:'gift',note:'媽媽生日禮物 Mom’s birthday',createdAt:addMonths(cm,-1)+'-14T10:00:00Z'});
-  return d;}
+  return ensureMeta(d);}
 
 /* ===================== UTILITY BILLS & SAVINGS WITHDRAWALS (UI) ===================== */
 function cycLabel(c){return CYC[c]||('每 '+c+' 個月 Every '+c+' months');}
@@ -1331,15 +1414,15 @@ document.addEventListener('click',function(ev){
     case 'bill-type':readBill();B.typeId=v;var ty=utype(v);if(ty&&!B.id&&!B.amountStr){B.months=ty.cycle;var R=utilReminders().filter(function(r){return r.t.id===v;})[0];var st=R&&R.last?R.nextStart:addMonths(ui.month,-(ty.cycle-1));B.start=st>ui.month?ui.month:st;}renderBill();break;
     case 'bill-paidtoday':$('#bPaid').value=todayStr();updateBill();break;
     case 'bill-save':saveBill();break;
-    case 'bill-del':var bid=B.id;askConfirm('刪除這張帳單？Delete this bill?',fmt(parseAmt(B.amountStr)||0)+' · '+periodLabel({start:B.start,months:B.months}),'刪除 Delete',true).then(function(ok){if(!ok)return;S.bills=S.bills.filter(function(x){return x.id!==bid;});save();B=null;closeModal();render();toast('帳單已刪除 Bill deleted');});break;
+    case 'bill-del':var bid=B.id;askConfirm('刪除這張帳單？Delete this bill?',fmt(parseAmt(B.amountStr)||0)+' · '+periodLabel({start:B.start,months:B.months}),'刪除 Delete',true).then(function(ok){if(!ok)return;tomb(bid);S.bills=S.bills.filter(function(x){return x.id!==bid;});save();B=null;closeModal();render();toast('帳單已刪除 Bill deleted');});break;
     case 'add-wd':openWd(null);break;
     case 'edit-wd':openWd(id);break;
     case 'wd-reason':readWd();W.reason=v;$$('#wReasons .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});break;
     case 'wd-save':saveWd(false);break;
-    case 'wd-del':var wid=W.id;askConfirm('刪除這筆取用？Delete this withdrawal?',fmt(parseAmt(W.amountStr)||0)+' · '+W.date+'\n存錢罐會加回來 The money goes back into the jar.','刪除 Delete',true).then(function(ok){if(!ok)return;S.withdrawals=S.withdrawals.filter(function(x){return x.id!==wid;});save();W=null;closeModal();render();toast('已刪除，存錢罐 jar '+fmt(jar().total));});break;
-    case 'ut-add':S.utilities.types.push({id:uid('U'),zh:'新帳單',en:'New bill',icon:'bill',cycle:1,est:0,included:false,since:curMonth(),custom:true});save();render();toast('已新增帳單種類 Bill type added ✓');break;
-    case 'ut-icon':var u0=utype(id);if(u0){u0.icon=v;save();render();}break;
-    case 'ut-del':var u1=utype(id),nb=S.bills.filter(function(b){return b.typeId===id;}).length;if(!u1)break;askConfirm('刪除帳單種類？Delete bill type?',u1.zh+' '+u1.en+(nb?'\n有 '+nb+' 張帳單 — they will show as “Other bill”.':''),'刪除 Delete',true).then(function(ok){if(!ok)return;S.utilities.types=S.utilities.types.filter(function(x){return x.id!==id;});save();render();toast('已刪除 Deleted');});break;
+    case 'wd-del':var wid=W.id;askConfirm('刪除這筆取用？Delete this withdrawal?',fmt(parseAmt(W.amountStr)||0)+' · '+W.date+'\n存錢罐會加回來 The money goes back into the jar.','刪除 Delete',true).then(function(ok){if(!ok)return;tomb(wid);S.withdrawals=S.withdrawals.filter(function(x){return x.id!==wid;});save();W=null;closeModal();render();toast('已刪除，存錢罐 jar '+fmt(jar().total));});break;
+    case 'ut-add':S.utilities.types.push({id:uid('U'),zh:'新帳單',en:'New bill',icon:'bill',cycle:1,est:0,included:false,since:curMonth(),custom:true,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});save();render();toast('已新增帳單種類 Bill type added ✓');break;
+    case 'ut-icon':var u0=utype(id);if(u0){u0.icon=v;u0.updatedAt=new Date().toISOString();save();render();}break;
+    case 'ut-del':var u1=utype(id),nb=S.bills.filter(function(b){return b.typeId===id;}).length;if(!u1)break;askConfirm('刪除帳單種類？Delete bill type?',u1.zh+' '+u1.en+(nb?'\n有 '+nb+' 張帳單 — they will show as “Other bill”.':''),'刪除 Delete',true).then(function(ok){if(!ok)return;tomb(id);S.utilities.types=S.utilities.types.filter(function(x){return x.id!==id;});save();render();toast('已刪除 Deleted');});break;
     case 'ut-sync':var ln=findLine(ui.month,'L_util');if(ln){ln.amount=r2(setAsideTotal());touchTemplate(ui.month);save();render();toast('水電預算 Utilities budget → '+fmt(ln.amount));}break;
   }
 });
@@ -1350,7 +1433,7 @@ document.addEventListener('change',function(ev){var t=ev.target;if(!t.closest)re
   if(uf==='est'){var a=parseAmt(t.value);if(!(a>=0)){toast('金額無效 Invalid amount');t.value=u.est.toFixed(2);return;}u.est=r2(a);}
   else if(uf==='cycle')u.cycle=+t.value||1;else if(uf==='included')u.included=t.checked;
   else{var nm=t.value.trim();if(!nm&&uf==='zh'){t.value=u.zh;return;}u[uf]=nm;}
-  save();toast('已儲存 Saved ✓ '+u.zh+(uf==='cycle'?' · '+cycLabel(u.cycle):uf==='est'?' · '+fmt(u.est)+' → '+fmt(rateOf(u))+'/mo':''));setTimeout(render,0);});
+  u.updatedAt=new Date().toISOString();save();toast('已儲存 Saved ✓ '+u.zh+(uf==='cycle'?' · '+cycLabel(u.cycle):uf==='est'?' · '+fmt(u.est)+' → '+fmt(rateOf(u))+'/mo':''));setTimeout(render,0);});
 document.addEventListener('keydown',function(ev){if(ev.key!=='Enter')return;var id=ev.target.id;if(B&&(id==='bAmt'||id==='bNote')){ev.preventDefault();saveBill();}else if(W&&(id==='wAmt'||id==='wNote')){ev.preventDefault();saveWd(false);}else if(ev.target.getAttribute&&ev.target.getAttribute('data-uf')&&ev.target.tagName==='INPUT'&&ev.target.type!=='checkbox')ev.target.blur();});
 
 /* ===================== 私房錢 PRIVATE STASH (not part of any budget) ===================== */
@@ -1398,18 +1481,18 @@ function saveStash(force){if(!updateStash())return toast('請輸入金額 Enter 
   toast((wasNew?(o.type==='out'?'已取出 Taken out ':'已存入 Added '):'已更新 Updated ✓ ')+(hid()?'':fmt(a))+' · 私房錢 stash '+(hid()?'•••':fmt(stashBal())));}
 document.addEventListener('click',function(ev){var t=ev.target.closest&&ev.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act'),id=t.getAttribute('data-id'),v=t.getAttribute('data-v');
   switch(act){
-    case 'toggle-hide':S.settings.hideMoney=!S.settings.hideMoney;save();render();toast(hid()?'金額已隱藏 Amounts hidden 🙈':'金額顯示 Amounts shown 👁');break;
+    case 'toggle-hide':S.settings.hideMoney=!S.settings.hideMoney;touchSettings();save();render();toast(hid()?'金額已隱藏 Amounts hidden 🙈':'金額顯示 Amounts shown 👁');break;
     case 'stash-add':openStash(null,v);break;
     case 'edit-stash':openStash(id);break;
     case 'st-mode':readStash();if(T.type!==v){T.type=v;T.src=v==='out'?'treat':'redpacket';}renderStash();break;
     case 'st-src':readStash();T.src=v;$$('#stSrc .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});break;
     case 'st-save':saveStash(false);break;
-    case 'st-del':var sid=T.id;askConfirm('刪除這筆私房錢紀錄？Delete this record?',(hid()?'':fmt(parseAmt(T.amountStr)||0)+' · ')+T.date,'刪除 Delete',true).then(function(ok){if(!ok)return;S.stash=S.stash.filter(function(x){return x.id!==sid;});save();T=null;closeModal();render();toast('已刪除 Deleted');});break;
+    case 'st-del':var sid=T.id;askConfirm('刪除這筆私房錢紀錄？Delete this record?',(hid()?'':fmt(parseAmt(T.amountStr)||0)+' · ')+T.date,'刪除 Delete',true).then(function(ok){if(!ok)return;tomb(sid);S.stash=S.stash.filter(function(x){return x.id!==sid;});save();T=null;closeModal();render();toast('已刪除 Deleted');});break;
   }});
 document.addEventListener('input',function(ev){if(T&&ev.target.closest&&ev.target.closest('.stashsheet'))updateStash();});
 document.addEventListener('change',function(ev){var t=ev.target;if(T&&t.closest&&t.closest('.stashsheet')){updateStash();return;}
-  if(t.id==='stashSum'){S.settings.stashInSummary=t.checked;save();toast(t.checked?'小結會包含私房錢 Stash included in summary':'小結不含私房錢 Stash kept private 🔒');}
-  if(t.id==='stashPdf'){S.settings.stashInPdf=t.checked;save();render();toast(t.checked?'PDF 會顯示私房錢 Stash shown in PDF':'PDF 不含私房錢 Stash hidden from PDF 🔒');}});
+  if(t.id==='stashSum'){S.settings.stashInSummary=t.checked;touchSettings();save();toast(t.checked?'小結會包含私房錢 Stash included in summary':'小結不含私房錢 Stash kept private 🔒');}
+  if(t.id==='stashPdf'){S.settings.stashInPdf=t.checked;touchSettings();save();render();toast(t.checked?'PDF 會顯示私房錢 Stash shown in PDF':'PDF 不含私房錢 Stash hidden from PDF 🔒');}});
 document.addEventListener('keydown',function(ev){if(ev.key==='Enter'&&T&&(ev.target.id==='stAmt'||ev.target.id==='stNote')){ev.preventDefault();saveStash(false);}});
 
 /* ===================== RENDER & EVENTS ===================== */
@@ -1452,10 +1535,10 @@ document.addEventListener('click',function(ev){
     case 'f-cups':readForm();F.cups=Math.max(1,Math.min(10,(F.cups||1)+(+v)));$('#fCups').textContent=F.cups;updateLive();break;
     case 'f-shop':$('#fShop').value=v;readForm();$$('#shopChips .qa').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});break;
     case 'f-save':saveEntry();break;
-    case 'f-del':var isInc=F.mode==='inc';askConfirm('刪除這筆？Delete this entry?',fmt(parseAmt(F.amountStr)||0)+' · '+F.date,'刪除 Delete',true).then(function(ok){if(!ok)return;if(isInc)S.incomes=S.incomes.filter(function(x){return x.id!==F.id;});else S.expenses=S.expenses.filter(function(x){return x.id!==F.id;});save();closeModal();render();toast('已刪除 Deleted');});break;
+    case 'f-del':var isInc=F.mode==='inc';askConfirm('刪除這筆？Delete this entry?',fmt(parseAmt(F.amountStr)||0)+' · '+F.date,'刪除 Delete',true).then(function(ok){if(!ok)return;tomb(F.id);if(isInc)S.incomes=S.incomes.filter(function(x){return x.id!==F.id;});else S.expenses=S.expenses.filter(function(x){return x.id!==F.id;});save();closeModal();render();toast('已刪除 Deleted');});break;
     case 'edit-allow':var c=calc(ui.month);promptAmount('💌 零用錢 Monthly allowance','爸爸每月給的零用錢 (CAD) — '+mLabel(ui.month),c.allowance).then(function(a){if(a==null)return;ensureMonth(ui.month).allowance=a;lineChanged('零用錢已更新 Allowance saved ✓ '+fmt(a));render();});break;
-    case 'line-add':ensureMonth(ui.month);var nl={id:uid('L'),zh:'新項目',en:'New line',amount:0,kind:'var',icon:'other'};S.months[ui.month].lines.push(nl);lineChanged('已新增項目 Line added ✓');render();var ni=$('[data-fid="lz-'+nl.id+'"]');if(ni){ni.focus();ni.select();ni.scrollIntoView({block:'center'});}break;
-    case 'line-icon':var li0=lineIdx(id);if(li0<0)break;S.months[ui.month].lines[li0].icon=v;lineChanged();render();break;
+    case 'line-add':ensureMonth(ui.month);var nl={id:uid('L'),zh:'新項目',en:'New line',amount:0,kind:'var',icon:'other',updatedAt:new Date().toISOString()};S.months[ui.month].lines.push(nl);lineChanged('已新增項目 Line added ✓');render();var ni=$('[data-fid="lz-'+nl.id+'"]');if(ni){ni.focus();ni.select();ni.scrollIntoView({block:'center'});}break;
+    case 'line-icon':var li0=lineIdx(id);if(li0<0)break;S.months[ui.month].lines[li0].icon=v;S.months[ui.month].lines[li0].updatedAt=new Date().toISOString();lineChanged();render();break;
     case 'line-del':var li=lineIdx(id),ln=S.months[ui.month].lines[li];var cnt=S.expenses.filter(function(e){return monthOf(e.date)===ui.month&&e.lineId===id;}).length;
       askConfirm('刪除項目？Delete line?',ln.zh+' '+ln.en+(cnt?'\n本月有 '+cnt+' 筆記錄用這個項目 — they will show as “unlinked”.':''),'刪除 Delete',true).then(function(ok){if(!ok)return;S.months[ui.month].lines.splice(lineIdx(id),1);lineChanged('已刪除 Deleted');render();});break;
     case 'copy-prev':var pm=addMonths(ui.month,-1);if(!S.months[pm]){toast(mLabel(pm)+' 沒有預算 No budget last month');break;}askConfirm('複製上月預算？Copy '+mLabel(pm)+' budget?','記錄不會被刪除 Entries are kept.','複製 Copy',false).then(function(ok){if(!ok)return;var P=S.months[pm];S.months[ui.month].lines=clone(P.lines);S.months[ui.month].allowance=P.allowance;lineChanged('已複製 Copied ✓');render();});break;
@@ -1468,9 +1551,8 @@ document.addEventListener('click',function(ev){
     case 'print':renderPrint(ui.repMonth||ui.month);toast('在列印視窗選「另存為 PDF」Choose “Save as PDF”');setTimeout(function(){window.print();},250);break;
     case 'export-dl':try{download(new Blob([exportJSON()],{type:'application/json'}),'Trinity-UofT-Budget-backup-'+todayStr()+'.json');toast('備份已下載 Backup downloaded ⬇️');}catch(err){toast('下載失敗，請用「複製 JSON」');}break;
     case 'export-copy':showText('📋 備份 JSON Backup',exportJSON(),'jsonOut','<p class="small muted" style="margin-top:0">複製並存到備忘錄或寄給自己。Save it in Notes or email it to yourself.</p>');break;
-    case 'import-file':$('#importFile').value='';$('#importFile').click();break;
-    case 'import-paste':openModal('<div class="sh"><h2>📥 貼上備份 Paste backup</h2><button class="xbtn" data-act="close-modal">×</button></div><textarea class="summary" id="pasteIn" placeholder="在此貼上 JSON… Paste here"></textarea><div class="foot"><button class="btn" data-act="close-modal">取消</button><button class="btn pri" data-act="import-go">驗證並匯入 Validate & import</button></div>');break;
-    case 'import-go':doImport($('#pasteIn').value);break;
+    case 'import-paste':var mg=v==='merge';openModal('<div class="sh"><h2>📥 '+(mg?'貼上合併 Paste & merge':'貼上取代 Paste & replace')+'</h2><button class="xbtn" data-act="close-modal">×</button></div><p class="small muted" style="margin-top:0">'+(mg?'貼上另一台裝置匯出的 JSON，會跟這裡的資料合併。Paste the JSON exported from your other device — it will be merged.':'⚠️ 會用貼上的資料取代這裡的全部資料。This replaces ALL data here.')+'</p><textarea class="summary" id="pasteIn" placeholder="在此貼上 JSON… Paste here"></textarea><div class="foot"><button class="btn" data-act="close-modal">取消</button><button class="btn pri" data-act="import-go" data-v="'+(mg?'merge':'replace')+'" id="pasteGo">'+(mg?'預覽合併 Preview merge':'驗證並取代 Validate & replace')+'</button></div>');break;
+    case 'import-go':doImport($('#pasteIn').value,v==='merge'?'merge':'replace');break;
     case 'demo-load':askConfirm('載入示範資料？Load demo data?','會用 4 個月的示範資料覆蓋全部資料。Replaces ALL data with 4 months of sample data.','載入 Load',true).then(function(ok){if(!ok)return;S=buildDemo();save();ui.month=curMonth();go('home');toast('示範資料已載入 Demo loaded ✨');});break;
     case 'reset-all':askConfirm('全部重設？Reset everything?','所有記錄和設定都會刪除，請先備份！All entries & settings will be deleted.','重設 Reset',true).then(function(ok){if(!ok)return;S=freshData();save();ui.month=curMonth();go('home');toast('已重設 Reset ⟲');});break;
   }
@@ -1479,9 +1561,9 @@ document.addEventListener('input',function(ev){var t=ev.target;if(F&&t.closest&&
 document.addEventListener('change',function(ev){
   var t=ev.target;
   if(t.id==='monthPicker'&&t.value){setMonth(t.value);return;}
-  if(t.id==='importFile'&&t.files&&t.files[0]){var rd=new FileReader();rd.onload=function(){doImport(String(rd.result));};rd.readAsText(t.files[0]);return;}
+  if(/^(importFile|importAny|mergeFile|mergeAny)$/.test(t.id)&&t.files&&t.files[0]){var md=/^merge/.test(t.id)?'merge':'replace',f0=t.files[0],rd=new FileReader();rd.onload=function(){t.value='';doImport(String(rd.result),md);};rd.onerror=function(){t.value='';toast('讀不到檔案 Could not read the file');};rd.readAsText(f0);return;}
   if(t.id==='repMonth'){ui.repMonth=t.value;render();return;}
-  if(t.id==='incToJar'){S.settings.incomeToJar=t.checked;save();render();toast(t.checked?'額外收入會存進存錢罐 Extra income → jar ✓':'額外收入另計 Kept separate ✓');return;}
+  if(t.id==='incToJar'){S.settings.incomeToJar=t.checked;touchSettings();save();render();toast(t.checked?'額外收入會存進存錢罐 Extra income → jar ✓':'額外收入另計 Kept separate ✓');return;}
   if(F&&t.closest&&t.closest('.entsheet')){if(t.id==='fDate'){readForm();renderForm();}else updateLive();return;}
   var mf=t.getAttribute('data-mf');
   if(mf){var a0=parseAmt(t.value),M=ensureMonth(ui.month);if(!(a0>=0)){toast('金額無效 Invalid amount');t.value=M[mf].toFixed(2);return;}M[mf]=r2(a0);lineChanged((mf==='rent'?'房租':'零用錢')+'已儲存 Saved ✓ '+fmt(a0));setTimeout(render,0);return;}
@@ -1489,7 +1571,7 @@ document.addEventListener('change',function(ev){
   if(lf){var row=t.closest('[data-line]'),lid=row.getAttribute('data-line'),i=lineIdx(lid);if(i<0)return;var l=S.months[ui.month].lines[i];
     if(lf==='amount'){var a=parseAmt(t.value);if(!(a>=0)){toast('金額無效 Invalid amount');t.value=l.amount.toFixed(2);return;}l.amount=r2(a);}
     else{var nm=t.value.trim();if(!nm&&lf==='zh'){t.value=l.zh;return;}l[lf]=nm;}
-    lineChanged('已儲存 Saved ✓ '+l.zh+(lf==='amount'?' '+fmt(l.amount):''));setTimeout(render,0);return;}
+    l.updatedAt=new Date().toISOString();lineChanged('已儲存 Saved ✓ '+l.zh+(lf==='amount'?' '+fmt(l.amount):''));setTimeout(render,0);return;}
 });
 document.addEventListener('keydown',function(ev){
   if(ev.key==='Escape'){if($('#confirmLayer').innerHTML)return;if($('#modalLayer').innerHTML)closeModal();return;}
@@ -1512,7 +1594,7 @@ S=load();ensureMonth(ui.month);save();
 initScene();
 [['navI1','heart'],['navI2','flex'],['navI3','book'],['navI4','star']].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.innerHTML=Art.icon(x[1],26);});
 render();
-window.__app={get S(){return S;},stashBal:stashBal,calc:calc,jar:jar,utilFor:utilFor,utilReminders:utilReminders,setAsideTotal:setAsideTotal,billShare:billShare,summaryText:summaryText,validate:validate,ui:ui,buildDemo:buildDemo};
+window.__app={get S(){return S;},mergeData:mergeData,mergePreview:mergePreview,migrate:migrate,stashBal:stashBal,calc:calc,jar:jar,utilFor:utilFor,utilReminders:utilReminders,setAsideTotal:setAsideTotal,billShare:billShare,summaryText:summaryText,validate:validate,ui:ui,buildDemo:buildDemo};
 })();
 
 </script>

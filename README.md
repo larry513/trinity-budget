@@ -7,3 +7,7 @@ Single-file offline budget app (HTML + localStorage). Open https://larry513.gith
 - 取用存款 Use savings: withdraw from the savings jar (history, edit/delete, below-zero warning); in Excel, PDF, and the summary for Dad.
 - 奶茶 Bubble tea quick entry: price per cup with recent-price chips, cups count, shop; average price per cup.
 - 私房錢 Private stash + 我的總資產 My total money (hide/show amounts); kept out of all budgets and, by default, out of the summary for Dad and the PDF.
+
+## v3 (2026-10-02)
+- 合併匯入 Merge import (next to Replace import): every record has a stable id + updatedAt (old data migrated), deletions sync via tombstones, newest edit wins, preview (新增 / 更新 / 略過重複 / 刪除) before applying.
+- 更多 → 搬資料・備份 Move data: bilingual how-to (export → WeChat / AirDrop / email → merge import); .json picker plus any-file fallback for iPhone Safari / Android Chrome; paste JSON still supported.
