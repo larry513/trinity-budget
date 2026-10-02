@@ -319,6 +319,43 @@ textarea.summary{width:100%;white-space:pre-wrap;font-family:inherit;font-size:1
   #printArea .hb{grid-template-columns:24px 160px 1fr 80px}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+.subchip.resv{border-style:dashed;background:#fffaf0}
+.subchip small{font-size:9.5px;color:#9a6200;margin-left:2px}
+.badge.wd{background:#ffe3ec;color:#c2446b}
+.setaside{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0}
+.setaside div{background:#fbf6fa;border:1px solid var(--line);border-radius:12px;padding:6px 8px}
+.setaside label{display:block;font-size:10.5px;color:var(--muted);line-height:1.25}
+.setaside b{font-size:16px}
+.billtypes{margin-top:6px}
+.btype{display:grid;grid-template-columns:38px 1fr auto;gap:8px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line)}
+.btype:last-child{border-bottom:0}
+.bt-n{font-weight:800;font-size:13.5px}
+.bt-next{margin-top:2px;line-height:1.35}
+.bt-r{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.bt-r .btn.sm{min-height:30px;padding:2px 10px}
+.warnc{color:#9a6200}
+.ut{border-bottom:1px solid var(--line);padding:10px 0}
+.ut .r1{display:grid;grid-template-columns:36px 1fr 1.3fr;gap:6px;align-items:center}
+.ut .r2{display:grid;grid-template-columns:1.3fr 1fr .8fr;gap:6px;margin-top:6px;align-items:end}
+.ut .r2 .field b{display:block;padding:9px 2px}
+.ut .r3{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.ut .r3 .check{min-height:36px;padding:6px 10px;font-size:12.5px}
+.inline{display:flex;gap:6px;align-items:center}.inline .inp{flex:1;min-width:0}
+.jarsplit{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn.wdbtn{width:100%;margin-top:8px;background:#fff0f5;border:1.5px solid #ffb3c8;color:#b23a62;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px}
+.bobaextra{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:end;margin-top:4px}
+.stepper{display:flex;align-items:center;gap:8px}.stepper b{min-width:26px;text-align:center;font-size:20px}.stepper .btn.sm{min-width:40px;min-height:40px;font-size:18px}
+.qamts.shops{margin-top:6px}.qa.on{background:var(--pri);color:#fff}.qa.recent{font-weight:900;border-color:#e7b98f;background:#fff7ee}
+.qlabel{font-size:11.5px;color:var(--muted);align-self:center;margin-right:2px}
+.bobaavg{margin-top:2px}.boba-add small{font-weight:600;opacity:.8;margin-left:4px}
+.moneycard .moneyrows{margin:4px 0 10px}
+.mrow{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line)}
+.mrow span{font-weight:700;font-size:13.5px}.mrow small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+.mrow b{font-size:17px}.mrow.tot{grid-template-columns:1fr auto;border-bottom:0}.mrow.tot b{font-size:21px;color:var(--pri)}
+.eyebtn{border:1px solid var(--line);background:#fff;border-radius:14px;padding:3px 10px;font-weight:800;font-size:12px;min-height:30px;cursor:pointer}
+.hidden-amt{letter-spacing:1px;color:var(--muted)}
+.row2.dp{grid-template-columns:1fr 1.5fr}.row2.dp .inline .btn.sm{white-space:nowrap;padding:4px 8px;font-size:12px}
+@media(max-width:480px){.row2.dp{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -441,6 +478,15 @@ var Art = (function(){
     save:'<circle cx="24" cy="8" r="5.5" fill="#ffe066"/><path d="M22,8 h4" fill="none"/><path d="M14,18 L12,11 L19,15.5" fill="#ff9fc2"/><ellipse cx="23" cy="29" rx="16.5" ry="12.5" fill="#ffb3c8"/><rect x="11" y="37" width="5" height="7" rx="2" fill="#ffb3c8"/><rect x="28" y="37" width="5" height="7" rx="2" fill="#ffb3c8"/><path d="M19,19 h8" fill="none" stroke-width="2.2"/><ellipse cx="39.5" cy="29" rx="4.5" ry="4" fill="#ff9fbf"/><circle cx="38.3" cy="29" r=".9" fill="'+OL+'" stroke="none"/><circle cx="40.8" cy="29" r=".9" fill="'+OL+'" stroke="none"/><circle cx="31" cy="24.5" r="1.7" fill="'+OL+'" stroke="none"/><ellipse cx="31" cy="30" rx="2.2" ry="1.4" fill="#ff7aa2" stroke="none" opacity=".7"/><path d="M6.5,28 q-4,-1 -3,-5" fill="none"/>',
     income:'<circle cx="22" cy="25" r="16" fill="#ffe58a"/><circle cx="22" cy="25" r="11.5" fill="none" stroke="#e6b94a" stroke-width="1.4"/>'+face(22,25,.85)+spark(41,9,5,'#ffb3c8')+spark(42,38,3.5,'#9fe0c5'),
     rent:'<path d="M5,23 L24,7 L43,23 Z" fill="#ffd1e3"/><rect x="9.5" y="21" width="29" height="21" rx="3" fill="#fff6fb"/><rect x="20" y="29" width="8" height="13" rx="2" fill="#c7b5ff"/>'+face(24,24.5,.6),
+    elec:'<circle cx="24" cy="19" r="13" fill="#ffe58a"/><rect x="18.5" y="31" width="11" height="8" rx="2.5" fill="#d4cce6"/><path d="M19.5,42.5 h9" fill="none"/>'+face(24,18,.9)+'<path d="M37,5 L33,13 H38 L34,21" fill="none" stroke="#f5a524" stroke-width="2"/>',
+    gas:'<path d="M24,4 C30,13 38,18 38,29 A14,14 0 0 1 10,29 C10,22 14,18 17,14 C18,19 20,21 22,21 C21,14 22,9 24,4Z" fill="#9fd4ff"/><path d="M24,24 C27,28 30,30 30,34 A6,6 0 0 1 18,34 C18,30 21,28 24,24Z" fill="#c7b5ff" stroke="none"/>'+face(24,30,.8),
+    water:'<path d="M18,4 C18,4 7,18 7,25 A11,11 0 0 0 29,25 C29,18 18,4 18,4Z" fill="#9fd4ff"/>'+face(18,24,.75)+'<path d="M30,27 H44 L42,44 H32 Z" fill="#9fe0c5"/><rect x="29" y="23.5" width="16" height="4" rx="2" fill="#7fd1b1"/><path d="M35,31 v9 M39,31 v9" fill="none" stroke="#fff" stroke-width="1.4"/>',
+    wifi:'<path d="M8,18 Q24,4 40,18 M13,23 Q24,13 35,23 M18,28 Q24,22 30,28" fill="none" stroke="#c7a6ff" stroke-width="2.6"/><rect x="9" y="31" width="30" height="12" rx="5" fill="#ffc2d9"/><circle cx="16" cy="37" r="1.6" fill="#7fd1b1" stroke="none"/><circle cx="21" cy="37" r="1.6" fill="#ffe066" stroke="none"/>'+face(31,36,.5),
+    travel:'<path d="M18,12 V8 Q18,6 20,6 H28 Q30,6 30,8 V12" fill="none" stroke-width="2"/><rect x="7" y="12" width="34" height="27" rx="6" fill="#ffc2d9"/><path d="M15,12 V39 M33,12 V39" fill="none" stroke="#ff9fc2" stroke-width="3"/><circle cx="14" cy="42" r="2.4" fill="'+OL+'"/><circle cx="34" cy="42" r="2.4" fill="'+OL+'"/>'+face(24,25,.8)+'<path d="M38,4 l1.5,3 3,1.5 -3,1.5 -1.5,3 -1.5,-3 -3,-1.5 3,-1.5z" fill="#ffe066" stroke="none"/>',
+    withdraw:'<ellipse cx="22" cy="30" rx="15.5" ry="11.5" fill="#ffb3c8"/><path d="M13,20 L11,13 L18,17" fill="#ff9fc2"/><rect x="11" y="37" width="5" height="6" rx="2" fill="#ffb3c8"/><rect x="26" y="37" width="5" height="6" rx="2" fill="#ffb3c8"/><ellipse cx="37.5" cy="30" rx="4" ry="3.6" fill="#ff9fbf"/><circle cx="29" cy="25.5" r="1.6" fill="'+OL+'" stroke="none"/><circle cx="40" cy="10" r="6" fill="#ffe066"/><path d="M26,16 Q31,6 34,9" fill="none" stroke="#5fbf9a" stroke-width="2.2"/><path d="M31,6.5 L34.5,9 L31,11.5" fill="none" stroke="#5fbf9a" stroke-width="2.2"/>',
+    emerg:'<rect x="7" y="14" width="34" height="27" rx="6" fill="#fff"/><path d="M18,14 V10 Q18,8 20,8 H28 Q30,8 30,10 V14" fill="none" stroke-width="2"/><path d="M21,20 h6 v5 h5 v6 h-5 v5 h-6 v-5 h-5 v-6 h5z" fill="#ff7a8a"/>',
+    bill:'<path d="M10,5 H38 V43 L33,40 L28,43 L24,40 L20,43 L15,40 L10,43 Z" fill="#fff6fb"/><path d="M16,14 H32 M16,20 H32 M16,26 H26" fill="none" stroke="#c7b5ff" stroke-width="2"/><circle cx="31" cy="32" r="5.5" fill="#ffe066"/><path d="M31,29.5 v5 M29.3,31 h3.4" fill="none" stroke-width="1.4"/>',
+    stash:'<path d="M9,22 Q9,15 16,15 H32 Q39,15 39,22 V36 Q39,43 32,43 H16 Q9,43 9,36 Z" fill="#ffc2d9"/><path d="M15,15 Q15,7 24,7 Q33,7 33,15" fill="none" stroke-width="2.2"/><circle cx="20" cy="15" r="3" fill="#ffe066"/><circle cx="28" cy="15" r="3" fill="#ffe066"/>'+face(24,30,.85)+'<path d="M36,4 a4,4 0 1 1 0.1,0" fill="#ffe066"/><path d="M41,9 l1,2 2,1 -2,1 -1,2 -1,-2 -2,-1 2,-1z" fill="#fff" stroke="none"/>',
     heart:'<path d="M24,42 C10,32 5,24 8,16 C11,9 20,9 24,16 C28,9 37,9 40,16 C43,24 38,32 24,42Z" fill="#ff8fb1"/>'+face(24,24,.8),
     star:'<path d="M24,5 L29.5,17.5 L43,18.5 L32.5,27.5 L36,41 L24,33.5 L12,41 L15.5,27.5 L5,18.5 L18.5,17.5 Z" fill="#ffe066"/>'+face(24,25,.8)
   };
@@ -606,6 +652,16 @@ var DEFAULT_LINES=[
  {id:'L_ttc',zh:'TTC 學生月票',en:'TTC student pass',amount:128,kind:'fixed',icon:'ttc'},
  {id:'L_groc',zh:'買菜',en:'Groceries',amount:150,kind:'var',icon:'groc'},
  {id:'L_flex',zh:'靈活資金',en:'Flexible',amount:515,kind:'flex',icon:'flex'}];
+var CYCLES=[[1,'每月 Monthly'],[2,'每兩個月 Bi-monthly'],[3,'每季 Quarterly'],[4,'每四個月 Every 4 months'],[6,'每半年 Every 6 months'],[12,'每年 Yearly']];
+var CYC={};CYCLES.forEach(function(c){CYC[c[0]]=c[1];});
+var DEFAULT_UTYPES=[
+ {id:'U_hydro',zh:'電費',en:'Electricity · Toronto Hydro',icon:'elec',cycle:1,est:45,included:false},
+ {id:'U_gas',zh:'瓦斯',en:'Natural gas · Enbridge',icon:'gas',cycle:1,est:35,included:false},
+ {id:'U_water',zh:'水費垃圾',en:'Water & waste · City of Toronto',icon:'water',cycle:4,est:72,included:false},
+ {id:'U_net',zh:'網路',en:'Internet',icon:'wifi',cycle:1,est:24,included:false}];
+var WREASONS=[['emerg','緊急','Emergency'],['school','學業','School'],['travel','旅行回家','Travel / trip home'],['gift','禮物','Gift'],['treat','犒賞自己','Treat myself'],['other','其他','Other']];
+var WR={};WREASONS.forEach(function(w){WR[w[0]]={id:w[0],zh:w[1],en:w[2],icon:w[0]==='emerg'?'emerg':w[0]==='school'?'book':w[0]==='travel'?'travel':w[0]==='gift'?'other':w[0]==='treat'?'shop':'withdraw'};});
+var STSRC=[['redpacket','紅包','Red packet'],['own','自己存的','My own savings'],['bank','銀行存款','Bank balance'],['gift','禮物','Gift money'],['other','其他','Other']];var STS={};STSRC.forEach(function(x){STS[x[0]]={id:x[0],zh:x[1],en:x[2],icon:x[0]==='redpacket'?'other':x[0]==='own'?'stash':x[0]==='bank'?'save':x[0]==='gift'?'heart':'income'};});
 var CORE={L_ins:1,L_util:1,L_buf:1,L_ttc:1,L_groc:1,L_flex:1};
 var KIND={fixed:'固定 Fixed',var:'日常 Variable',reserve:'儲備 Reserve',flex:'靈活 Flexible'};
 var QUICK={boba:[6.5,7,7.5,8.5],eat:[12,15,18,25],fun:[10,20,30],shop:[20,40,60],book:[10,25,60],daily:[8,15,25],other:[5,10,20],L_groc:[20,35,50],L_ttc:[128],L_ins:[28],L_util:[60,122],L_buf:[10,20,35]};
@@ -635,8 +691,9 @@ function lineName(l){return l?l.zh+' '+l.en:'(已刪除 deleted)';}
 function lineNameH(l){return l?esc(l.zh)+' <span class="en">'+esc(l.en)+'</span>':'(已刪除 deleted)';}
 
 /* ---------- storage ---------- */
+function defaultUTypes(since){return DEFAULT_UTYPES.map(function(t){var o=clone(t);o.since=since;return o;});}
 function defaultLines(){return clone(DEFAULT_LINES);}
-function freshData(){var m=curMonth();var o={schema:SCHEMA,app:APP,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),settings:{allowance:978,rent:1900,incomeToJar:false},template:{allowance:978,rent:1900,lines:defaultLines()},months:{},expenses:[],incomes:[]};o.months[m]={allowance:978,rent:1900,lines:defaultLines()};return o;}
+function freshData(){var m=curMonth();var o={schema:SCHEMA,app:APP,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),settings:{allowance:978,rent:1900,incomeToJar:false,hideMoney:false,stashInSummary:false,stashInPdf:false},template:{allowance:978,rent:1900,lines:defaultLines()},months:{},expenses:[],incomes:[],bills:[],withdrawals:[],stash:[],utilities:{types:defaultUTypes(m)}};o.months[m]={allowance:978,rent:1900,lines:defaultLines()};return o;}
 function validate(d){
   var errs=[];
   if(!d||typeof d!=='object'||Array.isArray(d))return {ok:false,errors:['Not a JSON object 不是有效的備份']};
@@ -648,12 +705,20 @@ function validate(d){
   if(!Array.isArray(d.expenses))errs.push('Missing "expenses" 缺少支出資料');
   else d.expenses.forEach(function(e,i){if(!e||typeof e.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(e.date||'')||!isFinite(+e.amount))errs.push('Bad expense #'+(i+1));});
   if(d.incomes!=null&&!Array.isArray(d.incomes))errs.push('"incomes" must be a list');
+  if(d.bills!=null&&(!Array.isArray(d.bills)||d.bills.some(function(b){return !b||typeof b.id!=='string'||!/^\d{4}-\d{2}$/.test(b.start||'')||!isFinite(+b.amount)||!(+b.months>=1);})))errs.push('Bad "bills" list 帳單資料有誤');
+  if(d.stash!=null&&(!Array.isArray(d.stash)||d.stash.some(function(x){return !x||typeof x.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!isFinite(+x.amount);})))errs.push('Bad "stash" list 私房錢資料有誤');
+  if(d.withdrawals!=null&&(!Array.isArray(d.withdrawals)||d.withdrawals.some(function(w){return !w||typeof w.id!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(w.date||'')||!isFinite(+w.amount);})))errs.push('Bad "withdrawals" list 取用資料有誤');
   if(errs.length>8)errs=errs.slice(0,8).concat(['…']);
-  return {ok:errs.length===0,errors:errs,stats:{months:d.months?Object.keys(d.months).length:0,expenses:Array.isArray(d.expenses)?d.expenses.length:0,incomes:Array.isArray(d.incomes)?d.incomes.length:0}};
+  return {ok:errs.length===0,errors:errs,stats:{months:d.months?Object.keys(d.months).length:0,expenses:Array.isArray(d.expenses)?d.expenses.length:0,incomes:Array.isArray(d.incomes)?d.incomes.length:0,bills:Array.isArray(d.bills)?d.bills.length:0,withdrawals:Array.isArray(d.withdrawals)?d.withdrawals.length:0,stash:Array.isArray(d.stash)?d.stash.length:0}};
 }
 function migrate(d){
-  d.schema=SCHEMA;d.app=APP;d.settings=Object.assign({allowance:978,rent:1900,incomeToJar:false},d.settings||{});
-  d.incomes=Array.isArray(d.incomes)?d.incomes:[];
+  d.schema=SCHEMA;d.app=APP;d.settings=Object.assign({allowance:978,rent:1900,incomeToJar:false,hideMoney:false,stashInSummary:false,stashInPdf:false},d.settings||{});
+  d.stash=Array.isArray(d.stash)?d.stash:[];d.stash.forEach(function(x){x.amount=r2(x.amount);x.type=x.type==='out'?'out':'in';x.note=x.note||'';x.src=x.src||'other';});
+  d.incomes=Array.isArray(d.incomes)?d.incomes:[];d.bills=Array.isArray(d.bills)?d.bills:[];d.withdrawals=Array.isArray(d.withdrawals)?d.withdrawals:[];
+  if(!d.utilities||!Array.isArray(d.utilities.types))d.utilities={types:defaultUTypes(curMonth())};
+  d.utilities.types.forEach(function(t){t.cycle=CYC[+t.cycle]?+t.cycle:1;t.est=r2(t.est);t.included=!!t.included;t.since=/^\d{4}-\d{2}$/.test(t.since||'')?t.since:curMonth();t.icon=t.icon||'util';t.zh=t.zh||t.en||'帳單';t.en=t.en||'';});
+  d.bills.forEach(function(b){b.amount=r2(b.amount);b.months=Math.max(1,Math.min(12,Math.round(+b.months)));b.note=b.note||'';b.due=b.due||'';b.paid=b.paid||'';});
+  d.withdrawals.forEach(function(w){w.amount=r2(w.amount);w.reason=WR[w.reason]?w.reason:'other';w.note=w.note||'';});
   if(!d.template||!Array.isArray(d.template.lines))d.template={allowance:d.settings.allowance,rent:d.settings.rent,lines:defaultLines()};
   Object.keys(d.months).forEach(function(k){var m=d.months[k];m.allowance=isFinite(+m.allowance)?r2(m.allowance):d.settings.allowance;m.rent=isFinite(+m.rent)?r2(m.rent):d.settings.rent;m.lines.forEach(function(l){l.amount=r2(l.amount);l.zh=l.zh||l.en||'項目';l.en=l.en||'';l.kind=KIND[l.kind]?l.kind:'var';l.icon=l.icon||'other';});});
   d.expenses.forEach(function(e){e.amount=r2(e.amount);e.note=e.note||'';});
@@ -674,10 +739,46 @@ function entryNameH(e){if(e.lineId==='L_flex'){var s=SUB[e.sub]||SUB.other;retur
 
 /* ---------- calculations ---------- */
 function status(b,a){if(b<=0)return a>0.004?'over':'none';var p=a/b;return a>b+0.004?'over':p>=0.999?'full':p>=0.8?'warn':'ok';}
+/* ---------- utilities: bills spread across their billing period ---------- */
+function mdiff(a,b){var p=a.split('-'),q=b.split('-');return (+q[0]-+p[0])*12+(+q[1]-+p[1]);}
+function billCovers(b,m){var i=mdiff(b.start,m);return i>=0&&i<b.months;}
+function billShare(b,m){var i=mdiff(b.start,m);if(i<0||i>=b.months)return 0;var c=cents(b.amount),base=Math.floor(c/b.months);return (i===b.months-1?c-base*(b.months-1):base)/100;}
+function billEnd(b){return addMonths(b.start,b.months-1);}
+function utype(id){var T=S.utilities.types;for(var i=0;i<T.length;i++)if(T[i].id===id)return T[i];return null;}
+function rateOf(t){return r2(t.est/t.cycle);}
+function utilFor(m){
+  var rows=[],actual=0,reserve=0,known={},bl=[];
+  var legacy=S.expenses.some(function(e){return e.lineId==='L_util'&&monthOf(e.date)===m;});
+  S.utilities.types.forEach(function(t){known[t.id]=1;
+    var bs=S.bills.filter(function(b){return b.typeId===t.id&&billCovers(b,m);});
+    if(bs.length){var a=sum(bs.map(function(b){return billShare(b,m);}));actual=r2(actual+a);bl=bl.concat(bs);rows.push({t:t,amt:a,kind:'actual',bills:bs});}
+    else if(t.included)rows.push({t:t,amt:0,kind:'incl',bills:[]});
+    else if(m>=t.since&&!legacy){var r=rateOf(t);reserve=r2(reserve+r);rows.push({t:t,amt:r,kind:'reserve',bills:[]});}
+    else rows.push({t:t,amt:0,kind:'none',bills:[]});});
+  var orphan=S.bills.filter(function(b){return !known[b.typeId]&&billCovers(b,m);});
+  if(orphan.length){var oa=sum(orphan.map(function(b){return billShare(b,m);}));actual=r2(actual+oa);bl=bl.concat(orphan);rows.push({t:{id:'U_x',zh:'其他帳單',en:'Other bill',icon:'bill',cycle:1,est:0},amt:oa,kind:'actual',bills:orphan});}
+  return {rows:rows,actual:actual,reserve:reserve,total:r2(actual+reserve),bills:bl};}
+function addMonthsDate(d,k){if(!/^\d{4}-\d{2}-\d{2}$/.test(d||''))return '';var m=addMonths(d.slice(0,7),k),dd=Math.min(+d.slice(8),new Date(+m.slice(0,4),+m.slice(5),0).getDate());return m+'-'+pad(dd);}
+function utilReminders(){
+  var cm=curMonth(),td=todayStr(),out=[];
+  S.utilities.types.forEach(function(t){if(t.included)return;
+    var bs=S.bills.filter(function(b){return b.typeId===t.id;}).sort(function(a,b){return a.start<b.start?1:-1;});
+    var last=bs[0],rate=rateOf(t),nextStart=last?addMonths(billEnd(last),1):t.since;
+    var saved=nextStart<=cm?r2(rate*(mdiff(nextStart,cm)+1)):0;
+    var expDue=last&&last.due?addMonthsDate(last.due,t.cycle):'';
+    var unpaid=bs.filter(function(b){return !b.paid;}).map(function(b){return {b:b,overdue:!!b.due&&b.due<td,days:b.due?Math.round((new Date(b.due)-new Date(td))/864e5):null};});
+    out.push({t:t,rate:rate,last:last,nextStart:nextStart,saved:saved,expDue:expDue,unpaid:unpaid});});
+  return out;}
+function setAsideTotal(){return sum(S.utilities.types.filter(function(t){return !t.included;}).map(rateOf));}
+function cupsOf(e){return Math.max(1,Math.round(+e.cups||1));}
+function bobaAvg(c){return c.bobaN?r2(c.bobaAmt/c.bobaN):0;}
+var SHOPS=['Chatime','CoCo','Gong Cha','The Alley','Tiger Sugar','Presotea'];
+function stashBal(){return r2(sum(S.stash.map(function(x){return x.type==='out'?-x.amount:x.amount;})));}
 function calc(m){
   var M=monthData(m);
   var exps=S.expenses.filter(function(e){return monthOf(e.date)===m;}),incs=S.incomes.filter(function(e){return monthOf(e.date)===m;});
   var by={};exps.forEach(function(e){by[e.lineId]=(by[e.lineId]||0)+cents(e.amount);});
+  var U=utilFor(m);by.L_util=(by.L_util||0)+cents(U.total);
   var ids={};
   var L=M.lines.map(function(l){ids[l.id]=1;return {id:l.id,zh:l.zh,en:l.en,kind:l.kind,icon:l.icon,budget:r2(l.amount),actual:(by[l.id]||0)/100,cover:0};});
   var u=L.filter(function(x){return x.id==='L_util';})[0],b=L.filter(function(x){return x.id==='L_buf';})[0],cover=0;
@@ -685,7 +786,7 @@ function calc(m){
   L.forEach(function(x){x.used=r2(x.actual+(x.id==='L_buf'?cover:0)-(x.id==='L_util'?cover:0));x.remaining=r2(x.budget-x.used);x.pct=x.budget>0?x.used/x.budget:(x.used>0?Infinity:0);
     x.st=status(x.budget,x.used);if(x.kind==='fixed'&&x.st==='full')x.st='paid';if(x.kind==='reserve'&&x.used===0)x.st='untouched';});
   var unlinked=sum(exps.filter(function(e){return !ids[e.lineId];}).map(function(e){return e.amount;}));
-  var spent=sum(exps.map(function(e){return e.amount;})),budget=sum(L.map(function(x){return x.budget;}));
+  var spent=r2(sum(exps.map(function(e){return e.amount;}))+U.total),budget=sum(L.map(function(x){return x.budget;}));
   var bySub={};SUBS.forEach(function(s){bySub[s[0]]={amt:0,n:0};});
   exps.filter(function(e){return e.lineId==='L_flex';}).forEach(function(e){var k=SUB[e.sub]?e.sub:'other';bySub[k].amt=r2(bySub[k].amt+e.amount);bySub[k].n++;});
   var boba=exps.filter(function(e){return e.lineId==='L_flex'&&e.sub==='boba';});
@@ -694,18 +795,20 @@ function calc(m){
   var overLines=L.filter(function(x){return x.st==='over';}),warnLines=L.filter(function(x){return x.st==='warn'||x.st==='full';});
   var mood=(remaining<0||overLines.length)?'worried':'happy';
   return {m:m,exists:!!S.months[m],allowance:allowance,rent:r2(M.rent),lines:L,exps:exps,incs:incs,spent:spent,budget:budget,unalloc:r2(allowance-budget),remaining:remaining,
-    unlinked:unlinked,bySub:bySub,bobaN:boba.length,bobaAmt:sum(boba.map(function(e){return e.amount;})),income:income,overLines:overLines,warnLines:warnLines,mood:mood,cover:cover,
-    hasData:exps.length>0||incs.length>0};
+    unlinked:unlinked,bySub:bySub,bobaN:sum(boba.map(cupsOf)),bobaAmt:sum(boba.map(function(e){return e.amount;})),income:income,overLines:overLines,warnLines:warnLines,mood:mood,cover:cover,
+    util:U,wds:S.withdrawals.filter(function(w){return monthOf(w.date)===m;}),hasData:exps.length>0||incs.length>0||U.bills.length>0};
 }
+function wdSum(m){return sum(S.withdrawals.filter(function(w){return monthOf(w.date)===m;}).map(function(w){return w.amount;}));}
 function jar(){
-  var cm=curMonth(),set={};Object.keys(S.months).forEach(function(k){set[k]=1;});S.expenses.forEach(function(e){set[monthOf(e.date)]=1;});S.incomes.forEach(function(e){set[monthOf(e.date)]=1;});
+  var cm=curMonth(),set={};Object.keys(S.months).forEach(function(k){set[k]=1;});S.expenses.forEach(function(e){set[monthOf(e.date)]=1;});S.incomes.forEach(function(e){set[monthOf(e.date)]=1;});S.withdrawals.forEach(function(w){set[monthOf(w.date)]=1;});
   var ms=Object.keys(set).sort(),cum=0,rows=[];
-  ms.forEach(function(m){if(m>=cm)return;var c=calc(m);
-    if(!c.exps.length){var inc0=S.settings.incomeToJar?c.income:0;cum=r2(cum+inc0);rows.push({m:m,skip:true,rolled:0,deficit:0,inc:inc0,cum:cum,spent:0,allowance:c.allowance});return;}
-    var rolled=Math.max(0,c.remaining),deficit=Math.min(0,c.remaining),inc=S.settings.incomeToJar?c.income:0;cum=r2(cum+rolled+inc);
-    rows.push({m:m,rolled:r2(rolled),deficit:r2(deficit),inc:inc,cum:cum,spent:c.spent,allowance:c.allowance});});
-  var c=calc(cm);
-  return {rows:rows,total:cum,projected:Math.max(0,c.remaining),projDeficit:Math.min(0,c.remaining),projInc:S.settings.incomeToJar?c.income:0};
+  ms.forEach(function(m){if(m>=cm)return;var c=calc(m),wd=wdSum(m);
+    if(!c.exps.length&&!c.util.bills.length){var inc0=S.settings.incomeToJar?c.income:0;cum=r2(cum+inc0-wd);rows.push({m:m,skip:true,rolled:0,deficit:0,inc:inc0,wd:wd,cum:cum,spent:0,allowance:c.allowance});return;}
+    var rolled=Math.max(0,c.remaining),deficit=Math.min(0,c.remaining),inc=S.settings.incomeToJar?c.income:0;cum=r2(cum+rolled+inc-wd);
+    rows.push({m:m,rolled:r2(rolled),deficit:r2(deficit),inc:inc,wd:wd,cum:cum,spent:c.spent,allowance:c.allowance});});
+  var c=calc(cm),later=sum(S.withdrawals.filter(function(w){return monthOf(w.date)>=cm;}).map(function(w){return w.amount;}));
+  var rolledIn=sum(rows.map(function(r){return r.rolled+r.inc;})),withdrawn=sum(S.withdrawals.map(function(w){return w.amount;}));
+  return {rows:rows,total:r2(cum-later),closedCum:cum,curWd:wdSum(cm),rolledIn:rolledIn,withdrawn:withdrawn,projected:Math.max(0,c.remaining),projDeficit:Math.min(0,c.remaining),projInc:S.settings.incomeToJar?c.income:0};
 }
 function jarAt(m){var J=jar(),t=0;J.rows.forEach(function(r){if(r.m<=m)t=r.cum;});return t;}
 
@@ -731,15 +834,18 @@ function lineRow(x,c){
   var h='<div class="prow" data-row="'+esc(x.id)+'"><div class="top"><span class="n">'+ic(x.icon,30)+'<span>'+lineNameH(x)+'</span></span><span class="num"><b>'+fmt(x.used)+'</b> <span class="muted">/ '+fmt(x.budget)+'</span></span></div>'+
   '<div class="bar '+barCls(x.st)+'"><i style="width:'+w.toFixed(1)+'%"></i></div>'+
   '<div class="bot"><span>'+(x.kind==='reserve'?'儲備金 Reserve · ':'')+(x.budget>0?pct(x.pct)+' used 已用':'—')+' '+stBadge(x)+'</span><span class="num '+(x.remaining<0?'neg':'')+'">'+(x.remaining<0?'超 Over ':'剩 Left ')+fmt(Math.abs(x.remaining))+'</span></div>';
+  if(x.id==='L_util'&&c&&c.util)h+=utilSubchips(c);
   if(x.id==='L_util'&&x.cover>0)h+='<div class="note">'+ic('buf',18)+' 超出的 '+fmt(x.cover)+' 由水電緩衝支付 — covered by the buffer</div>';
   if(x.id==='L_buf'&&c&&c.cover>0)h+='<div class="note">Helping utilities 支援水電 '+fmt(c.cover)+'</div>';
   if(x.kind==='flex'&&c){h+='<div class="subchips">'+SUBS.map(function(s){var v=c.bySub[s[0]];return '<span class="subchip'+(v.amt>0?'':' zero')+'">'+ic(s[0],20)+esc(s[1])+' <b class="num">'+fmt0(v.amt)+'</b></span>';}).join('')+'</div>';}
   return h+'</div>';}
 function entryItem(e){
+  if(e._t==='bill')return billItem(e._b,e._m);if(e._t==='wd')return wdItem(e);
   var inc=e._inc;
   if(inc){var so=SRC[e.source]||SRC.other;return '<li class="eitem" data-act="edit-inc" data-id="'+esc(e.id)+'"><div class="icw">'+ic('income',34)+'</div><div style="min-width:0"><div class="m">'+esc(so.zh)+' <span class="en">'+esc(so.en)+'</span> <span class="badge inc">額外收入 Extra</span></div><div class="s">'+dLabel(e.date)+(e.note?' · '+esc(e.note):'')+'</div></div><div class="a num pos">+'+fmt(e.amount)+'</div></li>';}
-  return '<li class="eitem" data-act="edit-exp" data-id="'+esc(e.id)+'"><div class="icw">'+ic(entryIcon(e),34)+'</div><div style="min-width:0"><div class="m">'+entryNameH(e)+'</div><div class="s">'+dLabel(e.date)+(e.note?' · '+esc(e.note):'')+'</div></div><div class="a num">'+fmt(e.amount)+'</div></li>';}
-function monthEntries(m){var a=S.expenses.filter(function(e){return monthOf(e.date)===m;}).map(function(e){return Object.assign({_inc:false},e);}).concat(S.incomes.filter(function(e){return monthOf(e.date)===m;}).map(function(e){return Object.assign({_inc:true},e);}));
+  return '<li class="eitem" data-act="edit-exp" data-id="'+esc(e.id)+'"><div class="icw">'+ic(entryIcon(e),34)+'</div><div style="min-width:0"><div class="m">'+entryNameH(e)+'</div><div class="s">'+dLabel(e.date)+(e.shop?' · '+esc(e.shop):'')+(e.lineId==='L_flex'&&e.sub==='boba'&&cupsOf(e)>1?' · '+cupsOf(e)+' 杯 cups':'')+(e.note?' · '+esc(e.note):'')+'</div></div><div class="a num">'+fmt(e.amount)+'</div></li>';}
+function monthEntries(m,noExtra){var a=S.expenses.filter(function(e){return monthOf(e.date)===m;}).map(function(e){return Object.assign({_inc:false,_t:'exp'},e);}).concat(S.incomes.filter(function(e){return monthOf(e.date)===m;}).map(function(e){return Object.assign({_inc:true,_t:'inc'},e);}));
+  if(!noExtra){a=a.concat(S.bills.filter(function(b){return billCovers(b,m);}).map(function(b){var d=b.due||b.paid||(b.start+'-01');if(monthOf(d)!==m)d=m+'-'+(monthOf(d)<m?'01':'28');return {_t:'bill',_b:b,_m:m,id:b.id,date:d,amount:billShare(b,m),note:b.note,createdAt:b.createdAt};})).concat(S.withdrawals.filter(function(w){return monthOf(w.date)===m;}).map(function(w){return Object.assign({_t:'wd'},w);}));}
   return a.sort(function(x,y){return x.date===y.date?((y.createdAt||'')>(x.createdAt||'')?1:-1):(x.date<y.date?1:-1);});}
 function chipKeys(m){var a=SUBS.map(function(s){return {k:s[0],lineId:'L_flex',sub:s[0],icon:s[0],zh:s[1],en:s[2],flex:true};});
   var ord={L_groc:1,L_ttc:2,L_util:3,L_ins:4,L_buf:5};monthData(m).lines.filter(function(l){return l.kind!=='flex';}).slice().sort(function(x,y){return (ord[x.id]||9)-(ord[y.id]||9);}).forEach(function(l){a.push({k:l.id,lineId:l.id,sub:null,icon:l.icon,zh:l.zh,en:l.en});});return a;}
@@ -778,7 +884,7 @@ function renderHome(){
   var col1='<section class="card hello" id="helloCard"><div class="hello-top"><div class="mbox" id="moodBox" data-mood="'+c.mood+'">'+Art.mascot(c.mood,104,c.mood==='worried'?'Trinity looks a little worried 有點擔心':'Trinity is happy 開心')+'</div><div class="bubble" id="greet">'+greeting(c)+'</div></div>'+
     '<div class="leftbig"><label>'+(c.remaining<0?'本月超支 Over budget':'本月還可以花 Left to spend')+'</label><div class="big num '+(c.remaining<0?'neg':'')+'" id="kpiLeft">'+fmt(c.remaining)+'</div><div class="sub">of 零用錢 allowance '+fmt(c.allowance)+' · '+mLabelFull(m)+' · '+mZh(m)+'</div></div>'+
     '<div class="bar fat '+st+'"><i style="width:'+Math.min(100,used*100).toFixed(1)+'%"></i></div>'+
-    '<div class="kpi-row"><div class="tile"><label>已花 Spent</label><b class="num" id="kpiSpent">'+fmt(c.spent)+'</b><small>'+pct(used)+' · '+c.exps.length+' 筆</small></div>'+
+    '<div class="kpi-row"><div class="tile"><label>已花 Spent</label><b class="num" id="kpiSpent">'+fmt(c.spent)+'</b><small>'+pct(used)+' · '+c.exps.length+' 筆'+(c.util.reserve>0?' · 含水電預留 incl. '+fmt0(c.util.reserve)+' set aside':'')+'</small></div>'+
     '<button class="tile" data-act="edit-allow"><label>零用錢 Allowance ✎</label><b class="num" id="kpiAllow">'+fmt(c.allowance)+'</b><small>from Dad 爸爸給的 💌</small></button>'+
     '<button class="tile" data-act="add-inc"><label>額外收入 Extra income ＋</label><b class="num pos" id="kpiInc">'+fmt(c.income)+'</b><small>separate 另計</small></button>'+
     '<button class="tile" data-act="nav" data-v="reports" data-scroll="jarHist"><label>存錢罐 Savings jar</label><b class="num" id="kpiJar">'+fmt(J.total)+'</b><small>累計 total saved</small></button></div>'+
@@ -787,21 +893,26 @@ function renderHome(){
   col1+='<section class="card" id="quickCard"><h3>'+ic('star',24)+' 快速記帳 Quick add <span class="right small muted">tap 點一下</span></h3><div class="qgrid">'+chipKeys(m).filter(function(k){return k.k!=='L_buf';}).map(function(k){return '<button class="qchip'+(k.k==='boba'?' boba':'')+'" data-act="quick" data-k="'+esc(k.k)+'">'+ic(k.icon,36)+'<span>'+esc(k.zh)+'</span><small>'+esc(k.en)+'</small></button>';}).join('')+'</div></section>';
   // col2 boba + status
   var last=S.expenses.filter(function(e){return e.lineId==='L_flex'&&e.sub==='boba';}).sort(function(a,b){return a.date<b.date?1:-1;})[0];
-  var col2='<section class="card bobacard" id="bobaCard"><h3>'+ic('boba',28)+' 奶茶計數器 Bubble Tea Counter</h3><div class="boba-row"><div class="mbox">'+Art.mascot('boba',92,'Trinity with bubble tea 喝奶茶')+'</div><div class="boba-stats"><div class="cups"><b class="num" id="bobaCount">'+c.bobaN+'</b> 杯 cups</div><div class="bobaamt"><b class="num" id="bobaAmt">'+fmt(c.bobaAmt)+'</b> 本月 this month</div><div class="mom" id="bobaMoM">'+bobaMoM(c,p)+'</div></div></div>'+
-    '<div class="cupline" id="cupLine">'+cupsRow(c.bobaN)+'</div><button class="btn boba-add" data-act="quick" data-k="boba" id="bobaPlus">＋1 杯 '+ic('boba',22)+' '+(last?'('+fmt(last.amount)+')':'')+'</button></section>';
+  var col2='<section class="card bobacard" id="bobaCard"><h3>'+ic('boba',28)+' 奶茶計數器 Bubble Tea Counter</h3><div class="boba-row"><div class="mbox">'+Art.mascot('boba',92,'Trinity with bubble tea 喝奶茶')+'</div><div class="boba-stats"><div class="cups"><b class="num" id="bobaCount">'+c.bobaN+'</b> 杯 cups</div><div class="bobaamt"><b class="num" id="bobaAmt">'+fmt(c.bobaAmt)+'</b> 本月 this month</div><div class="bobaavg small" id="bobaAvg">平均每杯 Avg per cup <b class="num">'+(c.bobaN?fmt(bobaAvg(c)):'—')+'</b>'+(p.bobaN?' <span class="muted">(上月 last '+fmt(bobaAvg(p))+')</span>':'')+'</div><div class="mom" id="bobaMoM">'+bobaMoM(c,p)+'</div></div></div>'+
+    '<div class="cupline" id="cupLine">'+cupsRow(c.bobaN)+'</div><button class="btn boba-add" data-act="quick" data-k="boba" id="bobaPlus">＋1 杯 '+ic('boba',22)+' '+(last?'<small>上次 last '+fmt(r2(last.amount/cupsOf(last)))+(last.shop?' · '+esc(last.shop):'')+'</small>':'')+'</button></section>';
   col2+='<section class="card" id="statusCard"><h3>'+ic('flex',26)+' 本月預算 Monthly status <button class="linkbtn right" data-act="nav" data-v="budget">編輯 Edit →</button></h3>'+
     '<div class="totrow"><span>總計 Total</span><span class="num"><b id="stTotal">'+fmt(c.spent)+'</b> / '+fmt(c.allowance)+'</span></div>';
   if(c.remaining<0)col2+='<div class="alert over" id="overAlert">⚠️ 本月超支 '+fmt(-c.remaining)+' Over this month — 存錢罐不會被扣 your jar is safe; the deficit is shown in reports.</div>';
   if(c.overLines.length||c.warnLines.length)col2+='<div class="chips" id="warnChips">'+c.overLines.map(function(x){return '<span class="chip over">🔴 '+esc(x.zh)+' 超 '+fmt(-x.remaining)+'</span>';}).join('')+c.warnLines.map(function(x){return '<span class="chip warn">🟠 '+esc(x.zh)+' '+pct(x.pct)+'</span>';}).join('')+'</div>';
   col2+=c.lines.map(function(x){return lineRow(x,c);}).join('');
   if(c.unlinked>0)col2+='<div class="note">未分類 Unlinked (deleted line): '+fmt(c.unlinked)+'</div>';
-  col2+='</section>';
+  col2+='</section>'+renderBillsCard(m);
   // col3 jar + recent
   var goal=Math.max(500,niceMax(J.total+J.projected));
   var col3='<section class="card jarcard" id="jarCard"><h3>'+ic('save',28)+' 存錢罐 Savings Jar</h3><div class="jar-row"><div class="mbox">'+Art.mascot('cheer',86,'Trinity cheering 加油')+'</div>'+jarSVG((J.total)/goal)+'<div><div class="small muted">累計 Saved so far</div><div class="big2 num" id="jarTotal">'+fmt(J.total)+'</div>'+
     (J.projDeficit<0?'<div class="small neg" id="jarProj">本月目前超支 '+fmt(-J.projDeficit)+' — nothing rolls in, jar stays safe</div>':'<div class="small pos" id="jarProj">月底預計存入 +'+fmt(J.projected)+' at month-end ✨</div>')+'</div></div>'+
-    '<div class="small muted" style="margin-top:6px">每月剩下的錢月底自動存進來；超支不會扣存錢罐。Leftover rolls in automatically at month-end; overspending never takes from the jar.</div>'+
-    (J.rows.length?'<table class="tbl" style="margin-top:8px">'+J.rows.slice(-4).reverse().map(function(r){return '<tr><td>'+mLabel(r.m)+'</td><td class="r num '+(r.deficit<0?'neg':'pos')+'">'+(r.skip?'<span class="muted">no records</span>':r.deficit<0?'超支 '+fmt(r.deficit):'+'+fmt(r.rolled))+'</td><td class="r num muted">'+fmt(r.cum)+'</td></tr>';}).join('')+'</table>':'')+'</section>';
+    '<div class="jarsplit small" id="jarSplit"><span>存入 Rolled in <b class="num pos">+'+fmt(J.rolledIn)+'</b></span><span>取用 Used <b class="num neg">−'+fmt(J.withdrawn)+'</b></span></div>'+
+    (J.total<0?'<div class="alert over" id="jarNeg">⚠️ 存錢罐是負的 The jar is below zero ('+fmt(J.total)+')</div>':'')+
+    '<button class="btn wdbtn" data-act="add-wd" id="wdBtn">'+ic('withdraw',26)+' 取用存款 Use savings</button>'+
+    (S.withdrawals.length?'<ul class="elist" id="wdRecent" style="margin-top:8px">'+S.withdrawals.slice().sort(function(a,b){return a.date<b.date?1:-1;}).slice(0,3).map(wdItem).join('')+'</ul>':'')+
+    '<div class="small muted" style="margin-top:6px">每月剩下的錢月底自動存進來；超支不會扣存錢罐。需要時可以「取用存款」。Leftover rolls in at month-end; overspending never takes from the jar. Use savings when you need it.</div>'+
+    (J.rows.length?'<table class="tbl" style="margin-top:8px">'+J.rows.slice(-4).reverse().map(function(r){return '<tr><td>'+mLabel(r.m)+'</td><td class="r num '+(r.deficit<0?'neg':'pos')+'">'+(r.skip?'<span class="muted">no records</span>':r.deficit<0?'超支 '+fmt(r.deficit):'+'+fmt(r.rolled))+(r.wd?' <span class="neg">−'+fmt(r.wd)+'</span>':'')+'</td><td class="r num muted">'+fmt(r.cum)+'</td></tr>';}).join('')+'</table>':'')+'</section>';
+  col3+=renderMoneyCard();
   var ents=monthEntries(m);
   col3+='<section class="card" id="recentCard"><h3>'+ic('book',26)+' 最近記錄 Recent <button class="linkbtn right" data-act="nav" data-v="entries">全部 All '+ents.length+' →</button></h3>'+(ents.length?'<ul class="elist">'+ents.slice(0,8).map(entryItem).join('')+'</ul>':'<div class="empty">還沒有記錄 No entries yet.<br>點「＋ 記一筆」開始吧！</div>')+'</section>';
   $('#v-home').innerHTML='<div class="home-grid"><div class="col">'+col1+'</div><div class="col">'+col2+'</div><div class="col">'+col3+'</div></div>';
@@ -824,6 +935,7 @@ function renderBudget(){
       (x.kind==='flex'?'<div class="note">靈活資金包含：'+SUBS.map(function(s){return s[1];}).join('、')+' — you pick the sub-category when logging.</div>':'')+'</div>';});
   h+='<div class="btnrow" style="margin-top:10px"><button class="btn pri sm" data-act="line-add">＋ 新增項目 Add line</button><button class="btn sm" data-act="copy-prev">複製上月 Copy last month</button><button class="btn sm" data-act="reset-lines">恢復預設 Default lines</button></div></section>';
   h+='</div><div class="col">';
+  h+=renderUtilEditor(m);
   h+='<section class="card"><h3>'+ic('flex',26)+' 靈活資金分類 Flexible sub-categories</h3><table class="tbl">'+SUBS.map(function(s){var v=c.bySub[s[0]];return '<tr><td>'+ic(s[0],26)+' '+esc(s[1])+' <span class="en">'+esc(s[2])+'</span></td><td class="r num">'+v.n+' 筆</td><td class="r num">'+fmt(v.amt)+'</td></tr>';}).join('')+'<tr class="tot"><td>合計 Total</td><td></td><td class="r num">'+fmt(sum(SUBS.map(function(s){return c.bySub[s[0]].amt;})))+'</td></tr></table></section>';
   h+='<section class="card"><h3>'+ic('rent',26)+' 房租 Rent (info)</h3><p class="small" style="margin:0">'+fmt(M.rent)+' / month — 爸爸直接付給房東，不算在妳的預算裡。Paid by Dad directly; it never reduces your budget. 謝謝爸爸 💗</p></section>';
   h+='</div></div>';
@@ -831,16 +943,25 @@ function renderBudget(){
 }
 
 /* ===================== REPORTS ===================== */
-function knownMonths(){var set={};Object.keys(S.months).forEach(function(k){set[k]=1;});S.expenses.forEach(function(e){set[monthOf(e.date)]=1;});S.incomes.forEach(function(e){set[monthOf(e.date)]=1;});set[curMonth()]=1;set[ui.month]=1;return Object.keys(set).sort();}
+function knownMonths(){var set={};Object.keys(S.months).forEach(function(k){set[k]=1;});S.expenses.forEach(function(e){set[monthOf(e.date)]=1;});S.incomes.forEach(function(e){set[monthOf(e.date)]=1;});S.withdrawals.forEach(function(w){set[monthOf(w.date)]=1;});set[curMonth()]=1;set[ui.month]=1;return Object.keys(set).sort();}
 function reportBody(m,forPrint){
   var c=calc(m),p=calc(addMonths(m,-1)),J=jar(),row=J.rows.filter(function(r){return r.m===m;})[0],closed=m<curMonth();
   var h='<div class="stats4 rstats"><div class="stat"><label>零用錢 Allowance</label><b class="num" id="'+(forPrint?'p':'r')+'Allow">'+fmt(c.allowance)+'</b></div><div class="stat"><label>已花 Spent</label><b class="num" id="'+(forPrint?'p':'r')+'Spent">'+fmt(c.spent)+'</b><div class="small muted">'+pct(c.allowance?c.spent/c.allowance:0)+' · '+c.exps.length+' 筆</div></div>'+
    '<div class="stat"><label>'+(c.remaining<0?'超支 Deficit':'剩餘 Left')+'</label><b class="num '+(c.remaining<0?'neg':'pos')+'" id="'+(forPrint?'p':'r')+'Left">'+fmt(c.remaining)+'</b></div><div class="stat"><label>存入存錢罐 To savings</label><b class="num" id="'+(forPrint?'p':'r')+'Jar">'+(closed?(row?fmt(row.rolled):fmt(0)):fmt(Math.max(0,c.remaining))+'<small class="muted"> (預計 proj.)</small>')+'</b></div>'+
-   '<div class="stat"><label>額外收入 Extra income</label><b class="num pos" id="'+(forPrint?'p':'r')+'Inc">'+fmt(c.income)+'</b></div><div class="stat"><label>奶茶 Bubble tea</label><b class="num" id="'+(forPrint?'p':'r')+'Boba">'+c.bobaN+' 杯 · '+fmt(c.bobaAmt)+'</b><div class="small muted">上月 last: '+p.bobaN+' 杯</div></div><div class="stat"><label>存錢罐累計 Jar total</label><b class="num">'+fmt(closed?jarAt(m):J.total)+'</b></div><div class="stat"><label>房租 Rent (Dad)</label><b class="num">'+fmt(c.rent)+'</b><div class="small muted">not in budget</div></div></div>';
+   '<div class="stat"><label>額外收入 Extra income</label><b class="num pos" id="'+(forPrint?'p':'r')+'Inc">'+fmt(c.income)+'</b></div><div class="stat"><label>奶茶 Bubble tea</label><b class="num" id="'+(forPrint?'p':'r')+'Boba">'+c.bobaN+' 杯 · '+fmt(c.bobaAmt)+'</b><div class="small muted">平均 avg '+(c.bobaN?fmt(bobaAvg(c)):'—')+'/杯</div><div class="small muted">上月 last: '+p.bobaN+' 杯</div></div><div class="stat"><label>存錢罐累計 Jar total</label><b class="num">'+fmt(closed?jarAt(m):J.total)+'</b></div><div class="stat"><label>房租 Rent (Dad)</label><b class="num">'+fmt(c.rent)+'</b><div class="small muted">not in budget</div></div></div>';
   h+='<h3 class="rh">'+ic('flex',24)+' 各項預算 Budget vs actual</h3><div class="tblwrap"><table class="tbl" id="'+(forPrint?'p':'r')+'Lines"><tr><th>項目 Line</th><th class="r">預算 Budget</th><th class="r">實際 Actual</th><th class="r">剩 Left</th><th class="r">%</th></tr>'+c.lines.map(function(x){return '<tr><td>'+ic(x.icon,22)+' '+lineNameH(x)+'</td><td class="r num">'+fmt(x.budget)+'</td><td class="r num">'+fmt(x.used)+'</td><td class="r num '+(x.remaining<0?'neg':'')+'">'+fmt(x.remaining)+'</td><td class="r">'+(x.budget>0?pct(x.pct):'—')+'</td></tr>';}).join('')+
    (c.unlinked?'<tr><td>未分類 Unlinked</td><td></td><td class="r num">'+fmt(c.unlinked)+'</td><td></td><td></td></tr>':'')+'<tr class="tot"><td>合計 Total</td><td class="r num">'+fmt(c.budget)+'</td><td class="r num">'+fmt(c.spent)+'</td><td class="r num '+(c.budget-c.spent<0?'neg':'')+'">'+fmt(c.budget-c.spent)+'</td><td class="r">'+(c.budget?pct(c.spent/c.budget):'')+'</td></tr></table></div>';
   var flexTot=sum(SUBS.map(function(s){return c.bySub[s[0]].amt;})),mx=Math.max.apply(null,SUBS.map(function(s){return c.bySub[s[0]].amt;}).concat([1]));
   h+='<h3 class="rh">'+ic('star',24)+' 靈活資金去哪了 Where Flexible went</h3><div class="hbars">'+SUBS.map(function(s){var v=c.bySub[s[0]];return '<div class="hb">'+ic(s[0],26)+'<span class="hl">'+esc(s[1])+' <span class="en">'+esc(s[2])+'</span></span><span class="ht"><i style="width:'+(v.amt/mx*100).toFixed(1)+'%"></i></span><b class="num">'+fmt(v.amt)+'</b></div>';}).join('')+'</div><div class="small muted">合計 '+fmt(flexTot)+' of '+fmt((c.lines.filter(function(x){return x.kind==='flex';})[0]||{budget:0}).budget)+'</div>';
+  var P=forPrint?'p':'r',U=c.util;
+  h+='<h3 class="rh">'+ic('bill',24)+' 水電帳單 Utilities (monthly equivalent)</h3><div class="tblwrap"><table class="tbl" id="'+P+'Util"><tr><th>帳單 Bill</th><th>週期 Cycle</th><th>狀態 Status</th><th class="r">本月 This month</th></tr>'+U.rows.filter(function(r){return r.kind!=='none';}).map(function(r){return '<tr><td>'+ic(r.t.icon,20)+' '+utName(r.t)+'</td><td>'+esc(cycLabel(r.t.cycle))+'</td><td>'+(r.kind==='actual'?r.bills.map(function(b){return fmt(b.amount)+' · '+periodLabel(b)+(b.months>1?' ÷'+b.months:'')+' · '+(b.paid?'已付 paid '+b.paid:'待付 unpaid'+(b.due?' (due '+b.due+')':''));}).join('<br>'):r.kind==='incl'?'含在房租 Included in rent':'預留 Set aside (no bill yet)')+'</td><td class="r num">'+fmt(r.amt)+'</td></tr>';}).join('')+
+   '<tr class="tot"><td>合計 Total</td><td></td><td class="small">帳單 billed '+fmt(U.actual)+' · 預留 set aside '+fmt(U.reserve)+(c.cover>0?' · 緩衝支援 buffer '+fmt(c.cover):'')+'</td><td class="r num">'+fmt(U.total)+'</td></tr></table></div>';
+  var rem=allReminders();
+  if(rem.length)h+='<div class="small" id="'+P+'Upcoming"><b>'+ic('bill',18)+' 待付帳單 Upcoming bills:</b> '+rem.map(function(x){return esc(x.t.zh)+' '+fmt(x.b.amount)+(x.b.due?' · '+dLabel(x.b.due)+' ('+daysTxt(x.days)+')':'');}).join(' ; ')+'</div>';
+  var wds=c.wds.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+  h+='<h3 class="rh">'+ic('withdraw',24)+' 取用存款 Savings used</h3>'+(wds.length?'<table class="tbl" id="'+P+'Wd"><tr><th>日期 Date</th><th>用途 Reason</th><th>備註 Note</th><th class="r">金額 Amount</th></tr>'+wds.map(function(w){var r=WR[w.reason]||WR.other;return '<tr><td>'+w.date+'</td><td>'+ic(r.icon,18)+' '+esc(r.zh)+' '+esc(r.en)+'</td><td>'+esc(w.note)+'</td><td class="r num neg">−'+fmt(w.amount)+'</td></tr>';}).join('')+'<tr class="tot"><td>合計 Total</td><td></td><td></td><td class="r num neg">−'+fmt(sum(wds.map(function(w){return w.amount;})))+'</td></tr></table>':'<div class="small muted" id="'+P+'Wd">這個月沒有取用存款 No savings used this month.</div>')+
+   '<div class="small muted">存錢罐 = 存入 rolled in '+fmt(J.rolledIn)+' − 取用 used '+fmt(J.withdrawn)+' = '+fmt(J.total)+'</div>';
+  if(forPrint&&S.settings.stashInPdf){var sb=stashBal(),sm=S.stash.filter(function(x){return monthOf(x.date)===m;});h+='<h3 class="rh">'+ic('stash',24)+' 私房錢 Private stash (not in budget)</h3><div class="small" id="pStash">餘額 Balance '+fmt(sb)+' · 本月 this month: '+(sm.length?sm.map(function(x){return (x.type==='out'?'−':'+')+fmt(x.amount)+' '+((x.type==='out'?WR[x.src]:STS[x.src])||{zh:''}).zh;}).join(', '):'—')+' · 總資產 Total money '+fmt(r2(J.total+sb))+'</div>';}
   return h;}
 function renderReports(){
   var keys=knownMonths().reverse();if(!ui.repMonth||keys.indexOf(ui.repMonth)<0)ui.repMonth=keys.indexOf(ui.month)>=0?ui.month:keys[0];
@@ -851,9 +972,10 @@ function renderReports(){
   var end=m,tr=[];for(var i=5;i>=0;i--)tr.push(addMonths(end,-i));var tcs=tr.map(calc);
   h+='<section class="card span2"><h3>'+ic('flex',24)+' 六個月趨勢 6-month trend</h3>'+barChart(tr.map(function(mm,i){return {label:mLabel(mm).slice(0,3),vals:[(tcs[i].hasData||tcs[i].exists)?tcs[i].allowance:0,tcs[i].spent,tcs[i].income]};}),[{name:'零用錢 Allowance',color:'#d9c4ff'},{name:'已花 Spent',color:'#ff8fb1'},{name:'額外 Extra',color:'#8fd8b8'}],'chTrend',true)+'</section>';
   h+='<section class="card"><h3>'+ic('boba',24)+' 奶茶趨勢 Boba cups</h3>'+barChart(tr.map(function(mm,i){return {label:mLabel(mm).slice(0,3),vals:[tcs[i].bobaN]};}),[{name:'杯 cups',color:'#e7b98f'}],'chBoba',false,380)+'<div class="small muted">本月 '+tcs[5].bobaN+' 杯 '+fmt(tcs[5].bobaAmt)+' · 上月 '+tcs[4].bobaN+' 杯 '+fmt(tcs[4].bobaAmt)+'</div></section>';
-  h+='<section class="card span3" id="jarHist"><h3>'+ic('save',26)+' 存錢罐紀錄 Savings jar history <span class="right num" id="rJarTotal">'+fmt(J.total)+'</span></h3><div class="tblwrap"><table class="tbl" id="jarTable"><tr><th>月份 Month</th><th class="r">零用錢</th><th class="r">已花 Spent</th><th class="r">存入 Rolled in</th><th class="r">超支 Deficit</th>'+(S.settings.incomeToJar?'<th class="r">額外收入</th>':'')+'<th class="r">累計 Total</th></tr>'+
-    J.rows.map(function(r){return '<tr data-m="'+r.m+'"><td>'+mLabel(r.m)+'</td><td class="r num">'+fmt(r.allowance)+'</td><td class="r num">'+(r.skip?'—':fmt(r.spent))+'</td><td class="r num pos">'+(r.skip?'<span class="muted small">no records 未記帳</span>':'+'+fmt(r.rolled))+'</td><td class="r num '+(r.deficit<0?'neg':'muted')+'">'+(r.deficit<0?fmt(r.deficit):'—')+'</td>'+(S.settings.incomeToJar?'<td class="r num">'+fmt(r.inc)+'</td>':'')+'<td class="r num"><b>'+fmt(r.cum)+'</b></td></tr>';}).join('')+
-    '<tr class="proj"><td>'+mLabel(curMonth())+' (進行中 in progress)</td><td></td><td class="r num">'+fmt(calc(curMonth()).spent)+'</td><td class="r num pos">'+(J.projDeficit<0?'—':'+'+fmt(J.projected)+' 預計')+'</td><td class="r num '+(J.projDeficit<0?'neg':'muted')+'">'+(J.projDeficit<0?fmt(J.projDeficit):'—')+'</td>'+(S.settings.incomeToJar?'<td class="r num">'+fmt(J.projInc)+'</td>':'')+'<td class="r num muted">'+fmt(r2(J.total+J.projected+J.projInc))+'</td></tr></table></div><p class="small muted">超支月份不會從存錢罐扣錢，只會顯示赤字。Deficit months never subtract from the jar — they are just shown here.</p></section>';
+  h+='<section class="card span3" id="jarHist"><h3>'+ic('save',26)+' 存錢罐紀錄 Savings jar history <span class="right num" id="rJarTotal">'+fmt(J.total)+'</span></h3><div class="tblwrap"><table class="tbl" id="jarTable"><tr><th>月份 Month</th><th class="r">零用錢</th><th class="r">已花 Spent</th><th class="r">存入 Rolled in</th><th class="r">超支 Deficit</th>'+(S.settings.incomeToJar?'<th class="r">額外收入</th>':'')+'<th class="r">取用 Used</th><th class="r">累計 Total</th></tr>'+
+    J.rows.map(function(r){return '<tr data-m="'+r.m+'"><td>'+mLabel(r.m)+'</td><td class="r num">'+fmt(r.allowance)+'</td><td class="r num">'+(r.skip?'—':fmt(r.spent))+'</td><td class="r num pos">'+(r.skip?'<span class="muted small">no records 未記帳</span>':'+'+fmt(r.rolled))+'</td><td class="r num '+(r.deficit<0?'neg':'muted')+'">'+(r.deficit<0?fmt(r.deficit):'—')+'</td>'+(S.settings.incomeToJar?'<td class="r num">'+fmt(r.inc)+'</td>':'')+'<td class="r num '+(r.wd?'neg':'muted')+'">'+(r.wd?'−'+fmt(r.wd):'—')+'</td><td class="r num"><b>'+fmt(r.cum)+'</b></td></tr>';}).join('')+
+    '<tr class="proj"><td>'+mLabel(curMonth())+' (進行中 in progress)</td><td></td><td class="r num">'+fmt(calc(curMonth()).spent)+'</td><td class="r num pos">'+(J.projDeficit<0?'—':'+'+fmt(J.projected)+' 預計')+'</td><td class="r num '+(J.projDeficit<0?'neg':'muted')+'">'+(J.projDeficit<0?fmt(J.projDeficit):'—')+'</td>'+(S.settings.incomeToJar?'<td class="r num">'+fmt(J.projInc)+'</td>':'')+'<td class="r num '+(J.curWd?'neg':'muted')+'">'+(J.curWd?'−'+fmt(J.curWd):'—')+'</td><td class="r num muted">'+fmt(r2(J.total+J.projected+J.projInc))+'</td></tr></table></div><p class="small muted">超支月份不會從存錢罐扣錢，只會顯示赤字。Deficit months never subtract from the jar — they are just shown here.</p>'+
+    '<h3 class="rh">'+ic('withdraw',24)+' 取用紀錄 Withdrawal history <button class="btn sm right" data-act="add-wd">＋ 取用存款 Use savings</button></h3>'+(S.withdrawals.length?'<ul class="elist" id="wdHist">'+S.withdrawals.slice().sort(function(a,b){return a.date<b.date?1:-1;}).map(wdItem).join('')+'</ul>':'<div class="empty">還沒有取用 No withdrawals yet</div>')+'</section>';
   h+='</div>';
   $('#v-reports').innerHTML=h;
   renderPrint(m);
@@ -861,7 +983,7 @@ function renderReports(){
 function renderPrint(m){
   var c=calc(m);
   $('#printArea').innerHTML='<div class="phead">'+Art.mascot(c.mood==='worried'?'worried':'happy',90)+'<div><h1>Trinity’s UofT Budget · 月報</h1><div>'+mLabelFull(m)+' · '+mZh(m)+' · CAD</div><div class="small">Generated 產生於 '+todayStr()+'</div></div>'+ic('save',60)+'</div>'+reportBody(m,true)+
-   '<h3 class="rh">'+ic('book',24)+' 明細 Entries</h3><table class="tbl"><tr><th>日期 Date</th><th>類別 Category</th><th class="r">金額 Amount</th><th>備註 Note</th></tr>'+monthEntries(m).slice().reverse().map(function(e){return '<tr><td>'+e.date+'</td><td>'+(e._inc?ic('income',18)+' 額外收入 '+esc((SRC[e.source]||SRC.other).zh):ic(entryIcon(e),18)+' '+entryNameH(e))+'</td><td class="r num">'+(e._inc?'+':'')+fmt(e.amount)+'</td><td>'+esc(e.note)+'</td></tr>';}).join('')+'</table>'+
+   '<h3 class="rh">'+ic('book',24)+' 明細 Entries</h3><table class="tbl"><tr><th>日期 Date</th><th>類別 Category</th><th class="r">金額 Amount</th><th>備註 Note</th></tr>'+monthEntries(m,true).slice().reverse().map(function(e){return '<tr><td>'+e.date+'</td><td>'+(e._inc?ic('income',18)+' 額外收入 '+esc((SRC[e.source]||SRC.other).zh):ic(entryIcon(e),18)+' '+entryNameH(e))+'</td><td class="r num">'+(e._inc?'+':'')+fmt(e.amount)+'</td><td>'+esc([e.shop||'',(!e._inc&&e.sub==='boba'&&cupsOf(e)>1)?cupsOf(e)+' 杯':'',e.note||''].filter(Boolean).join(' · '))+'</td></tr>';}).join('')+'</table>'+
    '<p class="small" style="margin-top:14px">'+ic('heart',16)+' 房租 '+fmt(c.rent)+' 由爸爸直接支付，不計入預算。Rent is paid by Dad directly.</p>';
 }
 function summaryText(m){
@@ -877,12 +999,20 @@ function summaryText(m){
   L.push('📋 各項 Budget lines:');
   c.lines.forEach(function(x){L.push('  • '+x.zh+' '+x.en+': '+fmt(x.used)+' / '+fmt(x.budget)+(x.st==='over'?' ⚠️ 超 '+fmt(-x.remaining):x.st==='paid'?' ✓':x.st==='untouched'?' ✓ 未動用':''));
     if(x.id==='L_util'&&x.cover>0)L.push('     (緩衝支援 buffer covered '+fmt(x.cover)+')');});
+  L.push('');
+  L.push('💡 水電帳單 Utility bills (monthly equivalent):');
+  c.util.rows.filter(function(r){return r.kind!=='none';}).forEach(function(r){L.push('  • '+r.t.zh+' '+r.t.en+': '+(r.kind==='incl'?'含在房租 included in rent':fmt(r.amt)+(r.kind==='reserve'?' (預留 set aside, bill not here yet)':' ('+r.bills.map(function(b){return fmt(b.amount)+' '+periodLabel(b)+(b.months>1?' ÷'+b.months:'')+(b.paid?' ✓ paid':' · unpaid');}).join('; ')+')')));});
+  var rem=allReminders();if(rem.length)L.push('  ⏰ 待付 Upcoming: '+rem.map(function(x){return x.t.zh+' '+fmt(x.b.amount)+(x.b.due?' due '+x.b.due:'');}).join('; '));
+  L.push('  每月預留 Set aside each month: '+fmt(setAsideTotal()));
   var subs=SUBS.filter(function(s){return c.bySub[s[0]].amt>0;});
   if(subs.length){L.push('');L.push('✨ 靈活資金明細 Flexible breakdown:');subs.forEach(function(s){L.push('  • '+s[1]+' '+s[2]+': '+fmt(c.bySub[s[0]].amt));});}
   L.push('');
-  L.push('🧋 奶茶 Bubble tea: '+c.bobaN+' 杯 cups · '+fmt(c.bobaAmt)+' (上月 last month '+p.bobaN+' 杯 · '+fmt(p.bobaAmt)+')');
+  L.push('🧋 奶茶 Bubble tea: '+c.bobaN+' 杯 cups · '+fmt(c.bobaAmt)+(c.bobaN?' · 平均 avg '+fmt(bobaAvg(c))+'/杯':'')+' (上月 last month '+p.bobaN+' 杯 · '+fmt(p.bobaAmt)+')');
   if(c.income>0)L.push('💪 額外收入 Extra income: '+fmt(c.income)+' ('+c.incs.map(function(e){return (SRC[e.source]||SRC.other).zh;}).filter(function(v,i,a){return a.indexOf(v)===i;}).join('、')+')');
+  if(c.wds.length){L.push('🐷 取用存款 Savings used this month: −'+fmt(sum(c.wds.map(function(w){return w.amount;}))));c.wds.forEach(function(w){var r=WR[w.reason]||WR.other;L.push('  • '+w.date+' '+r.zh+' '+r.en+': −'+fmt(w.amount)+(w.note?' ('+w.note+')':''));});}
   L.push('🐷 存錢罐 Savings jar: '+fmt(closed?jarAt(m):J.total)+(closed?'':' (+'+fmt(J.projected)+' 預計 this month)'));
+  L.push('   = 存入 rolled in '+fmt(J.rolledIn)+' − 取用 used '+fmt(J.withdrawn)+' (all time)');
+  if(S.settings.stashInSummary){var sb=stashBal(),smo=S.stash.filter(function(x){return monthOf(x.date)===m;});L.push('👛 私房錢 Private stash: '+fmt(sb)+(smo.length?' (本月 this month '+smo.map(function(x){return (x.type==='out'?'−':'+')+fmt(x.amount);}).join(', ')+')':'')+' · 總資產 Total money: '+fmt(r2(J.total+sb)));}
   L.push('');
   L.push('Love you, Dad! 愛你 ❤️ — Trinity');
   return L.join('\n');
@@ -896,6 +1026,7 @@ function renderMore(){
     (c.incs.length?'<ul class="elist">'+c.incs.map(function(e){return entryItem(Object.assign({_inc:true},e));}).join('')+'</ul>':'<div class="empty">還沒有額外收入 None yet</div>')+
     '<button class="btn pri" data-act="add-inc" style="margin-top:8px">＋ 記額外收入 Add extra income</button>'+
     '<label class="check" style="margin-top:10px"><input type="checkbox" id="incToJar" '+(S.settings.incomeToJar?'checked':'')+'> 額外收入也存進存錢罐 Also add extra income to the savings jar</label></section>';
+  h+=renderStashCard();
   h+='<section class="card" id="dataCard"><h3>'+ic('save',28)+' 備份與還原 Backup & restore</h3><p class="small muted" style="margin-top:0">資料只存在這個瀏覽器 (localStorage)。記得定期備份！Data lives only in this browser — export a backup now and then.</p>'+
     '<div class="btnrow"><button class="btn pri" data-act="export-dl">⬇️ 匯出備份 Export JSON</button><button class="btn" data-act="export-copy">📋 複製 JSON</button></div>'+
     '<div class="btnrow" style="margin-top:8px"><button class="btn" data-act="import-file">📂 從檔案匯入 Import file</button><button class="btn" data-act="import-paste">📥 貼上匯入 Paste JSON</button></div>'+
@@ -909,24 +1040,26 @@ function renderMore(){
 }
 function renderEntries(){
   var m=ui.month,f=ui.entFilter,all=monthEntries(m);
-  var list=all.filter(function(e){if(!f)return true;if(f==='inc')return e._inc;return !e._inc&&keyOf(e)===f;});
+  var list=all.filter(function(e){if(!f)return true;if(f==='inc')return e._t==='inc';if(f==='wd')return e._t==='wd';if(f==='L_util')return e._t==='bill'||(e._t==='exp'&&keyOf(e)==='L_util');return e._t==='exp'&&keyOf(e)===f;});
   var keys=chipKeys(m);
-  var h='<section class="card"><h2>'+ic('book',28)+' 明細 Entries · '+mLabel(m)+' <button class="linkbtn right" data-act="nav" data-v="home">← 首頁 Home</button></h2><div class="fchips"><button class="fchip'+(!f?' on':'')+'" data-act="ent-filter" data-v="">全部 All</button>'+keys.map(function(k){return '<button class="fchip'+(f===k.k?' on':'')+'" data-act="ent-filter" data-v="'+esc(k.k)+'">'+ic(k.icon,20)+esc(k.zh)+'</button>';}).join('')+'<button class="fchip'+(f==='inc'?' on':'')+'" data-act="ent-filter" data-v="inc">'+ic('income',20)+'額外收入</button></div>'+
-    '<div class="small muted" style="margin:8px 0" id="entCount">'+list.length+' 筆 · '+fmt(sum(list.filter(function(e){return !e._inc;}).map(function(e){return e.amount;})))+'</div>'+(list.length?'<ul class="elist">'+list.map(entryItem).join('')+'</ul>':'<div class="empty">沒有記錄 Nothing here yet</div>')+'</section>';
+  var h='<section class="card"><h2>'+ic('book',28)+' 明細 Entries · '+mLabel(m)+' <button class="linkbtn right" data-act="nav" data-v="home">← 首頁 Home</button></h2><div class="fchips"><button class="fchip'+(!f?' on':'')+'" data-act="ent-filter" data-v="">全部 All</button>'+keys.map(function(k){return '<button class="fchip'+(f===k.k?' on':'')+'" data-act="ent-filter" data-v="'+esc(k.k)+'">'+ic(k.icon,20)+esc(k.zh)+'</button>';}).join('')+'<button class="fchip'+(f==='inc'?' on':'')+'" data-act="ent-filter" data-v="inc">'+ic('income',20)+'額外收入</button><button class="fchip'+(f==='wd'?' on':'')+'" data-act="ent-filter" data-v="wd">'+ic('withdraw',20)+'取用存款</button></div>'+
+    '<div class="small muted" style="margin:8px 0" id="entCount">'+list.length+' 筆 · '+fmt(sum(list.filter(function(e){return e._t==='exp'||e._t==='bill';}).map(function(e){return e.amount;})))+'</div>'+(list.length?'<ul class="elist">'+list.map(entryItem).join('')+'</ul>':'<div class="empty">沒有記錄 Nothing here yet</div>')+'</section>';
   $('#v-entries').innerHTML=h;
 }
 
 /* ===================== ENTRY FORM (spending / extra income) ===================== */
 var F=null;
 function openEntry(mode,id,key){
+  if(mode==='exp'&&!id&&key==='L_util'){openBill(null,null);return;}
   var date=ui.month===curMonth()?todayStr():ui.month+'-01';
-  if(mode==='exp'&&id){var e=S.expenses.filter(function(x){return x.id===id;})[0];if(!e)return;F={mode:'exp',id:e.id,key:keyOf(e),amountStr:String(e.amount),date:e.date,note:e.note||'',createdAt:e.createdAt};}
+  if(mode==='exp'&&id){var e=S.expenses.filter(function(x){return x.id===id;})[0];if(!e)return;F={mode:'exp',id:e.id,key:keyOf(e),amountStr:String(e.lineId==='L_flex'&&e.sub==='boba'?r2(e.amount/cupsOf(e)):e.amount),date:e.date,note:e.note||'',cups:cupsOf(e),shop:e.shop||'',createdAt:e.createdAt};}
   else if(mode==='inc'&&id){var i=S.incomes.filter(function(x){return x.id===id;})[0];if(!i)return;F={mode:'inc',id:i.id,source:i.source,amountStr:String(i.amount),date:i.date,note:i.note||'',createdAt:i.createdAt};}
-  else F={mode:mode,id:null,key:key||null,source:'job',amountStr:'',date:date,note:''};
-  if(F.mode==='exp'&&!F.id&&F.key){var q=quickAmts(F.key);if(F.key==='boba'&&q.length)F.amountStr=String(q[0]);}
+  else F={mode:mode,id:null,key:key||null,source:'job',amountStr:'',date:date,note:'',cups:1,shop:''};
   renderForm();
 }
-function recentAmts(k){var seen={},out=[];S.expenses.filter(function(e){return keyOf(e)===k;}).sort(function(a,b){return (a.date+(a.createdAt||''))<(b.date+(b.createdAt||''))?1:-1;}).forEach(function(e){if(!seen[e.amount]&&out.length<4){seen[e.amount]=1;out.push(e.amount);}});return out;}
+function recentAmts(k){var seen={},out=[];S.expenses.filter(function(e){return keyOf(e)===k;}).sort(function(a,b){return (a.date+(a.createdAt||''))<(b.date+(b.createdAt||''))?1:-1;}).forEach(function(e){var v=k==='boba'?r2(e.amount/cupsOf(e)):e.amount;if(!seen[v]&&out.length<(k==='boba'?5:4)){seen[v]=1;out.push(v);}});return out;}
+function recentShops(){var seen={},out=[];S.expenses.filter(function(e){return e.lineId==='L_flex'&&e.sub==='boba'&&e.shop;}).sort(function(a,b){return a.date<b.date?1:-1;}).forEach(function(e){var k=e.shop.toLowerCase();if(!seen[k]&&out.length<6){seen[k]=1;out.push(e.shop);}});SHOPS.forEach(function(s){if(out.length<6&&!seen[s.toLowerCase()]){seen[s.toLowerCase()]=1;out.push(s);}});return out;}
+function isBobaF(){return F&&F.mode==='exp'&&F.key==='boba';}
 function quickAmts(k){var r=recentAmts(k),d=QUICK[k]||[5,10,20];var out=r.slice();d.forEach(function(v){if(out.length<5&&out.indexOf(v)<0)out.push(v);});return out;}
 function keyInfo(m,k){return chipKeys(m).filter(function(x){return x.k===k;})[0]||null;}
 function renderForm(){
@@ -935,15 +1068,18 @@ function renderForm(){
   if(!edit)h+='<div class="seg" id="fMode"><button type="button" data-act="f-mode" data-v="exp" class="'+(inc?'':'on')+'">'+ic('flex',20)+' 支出 Spending</button><button type="button" data-act="f-mode" data-v="inc" class="'+(inc?'on':'')+'">'+ic('income',20)+' 額外收入 Extra income</button></div>';
   if(inc)h+='<div class="field"><span>來源 Source</span><div class="cgrid" id="srcChips">'+SRCS.map(function(s){return '<button type="button" class="cchip'+(F.source===s[0]?' on':'')+'" data-act="f-src" data-v="'+s[0]+'">'+ic(s[0]==='job'?'income':s[0]==='tutor'?'book':s[0]==='gift'?'other':s[0]==='award'?'star':'flex',30)+'<span>'+esc(s[1])+'</span><small>'+esc(s[2])+'</small></button>';}).join('')+'</div></div>';
   else h+='<div class="field"><span>類別 Category — 點一下 tap one</span><div class="cgrid" id="catChips">'+chipKeys(m).map(function(k){return '<button type="button" class="cchip'+(F.key===k.k?' on':'')+(k.k==='boba'?' boba':'')+'" data-act="f-key" data-k="'+esc(k.k)+'">'+ic(k.icon,30)+'<span>'+esc(k.zh)+'</span><small>'+esc(k.en)+'</small></button>';}).join('')+'</div></div>';
-  h+='<div class="amtwrap"><span class="cur">$</span><input id="fAmt" inputmode="decimal" autocomplete="off" placeholder="0.00" value="'+esc(F.amountStr)+'" aria-label="Amount 金額"><span class="code">CAD</span></div><div class="qamts" id="qAmts"></div>'+
+  var bb=isBobaF();
+  h+=(bb?'<div class="field" style="margin-bottom:4px"><span>'+ic('boba',18)+' 這杯多少錢？Price per cup — 每家店價格不一樣，輸入或點最近的價格</span></div>':'')+'<div class="amtwrap"><span class="cur">$</span><input id="fAmt" inputmode="decimal" autocomplete="off" placeholder="'+(bb?'每杯 per cup':'0.00')+'" value="'+esc(F.amountStr)+'" aria-label="'+(bb?'Price per cup 每杯價格':'Amount 金額')+'"><span class="code">CAD</span></div><div class="qamts" id="qAmts"></div>'+
+    (bb?'<div class="bobaextra" id="bobaExtra"><div class="field"><span>杯數 Cups</span><div class="stepper"><button type="button" class="btn sm" data-act="f-cups" data-v="-1" aria-label="fewer cups">−</button><b class="num" id="fCups">'+(F.cups||1)+'</b><button type="button" class="btn sm" data-act="f-cups" data-v="1" aria-label="more cups">＋</button></div></div><label class="field"><span>店家 Shop (optional)</span><input class="inp" id="fShop" maxlength="40" placeholder="e.g. Chatime" value="'+esc(F.shop||'')+'"></label></div><div class="qamts shops" id="shopChips">'+recentShops().map(function(s){return '<button type="button" class="qa'+(F.shop===s?' on':'')+'" data-act="f-shop" data-v="'+esc(s)+'">'+esc(s)+'</button>';}).join('')+'</div>':'')+
     '<div id="fLive" class="live"></div>'+
     '<div class="row2"><label class="field"><span>日期 Date</span><input type="date" class="inp" id="fDate" value="'+esc(F.date)+'"></label><label class="field"><span>備註 Note (optional 可不填)</span><input class="inp" id="fNote" maxlength="80" placeholder="'+(inc?'e.g. Robarts shift':'e.g. Chatime w/ friends')+'" value="'+esc(F.note)+'"></label></div>'+
     '<div class="err" id="fErr"></div><div class="foot">'+(edit?'<button class="btn danger" data-act="f-del" style="flex:0 0 auto">🗑 刪除</button>':'<button class="btn" data-act="close-modal">取消 Cancel</button>')+'<button class="btn pri" id="fSave" data-act="f-save">'+(edit?'儲存修改 Save':'儲存 Save')+'</button></div>';
   openModal(h,'entsheet');updateQuick();updateLive();
   if(!edit&&(F.key||inc))setTimeout(function(){var a=$('#fAmt');if(a){a.focus();a.select();}},60);
 }
-function updateQuick(){var q=$('#qAmts');if(!q)return;var arr=F.mode==='inc'?[20,50,100,200]:(F.key?quickAmts(F.key):[]);q.innerHTML=arr.map(function(v){return '<button type="button" class="qa" data-act="f-quick" data-v="'+v+'">'+fmt0(v)+'</button>';}).join('');}
-function readForm(){if(!F||!$('#fAmt'))return;F.amountStr=$('#fAmt').value;F.date=$('#fDate').value||F.date;F.note=$('#fNote').value;}
+function updateQuick(){var q=$('#qAmts');if(!q)return;var bb=isBobaF(),rec=bb?recentAmts('boba'):[],arr=F.mode==='inc'?[20,50,100,200]:(F.key?quickAmts(F.key):[]);q.innerHTML=(bb&&rec.length?'<span class="qlabel">最近 Recent:</span>':'')+arr.map(function(v){return '<button type="button" class="qa'+(bb&&rec.indexOf(v)>=0?' recent':'')+'" data-act="f-quick" data-v="'+v+'">'+fmt0(v)+'</button>';}).join('');}
+function readForm(){if(!F||!$('#fAmt'))return;F.amountStr=$('#fAmt').value;F.date=$('#fDate').value||F.date;F.note=$('#fNote').value;var sh=$('#fShop');if(sh)F.shop=sh.value;}
+function fTotal(){var a=parseAmt(F.amountStr);return a>0?(isBobaF()?r2(a*(F.cups||1)):a):a;}
 function lineCheck(m,lineId,amount,excludeId){
   var l=findLine(m,lineId),budget=l?r2(l.amount):0,already=0;
   S.expenses.forEach(function(e){if(e.id!==excludeId&&monthOf(e.date)===m&&e.lineId===lineId)already+=cents(e.amount);});already/=100;
@@ -951,7 +1087,7 @@ function lineCheck(m,lineId,amount,excludeId){
   return {line:l,budget:budget,already:already,after:after,pct:budget>0?used/budget:(used>0?Infinity:0),st:budget<=0?(used>0?'over':'ok'):(used>budget+0.004?'over':used/budget>=0.8?'warn':'ok')};}
 function updateLive(){
   readForm();if(!F)return false;
-  var m=monthOf(F.date),amt=parseAmt(F.amountStr),a=amt>0?amt:0,ok=true,err='',live=$('#fLive'),h='';
+  var m=monthOf(F.date),amt=fTotal(),a=amt>0?amt:0,ok=true,err='',live=$('#fLive'),h='';
   if(!(amt>0)){ok=false;err=F.amountStr.trim()?'請輸入有效金額 Enter a valid amount':'';}
   if(F.mode==='inc'){h='<div class="status info">'+ic('income',22)+' 額外收入另外計算 Counted separately — nice work! 💪</div>';}
   else if(!F.key){ok=false;err=err||'';h='<div class="muted small">先點一個類別 Pick a category above 👆</div>';}
@@ -962,17 +1098,17 @@ function updateLive(){
       else if(ck.st==='over')h+='<div class="status over" id="liveStatus">會超支 Over by '+fmt(-ck.after)+' — 沒關係，記下來最重要！Logging it is what matters 💗</div>';
       else if(ck.st==='warn')h+='<div class="status warn" id="liveStatus">快用完囉 '+pct(ck.pct)+' used — still OK 🌷</div>';
       else h+='<div class="status ok" id="liveStatus">✓ 預算內 Within budget ✨</div>';
-      if(F.key==='boba'){var n=S.expenses.filter(function(e){return e.id!==F.id&&monthOf(e.date)===m&&e.lineId==='L_flex'&&e.sub==='boba';}).length+1;h+='<div class="small" style="text-align:center;margin-top:6px">'+ic('boba',18)+' 這是本月第 <b>'+n+'</b> 杯 — cup #'+n+' this month</div>';}
+      if(F.key==='boba'){var n0=sum(S.expenses.filter(function(e){return e.id!==F.id&&monthOf(e.date)===m&&e.lineId==='L_flex'&&e.sub==='boba';}).map(cupsOf)),cu=F.cups||1,n=n0+cu;h+='<div class="small" id="bobaLiveCup" style="text-align:center;margin-top:6px">'+ic('boba',18)+(cu>1?' '+cu+' 杯 × '+fmt(parseAmt(F.amountStr)||0)+' = <b>'+fmt(a)+'</b> · 本月第 '+(n0+1)+'–'+n+' 杯 — cups #'+(n0+1)+'–'+n+' this month':' 這是本月第 <b>'+n+'</b> 杯 — cup #'+n+' this month')+'</div>';}
     }}
   if(live)live.innerHTML=h;var e=$('#fErr');if(e)e.textContent=err;var sv=$('#fSave');if(sv)sv.disabled=!ok;return ok;
 }
 function saveEntry(){
   if(!updateLive())return toast('請檢查 Please pick a category & amount');
-  var amt=r2(parseAmt(F.amountStr)),m=monthOf(F.date);ensureMonth(m);var now=new Date().toISOString(),msg;
+  var amt=r2(fTotal()),m=monthOf(F.date);ensureMonth(m);var now=new Date().toISOString(),msg;
   if(F.mode==='inc'){var o={id:F.id||uid('i'),date:F.date,amount:amt,source:F.source,note:F.note.trim(),createdAt:F.createdAt||now,updatedAt:now};var ix=S.incomes.findIndex(function(x){return x.id===o.id;});if(ix>=0)S.incomes[ix]=o;else S.incomes.push(o);msg=(F.id?'已更新 Updated ✓ ':'已儲存 Saved ✓ ')+'+'+fmt(amt)+' 額外收入 💪';}
-  else{var k=keyInfo(m,F.key);var e={id:F.id||uid('e'),date:F.date,amount:amt,lineId:k.lineId,sub:k.sub,note:F.note.trim(),createdAt:F.createdAt||now,updatedAt:now};var i=S.expenses.findIndex(function(x){return x.id===e.id;});if(i>=0)S.expenses[i]=e;else S.expenses.push(e);
+  else{var k=keyInfo(m,F.key);var e={id:F.id||uid('e'),date:F.date,amount:amt,lineId:k.lineId,sub:k.sub,note:F.note.trim(),createdAt:F.createdAt||now,updatedAt:now};if(F.key==='boba'){e.cups=F.cups||1;if((F.shop||'').trim())e.shop=F.shop.trim();}var i=S.expenses.findIndex(function(x){return x.id===e.id;});if(i>=0)S.expenses[i]=e;else S.expenses.push(e);
     var c=calc(m),ln=c.lines.filter(function(x){return x.id===k.lineId;})[0];
-    msg=(F.id?'已更新 Updated ✓ ':'已儲存 Saved ✓ ')+k.zh+' '+fmt(amt)+(F.key==='boba'?' · 本月第 '+c.bobaN+' 杯 🧋':'')+(ln&&ln.st==='over'?' · ⚠️ '+ln.zh+' 超支 over':'');}
+    msg=(F.id?'已更新 Updated ✓ ':'已儲存 Saved ✓ ')+k.zh+' '+fmt(amt)+(F.key==='boba'?(e.cups>1?' ('+e.cups+' 杯)':'')+' · 本月第 '+c.bobaN+' 杯 🧋 · 平均 avg '+fmt(bobaAvg(c))+'/杯':'')+(ln&&ln.st==='over'?' · ⚠️ '+ln.zh+' 超支 over':'');}
   if(!save())return;closeModal();ui.month=m;render();toast(msg);
 }
 
@@ -1005,21 +1141,33 @@ function buildXlsx(sheets){
 function xlsxSheets(scope){
   var months=scope==='all'?knownMonths().filter(function(m){return calc(m).hasData||S.months[m];}):[scope];
   var $m=function(v){return {v:r2(v),s:2};};
-  var ent=[['日期 Date','月份 Month','類別 Category','子類別 Sub-category','金額 Amount (CAD)','備註 Note']];
+  var ent=[['日期 Date','月份 Month','類別 Category','子類別 Sub-category','金額 Amount (CAD)','備註 Note','杯數 Cups','店家 Shop']];
   var exps=S.expenses.filter(function(e){return months.indexOf(monthOf(e.date))>=0;}).sort(function(a,b){return a.date<b.date?-1:1;});
-  exps.forEach(function(e){var l=findLine(monthOf(e.date),e.lineId),s=e.lineId==='L_flex'?(SUB[e.sub]||SUB.other):null;ent.push([e.date,monthOf(e.date),lineName(l),s?s.zh+' '+s.en:'',$m(e.amount),e.note||'']);});
-  ent.push(['','','合計 Total','',{v:sum(exps.map(function(e){return e.amount;})),s:3},'']);
+  exps.forEach(function(e){var l=findLine(monthOf(e.date),e.lineId),s=e.lineId==='L_flex'?(SUB[e.sub]||SUB.other):null;var bo=e.lineId==='L_flex'&&e.sub==='boba';ent.push([e.date,monthOf(e.date),lineName(l),s?s.zh+' '+s.en:'',$m(e.amount),e.note||'',bo?cupsOf(e):'',bo?(e.shop||''):'']);});
+  ent.push(['','','合計 Total','',{v:sum(exps.map(function(e){return e.amount;})),s:3},'','','']);
   var inc=[['日期 Date','月份 Month','來源 Source','金額 Amount (CAD)','備註 Note']];
   S.incomes.filter(function(e){return months.indexOf(monthOf(e.date))>=0;}).sort(function(a,b){return a.date<b.date?-1:1;}).forEach(function(e){var so=SRC[e.source]||SRC.other;inc.push([e.date,monthOf(e.date),so.zh+' '+so.en,$m(e.amount),e.note||'']);});
-  var sm=[['月份 Month','零用錢 Allowance','預算 Budget','已花 Spent','剩餘/超支 Left (−deficit)','存入存錢罐 Rolled to savings','奶茶杯數 Boba cups','奶茶金額 Boba $','額外收入 Extra income','房租(爸爸付) Rent by Dad']];
+  var sm=[['月份 Month','零用錢 Allowance','預算 Budget','已花 Spent','剩餘/超支 Left (−deficit)','存入存錢罐 Rolled to savings','奶茶杯數 Boba cups','奶茶金額 Boba $','平均每杯 Avg $/cup','額外收入 Extra income','房租(爸爸付) Rent by Dad','水電(月攤) Utilities monthly eq.','其中預留 of which set aside','緩衝支援 Buffer used','取用存款 Savings used']];
   var J=jar(),jm={};J.rows.forEach(function(r){jm[r.m]=r;});
-  months.forEach(function(m){var c=calc(m),r=jm[m];sm.push([m,$m(c.allowance),$m(c.budget),$m(c.spent),$m(c.remaining),r?$m(r.rolled):(m>=curMonth()?'(in progress)':$m(0)),c.bobaN,$m(c.bobaAmt),$m(c.income),$m(c.rent)]);});
+  months.forEach(function(m){var c=calc(m),r=jm[m];sm.push([m,$m(c.allowance),$m(c.budget),$m(c.spent),$m(c.remaining),r?$m(r.rolled):(m>=curMonth()?'(in progress)':$m(0)),c.bobaN,$m(c.bobaAmt),$m(bobaAvg(c)),$m(c.income),$m(c.rent),$m(c.util.total),$m(c.util.reserve),$m(c.cover),$m(sum(c.wds.map(function(w){return w.amount;})))]);});
   var lines=[['月份 Month','項目 Line','English','預算 Budget','實際 Actual','剩 Left']];
   months.forEach(function(m){calc(m).lines.forEach(function(x){lines.push([m,x.zh,x.en,$m(x.budget),$m(x.used),$m(x.remaining)]);});});
-  var sv=[['月份 Month','已花 Spent','存入 Rolled in','超支 Deficit (not deducted)','額外收入入罐 Income to jar','累計 Cumulative']];
-  J.rows.filter(function(r){return scope==='all'||r.m<=scope;}).forEach(function(r){sv.push([r.m,r.skip?'—':$m(r.spent),$m(r.rolled),$m(r.deficit),$m(r.inc),$m(r.cum)]);});
-  sv.push([curMonth()+' (projected 預計)','',$m(J.projected),$m(J.projDeficit),$m(J.projInc),$m(J.total+J.projected+J.projInc)]);
-  return [{name:'Entries 明細',rows:ent,widths:[12,10,24,22,16,30]},{name:'Monthly summary 月結',rows:sm,widths:[10,14,12,12,18,20,12,12,14,16]},{name:'Budget lines 預算',rows:lines,widths:[10,16,20,12,12,12]},{name:'Savings 存錢罐',rows:sv,widths:[22,12,14,22,20,14]},{name:'Extra income 額外收入',rows:inc,widths:[12,10,22,16,30]}];
+  var sv=[['月份 Month','已花 Spent','存入 Rolled in','超支 Deficit (not deducted)','額外收入入罐 Income to jar','取用 Withdrawn','累計 Cumulative']];
+  J.rows.filter(function(r){return scope==='all'||r.m<=scope;}).forEach(function(r){sv.push([r.m,r.skip?'—':$m(r.spent),$m(r.rolled),$m(r.deficit),$m(r.inc),$m(-r.wd),$m(r.cum)]);});
+  sv.push([curMonth()+' (projected 預計)','',$m(J.projected),$m(J.projDeficit),$m(J.projInc),$m(-J.curWd),$m(J.total+J.projected+J.projInc)]);
+  sv.push(['目前存錢罐 Jar balance now','',$m(J.rolledIn),'','',$m(-J.withdrawn),{v:J.total,s:3}]);
+  var bills=[['帳單 Bill type','English','週期 Cycle (months)','金額 Amount (CAD)','期間開始 Period start','涵蓋月數 Months','期間結束 Period end','每月分攤 Monthly equiv.','到期 Due','付款 Paid','備註 Note']];
+  S.bills.filter(function(b){return months.some(function(m){return billCovers(b,m);});}).sort(function(a,b){return a.start<b.start?-1:1;}).forEach(function(b){var t=utype(b.typeId)||{zh:'其他帳單',en:'Other bill',cycle:''};bills.push([t.zh,t.en,t.cycle,$m(b.amount),b.start,b.months,billEnd(b),$m(b.amount/b.months),b.due||'',b.paid||'未付 unpaid',b.note||'']);});
+  var ubm=[['月份 Month','帳單 Bill type','狀態 Status','本月金額 This month (CAD)']];
+  months.forEach(function(m){calc(m).util.rows.filter(function(r){return r.kind!=='none';}).forEach(function(r){ubm.push([m,r.t.zh+' '+r.t.en,r.kind==='actual'?'帳單 Billed':r.kind==='incl'?'含在房租 In rent':'預留 Set aside',$m(r.amt)]);});});
+  var wd=[['日期 Date','月份 Month','用途 Reason','金額 Amount (CAD)','備註 Note']];
+  var wl=S.withdrawals.filter(function(w){return scope==='all'||monthOf(w.date)<=scope;}).sort(function(a,b){return a.date<b.date?-1:1;});
+  wl.forEach(function(w){var r=WR[w.reason]||WR.other;wd.push([w.date,monthOf(w.date),r.zh+' '+r.en,$m(w.amount),w.note||'']);});
+  var stx=[['日期 Date','月份 Month','類型 Type','來源/用途 Source / reason','金額 Amount (CAD)','餘額 Balance','備註 Note']],bal=0;
+  S.stash.filter(function(x){return scope==='all'||monthOf(x.date)<=scope;}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:((a.createdAt||'')<(b.createdAt||'')?-1:1);}).forEach(function(x){var o=x.type==='out',r=(o?WR[x.src]:STS[x.src])||{zh:'其他',en:'Other'};bal=r2(bal+(o?-x.amount:x.amount));stx.push([x.date,monthOf(x.date),o?'取出 Out':'存入 In',r.zh+' '+r.en,$m(o?-x.amount:x.amount),$m(bal),x.note||'']);});
+  stx.push(['','','','餘額 Balance (not in budget)',{v:bal,s:3},'','']);
+  wd.push(['','','合計 Total',{v:sum(wl.map(function(w){return w.amount;})),s:3},'']);
+  return [{name:'Entries 明細',rows:ent,widths:[12,10,24,22,16,30,8,14]},{name:'Monthly summary 月結',rows:sm,widths:[10,14,12,12,18,20,12,12,14,16]},{name:'Budget lines 預算',rows:lines,widths:[10,16,20,12,12,12]},{name:'Savings 存錢罐',rows:sv,widths:[22,12,14,22,20,14]},{name:'Extra income 額外收入',rows:inc,widths:[12,10,22,16,30]},{name:'Utility bills 水電帳單',rows:bills,widths:[12,28,10,14,12,10,12,14,12,12,24]},{name:'Utilities by month 水電月攤',rows:ubm,widths:[10,34,16,16]},{name:'Withdrawals 取用存款',rows:wd,widths:[12,10,24,16,30]},{name:'Private stash 私房錢',rows:stx,widths:[12,10,10,24,14,14,30]}];
 }
 function download(blob,name){var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1500);}
 function exportXlsx(scope){try{var name='Trinity-UofT-Budget-'+(scope==='all'?'all':scope)+'-'+todayStr()+'.xlsx';download(buildXlsx(xlsxSheets(scope)),name);toast('Excel 已匯出 Exported ⬇️ '+name);}catch(e){console.error(e);toast('Excel 匯出失敗 Export failed');}}
@@ -1034,12 +1182,12 @@ function showText(title,text,id,extra){openModal('<div class="sh"><h2>'+title+'<
 function doImport(text){
   var d;try{d=JSON.parse(text);}catch(e){return askConfirm('匯入失敗 Import failed','不是有效的 JSON. Not valid JSON.\n'+e.message,'OK',false);}
   var v=validate(d);if(!v.ok)return askConfirm('備份無效 Backup invalid',v.errors.join('\n'),'OK',false);
-  return askConfirm('覆蓋全部資料？Replace all data?','備份內有 '+v.stats.months+' 個月、'+v.stats.expenses+' 筆支出、'+v.stats.incomes+' 筆額外收入'+(d.exportedAt?'\nExported '+new Date(d.exportedAt).toLocaleString():'')+'.\n目前資料將被覆蓋 Current data will be overwritten.','匯入 Import',true).then(function(ok){
+  return askConfirm('覆蓋全部資料？Replace all data?','備份內有 '+v.stats.months+' 個月、'+v.stats.expenses+' 筆支出、'+v.stats.incomes+' 筆額外收入、'+v.stats.bills+' 張帳單、'+v.stats.withdrawals+' 筆取用、'+v.stats.stash+' 筆私房錢'+(d.exportedAt?'\nExported '+new Date(d.exportedAt).toLocaleString():'')+'.\n目前資料將被覆蓋 Current data will be overwritten.','匯入 Import',true).then(function(ok){
     if(!ok)return;delete d.exportedAt;S=migrate(d);save();closeModal();ui.month=S.months[curMonth()]?curMonth():latestMonth()||curMonth();ensureMonth(ui.month);render();toast('匯入成功 Imported ✓');});}
 function buildDemo(){
   var d=freshData(),cm=curMonth(),td=+todayStr().slice(8);d.months={};
   var ms=[addMonths(cm,-3),addMonths(cm,-2),addMonths(cm,-1),cm];
-  ms.forEach(function(m){d.months[m]={allowance:978,rent:1900,lines:defaultLines()};});d.template=clone({allowance:978,rent:1900,lines:defaultLines()});
+  ms.forEach(function(m){d.months[m]={allowance:978,rent:1900,lines:defaultLines()};});d.utilities={types:defaultUTypes(ms[0])};d.template=clone({allowance:978,rent:1900,lines:defaultLines()});
   var n=0;function E(m,day,amt,line,sub,note){if(m===cm&&day>td)day=Math.max(1,td-((n*3)%Math.max(1,td)));d.expenses.push({id:'e_demo'+(n++),date:m+'-'+pad(day),amount:amt,lineId:line,sub:sub||null,note:note||'',createdAt:m+'-'+pad(day)+'T12:00:'+pad(n%60)+'Z'});}
   function I(m,day,amt,src,note){if(m===cm&&day>td)day=td;d.incomes.push({id:'i_demo'+(n++),date:m+'-'+pad(day),amount:amt,source:src,note:note||'',createdAt:m+'-'+pad(day)+'T13:00:00Z'});}
   var plan=[ // [util, groc[], eat[], boba[], fun[], shop[], book[], daily[], other[]]
@@ -1050,12 +1198,219 @@ function buildDemo(){
   var notes={boba:['Chatime','Coco 椰子','Tiger Sugar','The Alley','Gong Cha','Kung Fu Tea','Presotea','Chatime','Sharetea'],eat:['Pho w/ friends','Sansotei ramen','Banh mi','Hot pot 火鍋','Sushi','Burger'],groc:['T&T','No Frills','Loblaws','Metro'],fun:['Movie night','Karaoke KTV','AGO student','Escape room'],shop:['Uniqlo','Aritzia','Winners'],book:['UofT Bookstore','Muji pens','Course reader'],daily:['Shoppers','Dollarama'],other:['Birthday gift','Phone case']};
   ms.forEach(function(m,mi){var P=plan[mi],cur=m===cm;
     E(m,1,28,'L_ins','', 'Monthly premium');E(m,1,128,'L_ttc','','Post-secondary pass');
-    if(P.util)E(m,20,P.util,'L_util','','Toronto Hydro + Enbridge');
     P.groc.forEach(function(v,i){E(m,3+i*7,v,'L_groc','',notes.groc[i%4]);});
     ['eat','boba','fun','shop','book','daily','other'].forEach(function(k){P[k].forEach(function(v,i){E(m,2+((i*5+mi*3+k.length)%26),v,'L_flex',k,(notes[k]||[''])[i%(notes[k]||['']).length]);});});
     if(mi===1){E(m,26,64,'L_flex','fun','Concert tickets 🎤');}
     if(mi===0||mi===2)I(m,15,120,'job','Robarts library shift');if(mi===1)I(m,10,88,'gift','紅包 from 阿姨');if(cur)I(m,12,96,'tutor','Math tutoring');});
+  d.expenses.forEach(function(e){if(e.sub==='boba'){e.shop=e.note;e.note='';e.cups=1;}});
+  var two=d.expenses.filter(function(e){return e.sub==='boba'&&monthOf(e.date)===addMonths(cm,-2);})[0];if(two){two.cups=2;two.amount=r2(two.amount*2);two.note='with roommate 跟室友';}
+  // utility bills: Hydro & Enbridge monthly (bill arrives the next month), internet monthly in advance, City water/waste every 4 months
+  var hy=[38.9,52.4,61.3],gs=[18.6,16.9,27.5],tdy=todayStr();function Bl(t,amt,start,mo,due,paid,note){d.bills.push({id:'b_demo'+(n++),typeId:t,amount:amt,start:start,months:mo,due:due,paid:paid,note:note||'',createdAt:due+'T09:00:00Z'});}
+  function cap(x){return x>tdy?tdy:x;}
+  for(var k=0;k<3;k++){var bm=ms[k],nm=addMonths(bm,1);Bl('U_hydro',hy[k],bm,1,nm+'-18',cap(nm+'-16'),'Toronto Hydro');Bl('U_gas',gs[k],bm,1,nm+'-21',cap(nm+'-20'),'Enbridge');}
+  ms.forEach(function(m){Bl('U_net',24,m,1,m+'-05',cap(m+'-05'),'Internet (billed in advance)');});
+  Bl('U_water',78.4,addMonths(cm,-4),4,addDays(tdy,6),'','City of Toronto · water + solid waste');
+  d.stash=[{id:'s_demo1',type:'in',date:addMonths(cm,-3)+'-01',amount:1500,src:'bank',note:'TD savings — opening balance',createdAt:addMonths(cm,-3)+'-01T09:00:00Z'},{id:'s_demo2',type:'in',date:addMonths(cm,-2)+'-09',amount:200,src:'redpacket',note:'中秋紅包 from 外婆',createdAt:addMonths(cm,-2)+'-09T09:00:00Z'},{id:'s_demo3',type:'out',date:addMonths(cm,-1)+'-27',amount:85,src:'treat',note:'Concert merch 🎤',createdAt:addMonths(cm,-1)+'-27T09:00:00Z'}];
+  d.withdrawals.push({id:'w_demo1',date:addMonths(cm,-1)+'-14',amount:60,reason:'gift',note:'媽媽生日禮物 Mom’s birthday',createdAt:addMonths(cm,-1)+'-14T10:00:00Z'});
   return d;}
+
+/* ===================== UTILITY BILLS & SAVINGS WITHDRAWALS (UI) ===================== */
+function cycLabel(c){return CYC[c]||('每 '+c+' 個月 Every '+c+' months');}
+function periodLabel(b){var e=billEnd(b);return b.months===1?mLabel(b.start):mLabel(b.start).slice(0,3)+(b.start.slice(0,4)===e.slice(0,4)?'':' '+b.start.slice(0,4))+'–'+mLabel(e).slice(0,3)+' '+e.slice(0,4);}
+function utName(t){return t?esc(t.zh)+' <span class="en">'+esc(t.en)+'</span>':'其他帳單 <span class="en">Other bill</span>';}
+function daysTxt(d){return d===0?'今天到期 due today':d>0?'還有 '+d+' 天 in '+d+' day'+(d>1?'s':''):'逾期 '+(-d)+' 天 overdue '+(-d)+'d';}
+function allReminders(){var R=utilReminders(),out=[];R.forEach(function(r){r.unpaid.forEach(function(u){out.push({t:r.t,b:u.b,days:u.days,overdue:u.overdue});});});return out.sort(function(a,b){return (a.b.due||'9')<(b.b.due||'9')?-1:1;});}
+function utilKindTag(row){return row.kind==='actual'?'<span class="badge ok">帳單 Billed</span>':row.kind==='incl'?'<span class="badge kind">含在房租 In rent</span>':row.kind==='reserve'?'<span class="badge warn">預留 Set aside</span>':'<span class="badge kind">—</span>';}
+function utilSubchips(c){return '<div class="subchips" id="utilChips">'+c.util.rows.filter(function(r){return r.kind!=='none';}).map(function(r){return '<span class="subchip'+(r.kind==='reserve'?' resv':'')+(r.kind==='incl'?' zero':'')+'" data-ut="'+esc(r.t.id)+'">'+ic(r.t.icon,20)+esc(r.t.zh)+' <b class="num">'+(r.kind==='incl'?'含租':fmt0(r.amt))+'</b>'+(r.kind==='reserve'?'<small>預留</small>':'')+'</span>';}).join('')+'</div>'+
+  (c.util.reserve>0?'<div class="note small">含預留 incl. set-aside '+fmt(c.util.reserve)+' for bills not here yet — replaced by the real bill when you enter it.</div>':'');}
+function renderBillsCard(m){
+  var R=utilReminders(),c=calc(m),ul=c.lines.filter(function(x){return x.id==='L_util';})[0],tgt=ul?ul.budget:0,sa=setAsideTotal(),rem=allReminders();
+  var h='<section class="card" id="billsCard"><h3>'+ic('bill',26)+' 水電帳單 Utility bills <button class="linkbtn right" data-act="add-bill">＋ 帳單 Add bill</button></h3>';
+  var soon=rem.filter(function(x){return x.days!=null&&x.days<=14;});
+  if(soon.length)h+='<div class="alert '+(soon.some(function(x){return x.overdue;})?'over':'warn')+'" id="billAlert">'+soon.map(function(x){return ic(x.t.icon,20)+' <b>'+esc(x.t.zh)+' '+fmt(x.b.amount)+'</b> · '+dLabel(x.b.due)+' · '+daysTxt(x.days);}).join('<br>')+'</div>';
+  h+='<div class="setaside" id="setAside"><div><label>每月要存起來 Set aside each month</label><b class="num">'+fmt(sa)+'</b></div><div><label>水電預算 Utilities target</label><b class="num">'+fmt(tgt)+'</b></div><div><label>緩衝 Buffer (overruns only)</label><b class="num">'+fmt((c.lines.filter(function(x){return x.id==='L_buf';})[0]||{budget:0}).budget)+'</b></div></div>';
+  if(Math.abs(sa-tgt)>0.004)h+='<div class="small '+(sa>tgt?'neg':'muted')+'" id="setAsideMsg">'+(sa>tgt?'預估比預算多 '+fmt(sa-tgt)+' — the buffer may be needed':'預估比預算少 '+fmt(tgt-sa)+' — extra room 🌷')+'</div>';
+  h+='<div class="billtypes">'+R.map(function(r){var row=c.util.rows.filter(function(x){return x.t.id===r.t.id;})[0]||{amt:0,kind:'none'},nx='';
+    if(r.t.included)nx='<span class="muted">含在房租，不用付 Included in rent</span>';
+    else if(r.unpaid.length){var u=r.unpaid[0];nx='<span class="'+(u.overdue?'neg':'warnc')+'">待付 Unpaid '+fmt(u.b.amount)+(u.b.due?' · '+dLabel(u.b.due)+' · '+daysTxt(u.days):'')+'</span>';}
+    else if(r.expDue)nx='下一張約 Next bill ≈ '+dLabel(r.expDue)+(r.saved>0?' · 已預留 saved '+fmt(r.saved):'');
+    else nx='還沒有帳單 No bill yet'+(r.saved>0?' · 已預留 saved '+fmt(r.saved):'');
+    return '<div class="btype" data-ut="'+esc(r.t.id)+'">'+ic(r.t.icon,34)+'<div class="bt-main"><div class="bt-n">'+utName(r.t)+'</div><div class="small"><span class="badge kind">'+esc(cycLabel(r.t.cycle))+'</span> '+(r.t.included?'':'<span class="muted">'+fmt(r.rate)+'/mo</span>')+'</div><div class="small bt-next">'+nx+'</div></div><div class="bt-r"><b class="num">'+(row.kind==='incl'?'—':fmt(row.amt))+'</b>'+utilKindTag(row)+(r.t.included?'':'<button class="btn sm" data-act="add-bill" data-v="'+esc(r.t.id)+'" aria-label="Add '+esc(r.t.en)+' bill">＋</button>')+'</div></div>';}).join('')+'</div>';
+  h+='<p class="small muted" style="margin:8px 0 0">多個月的帳單會平均分攤到每個月，月預算才公平。Bills covering several months are spread evenly across them.</p></section>';
+  return h;}
+function billItem(b,m){var t=utype(b.typeId),share=m?billShare(b,m):b.amount;
+  return '<li class="eitem" data-act="edit-bill" data-id="'+esc(b.id)+'"><div class="icw">'+ic(t?t.icon:'bill',34)+'</div><div style="min-width:0"><div class="m">'+utName(t)+' <span class="badge '+(b.paid?'ok':(b.due&&b.due<todayStr()?'over':'warn'))+'">'+(b.paid?'已付 Paid':'待付 Unpaid')+'</span></div><div class="s">'+periodLabel(b)+' · '+fmt(b.amount)+(b.months>1?' ÷ '+b.months+' = '+fmt(r2(b.amount/b.months))+'/mo':'')+(b.due?' · due '+dLabel(b.due):'')+(b.paid?' · paid '+dLabel(b.paid):'')+(b.note?' · '+esc(b.note):'')+'</div></div><div class="a num">'+fmt(share)+'</div></li>';}
+function wdItem(w){var r=WR[w.reason]||WR.other;return '<li class="eitem" data-act="edit-wd" data-id="'+esc(w.id)+'"><div class="icw">'+ic(r.icon,34)+'</div><div style="min-width:0"><div class="m">'+esc(r.zh)+' <span class="en">'+esc(r.en)+'</span> <span class="badge wd">取用存款 Use savings</span></div><div class="s">'+dLabel(w.date)+' '+w.date.slice(0,4)+(w.note?' · '+esc(w.note):'')+'</div></div><div class="a num neg">−'+fmt(w.amount)+'</div></li>';}
+function renderUtilEditor(m){
+  var c=calc(m),T=S.utilities.types,tgt=(c.lines.filter(function(x){return x.id==='L_util';})[0]||{budget:0}).budget,sa=setAsideTotal();
+  var h='<section class="card" id="utilCard"><h3>'+ic('util',26)+' 水電帳單設定 Utility bill types</h3><p class="small muted" style="margin-top:0">每種帳單有自己的週期。Toronto Hydro 電費、Enbridge 瓦斯、網路通常每月一張；City of Toronto 水費垃圾通常每 4 個月一張。公寓出租常常含暖氣、水 — 跟房東確認，勾「含在房租」。</p>';
+  T.forEach(function(t){h+='<div class="ut" data-utid="'+esc(t.id)+'"><div class="r1">'+ic(t.icon,34)+'<input class="inp" data-fid="uz-'+esc(t.id)+'" data-uf="zh" value="'+esc(t.zh)+'" aria-label="中文名稱"><input class="inp" data-fid="ue-'+esc(t.id)+'" data-uf="en" value="'+esc(t.en)+'" aria-label="English name"></div>'+
+    '<div class="r2"><label class="field"><span>週期 Billing cycle</span><select class="inp" data-fid="uc-'+esc(t.id)+'" data-uf="cycle">'+CYCLES.map(function(cy){return '<option value="'+cy[0]+'"'+(cy[0]===t.cycle?' selected':'')+'>'+cy[1]+'</option>';}).join('')+'</select></label><label class="field"><span>每張預估 Expected per bill</span><input class="inp num" data-fid="us-'+esc(t.id)+'" data-uf="est" inputmode="decimal" value="'+t.est.toFixed(2)+'"></label><div class="field"><span>每月預留 Monthly</span><b class="num">'+(t.included?'—':fmt(rateOf(t)))+'</b></div></div>'+
+    '<div class="r3"><label class="check"><input type="checkbox" data-uf="included" '+(t.included?'checked':'')+'> 含在房租 Included in rent / condo fees</label>'+(t.custom?'<span class="iconpick">'+['bill','elec','gas','water','wifi','util'].map(function(n){return '<button class="ipk'+(t.icon===n?' on':'')+'" data-act="ut-icon" data-id="'+esc(t.id)+'" data-v="'+n+'">'+ic(n,22)+'</button>';}).join('')+'</span><button class="btn sm danger" data-act="ut-del" data-id="'+esc(t.id)+'">刪除 Delete</button>':'')+'</div></div>';});
+  h+='<div class="totrow"><span>每月預留合計 Set aside / month</span><span class="num"><b id="utSetAside">'+fmt(sa)+'</b> / 預算 '+fmt(tgt)+'</span></div>';
+  h+='<div class="btnrow"><button class="btn pri sm" data-act="ut-add">＋ 新增帳單種類 Add bill type</button>'+(Math.abs(sa-tgt)>0.004?'<button class="btn sm" data-act="ut-sync" id="utSync">水電預算設為 Set budget to '+fmt(sa)+'</button>':'')+'<button class="btn sm" data-act="add-bill">'+ic('bill',18)+' 記帳單 Add bill</button></div></section>';
+  var bl=S.bills.slice().sort(function(a,b){return a.start<b.start?1:a.start>b.start?-1:(a.typeId<b.typeId?-1:1);});
+  h+='<section class="card" id="billList"><h3>'+ic('bill',26)+' 所有帳單 All bills <span class="right small muted">'+bl.length+'</span></h3>'+(bl.length?'<ul class="elist">'+bl.map(function(b){return billItem(b,null);}).join('')+'</ul>':'<div class="empty">還沒有帳單 No bills yet</div>')+'</section>';
+  return h;}
+
+/* ---------- bill sheet ---------- */
+var B=null;
+function openBill(id,typeId){
+  if(id){var b=S.bills.filter(function(x){return x.id===id;})[0];if(!b)return;B={id:b.id,typeId:b.typeId,amountStr:String(b.amount),start:b.start,months:b.months,due:b.due||'',paid:b.paid||'',note:b.note||'',createdAt:b.createdAt};}
+  else{var t=utype(typeId)||S.utilities.types.filter(function(x){return !x.included;})[0]||S.utilities.types[0];var R=t?utilReminders().filter(function(r){return r.t.id===t.id;})[0]:null,cyc=t?t.cycle:1,ref=ui.month;
+    var st=R&&R.last?R.nextStart:addMonths(ref,-(cyc-1));if(st>ref)st=ref;
+    B={id:null,typeId:t?t.id:'',amountStr:'',start:st,months:cyc,due:addDays(todayStr(),14),paid:'',note:''};}
+  renderBill();}
+function addDays(d,k){var x=new Date(d+'T12:00:00');x.setDate(x.getDate()+k);return x.getFullYear()+'-'+pad(x.getMonth()+1)+'-'+pad(x.getDate());}
+function renderBill(){
+  var edit=!!B.id;
+  var h='<div class="sh"><h2>'+ic('bill',28)+' '+(edit?'修改帳單 Edit bill':'記帳單 Add utility bill')+'</h2><button class="xbtn" data-act="close-modal" aria-label="Close">×</button></div>'+
+   '<div class="field"><span>哪一種帳單 Bill type</span><div class="cgrid" id="billTypes">'+S.utilities.types.map(function(t){return '<button type="button" class="cchip'+(B.typeId===t.id?' on':'')+'" data-act="bill-type" data-v="'+esc(t.id)+'">'+ic(t.icon,30)+'<span>'+esc(t.zh)+'</span><small>'+esc(cycLabel(t.cycle).split(' ')[0])+'</small></button>';}).join('')+'</div></div>'+
+   '<div class="amtwrap"><span class="cur">$</span><input id="bAmt" inputmode="decimal" autocomplete="off" placeholder="帳單金額 bill total" value="'+esc(B.amountStr)+'" aria-label="Bill amount 帳單金額"><span class="code">CAD</span></div>'+
+   '<div class="row2"><label class="field"><span>帳單期間從 Period starts</span><input type="month" class="inp" id="bStart" value="'+esc(B.start)+'"></label><label class="field"><span>涵蓋幾個月 Months covered</span><select class="inp" id="bMonths">'+[1,2,3,4,5,6,12].map(function(n){return '<option value="'+n+'"'+(n===B.months?' selected':'')+'>'+n+' 個月 month'+(n>1?'s':'')+'</option>';}).join('')+'</select></label></div>'+
+   '<div id="bLive" class="live"></div>'+
+   '<div class="row2 dp"><label class="field"><span>到期日 Due date</span><input type="date" class="inp" id="bDue" value="'+esc(B.due)+'"></label><label class="field"><span>付款日 Paid on (空白 = 還沒付 blank = unpaid)</span><div class="inline"><input type="date" class="inp" id="bPaid" value="'+esc(B.paid)+'"><button type="button" class="btn sm" data-act="bill-paidtoday" id="bPaidToday">今天付了 Paid today</button></div></label></div>'+
+   '<label class="field"><span>備註 Note (optional)</span><input class="inp" id="bNote" maxlength="80" placeholder="e.g. Account #, estimated read" value="'+esc(B.note)+'"></label>'+
+   '<div class="err" id="bErr"></div><div class="foot">'+(edit?'<button class="btn danger" data-act="bill-del" style="flex:0 0 auto">🗑 刪除</button>':'<button class="btn" data-act="close-modal">取消 Cancel</button>')+'<button class="btn pri" id="bSave" data-act="bill-save">'+(edit?'儲存修改 Save':'儲存帳單 Save bill')+'</button></div>';
+  openModal(h,'billsheet');updateBill();setTimeout(function(){var a=$('#bAmt');if(a&&!edit)a.focus();},60);}
+function readBill(){if(!B||!$('#bAmt'))return;B.amountStr=$('#bAmt').value;B.start=$('#bStart').value||B.start;B.months=+$('#bMonths').value||1;B.due=$('#bDue').value;B.paid=$('#bPaid').value;B.note=$('#bNote').value;}
+function updateBill(){
+  readBill();if(!B)return false;var amt=parseAmt(B.amountStr),ok=true,err='',t=utype(B.typeId),h='';
+  if(!t){ok=false;err='請選帳單種類 Pick a bill type';}
+  if(!(amt>0)){ok=false;err=err||(B.amountStr.trim()?'請輸入有效金額 Enter a valid amount':'');}
+  if(!/^\d{4}-\d{2}$/.test(B.start||'')){ok=false;err=err||'請選期間 Pick the period';}
+  if(ok){var b={amount:r2(amt),start:B.start,months:B.months},per=r2(amt/B.months),exp=t?t.est:0,dif=r2(amt-exp*B.months/t.cycle);
+    h='<div class="g"><div><label>期間 Period</label><b>'+periodLabel(b)+'</b></div><div><label>每月分攤 Monthly equivalent</label><b class="num" id="bPer">'+fmt(per)+'</b></div><div><label>預估 Expected</label><b class="num">'+fmt(r2(exp*B.months/t.cycle))+'</b></div><div><label>差額 Difference</label><b class="num '+(dif>0?'neg':'pos')+'">'+(dif>0?'+':'')+fmt(dif)+'</b></div></div>';
+    if(B.months>1)h+='<div class="status info" id="bSpread">'+ic('bill',20)+' '+fmt(amt)+' 會分到 '+B.months+' 個月，每月 '+fmt(per)+' — spread over '+B.months+' months so each month stays fair</div>';
+    if(B.months!==t.cycle)h+='<div class="small muted" style="margin-top:4px">這張涵蓋 '+B.months+' 個月，設定週期是 '+t.cycle+' 個月 — that’s fine (e.g. an estimated or catch-up bill).</div>';}
+  var L=$('#bLive');if(L)L.innerHTML=h;var e=$('#bErr');if(e)e.textContent=err;var sv=$('#bSave');if(sv)sv.disabled=!ok;return ok;}
+function saveBill(){
+  if(!updateBill())return toast('請檢查 Please check type & amount');
+  var now=new Date().toISOString(),o={id:B.id||uid('b'),typeId:B.typeId,amount:r2(parseAmt(B.amountStr)),start:B.start,months:B.months,due:B.due||'',paid:B.paid||'',note:B.note.trim(),createdAt:B.createdAt||now,updatedAt:now};
+  for(var k=0;k<o.months;k++){var mk=addMonths(o.start,k);if(mk<=curMonth())ensureMonth(mk);}
+  var i=S.bills.findIndex(function(x){return x.id===o.id;});if(i>=0)S.bills[i]=o;else S.bills.push(o);
+  if(!save())return;var t=utype(o.typeId),wasNew=!B.id;B=null;closeModal();render();toast((wasNew?'帳單已儲存 Bill saved ✓ ':'已更新 Updated ✓ ')+(t?t.zh:'')+' '+fmt(o.amount)+(o.months>1?' → '+fmt(r2(o.amount/o.months))+'/mo × '+o.months:''));}
+
+/* ---------- withdraw sheet ---------- */
+var W=null;
+function openWd(id){
+  if(id){var w=S.withdrawals.filter(function(x){return x.id===id;})[0];if(!w)return;W={id:w.id,amountStr:String(w.amount),date:w.date,reason:w.reason,note:w.note||'',createdAt:w.createdAt,orig:w.amount};}
+  else W={id:null,amountStr:'',date:ui.month===curMonth()?todayStr():ui.month+'-01',reason:'other',note:'',orig:0};
+  renderWd();}
+function renderWd(){
+  var edit=!!W.id;
+  var h='<div class="sh"><h2>'+ic('withdraw',30)+' '+(edit?'修改取用 Edit':'取用存款 Use savings')+'</h2><button class="xbtn" data-act="close-modal" aria-label="Close">×</button></div>'+
+   '<p class="small muted" style="margin-top:0">從存錢罐拿錢出來用，會從累計中扣掉。Takes money out of the jar — it is not counted as monthly spending.</p>'+
+   '<div class="field"><span>用途 Reason</span><div class="cgrid" id="wReasons">'+WREASONS.map(function(r){return '<button type="button" class="cchip'+(W.reason===r[0]?' on':'')+'" data-act="wd-reason" data-v="'+r[0]+'">'+ic(WR[r[0]].icon,30)+'<span>'+esc(r[1])+'</span><small>'+esc(r[2])+'</small></button>';}).join('')+'</div></div>'+
+   '<div class="amtwrap"><span class="cur">$</span><input id="wAmt" inputmode="decimal" autocomplete="off" placeholder="0.00" value="'+esc(W.amountStr)+'" aria-label="Amount 金額"><span class="code">CAD</span></div><div id="wLive" class="live"></div>'+
+   '<div class="row2"><label class="field"><span>日期 Date</span><input type="date" class="inp" id="wDate" value="'+esc(W.date)+'"></label><label class="field"><span>備註 Note</span><input class="inp" id="wNote" maxlength="80" placeholder="e.g. Flight home for Reading Week" value="'+esc(W.note)+'"></label></div>'+
+   '<div class="err" id="wErr"></div><div class="foot">'+(edit?'<button class="btn danger" data-act="wd-del" style="flex:0 0 auto">🗑 刪除</button>':'<button class="btn" data-act="close-modal">取消 Cancel</button>')+'<button class="btn pri" id="wSave" data-act="wd-save">'+(edit?'儲存修改 Save':'取用 Withdraw')+'</button></div>';
+  openModal(h,'wdsheet');updateWd();setTimeout(function(){var a=$('#wAmt');if(a&&!edit)a.focus();},60);}
+function readWd(){if(!W||!$('#wAmt'))return;W.amountStr=$('#wAmt').value;W.date=$('#wDate').value||W.date;W.note=$('#wNote').value;}
+function wdBalance(){var J=jar();return {before:r2(J.total+(W&&W.id?W.orig:0))};}
+function updateWd(){
+  readWd();if(!W)return false;var amt=parseAmt(W.amountStr),ok=amt>0,b=wdBalance().before,after=r2(b-(ok?amt:0));
+  var h='<div class="g"><div><label>存錢罐現在 Jar now</label><b class="num" id="wBefore">'+fmt(b)+'</b></div><div><label>取用 Withdraw</label><b class="num neg">−'+fmt(ok?amt:0)+'</b></div><div><label>取用後 After</label><b class="num '+(after<0?'neg':'')+'" id="wAfter">'+fmt(after)+'</b></div></div>'+
+    (after<0?'<div class="status over" id="wWarn">⚠️ 存錢罐不夠，會變成 '+fmt(after)+' — the jar would go below zero</div>':ok?'<div class="status ok">✓ 存錢罐還剩 '+fmt(after)+' left in the jar</div>':'');
+  var L=$('#wLive');if(L)L.innerHTML=h;var e=$('#wErr');if(e)e.textContent=!ok&&W.amountStr.trim()?'請輸入有效金額 Enter a valid amount':'';var sv=$('#wSave');if(sv)sv.disabled=!ok||!/^\d{4}-\d{2}-\d{2}$/.test(W.date);return ok;}
+function saveWd(force){
+  if(!updateWd())return toast('請輸入金額 Enter an amount');
+  var amt=r2(parseAmt(W.amountStr)),after=r2(wdBalance().before-amt);
+  if(after<0&&!force){var keep=clone(W);return askConfirm('⚠️ 存錢罐不夠 Not enough savings','取用 '+fmt(amt)+' 後存錢罐會是 '+fmt(after)+'。\nThe jar would go below zero ('+fmt(after)+'). Withdraw anyway?','還是取用 Withdraw anyway',true).then(function(ok){if(ok){W=keep;saveWd(true);}});}
+  var now=new Date().toISOString(),o={id:W.id||uid('w'),date:W.date,amount:amt,reason:W.reason,note:W.note.trim(),createdAt:W.createdAt||now,updatedAt:now};
+  var i=S.withdrawals.findIndex(function(x){return x.id===o.id;});if(i>=0)S.withdrawals[i]=o;else S.withdrawals.push(o);
+  var wasNew=!W.id;if(!save())return;W=null;closeModal();render();toast((wasNew?'已取用 Withdrawn ':'已更新 Updated ✓ ')+fmt(amt)+' · 存錢罐 jar '+fmt(jar().total));}
+
+/* ---------- events for this module ---------- */
+document.addEventListener('click',function(ev){
+  var t=ev.target.closest&&ev.target.closest('[data-act]');if(!t)return;
+  var act=t.getAttribute('data-act'),id=t.getAttribute('data-id'),v=t.getAttribute('data-v');
+  switch(act){
+    case 'add-bill':openBill(null,v);break;
+    case 'edit-bill':openBill(id);break;
+    case 'bill-type':readBill();B.typeId=v;var ty=utype(v);if(ty&&!B.id&&!B.amountStr){B.months=ty.cycle;var R=utilReminders().filter(function(r){return r.t.id===v;})[0];var st=R&&R.last?R.nextStart:addMonths(ui.month,-(ty.cycle-1));B.start=st>ui.month?ui.month:st;}renderBill();break;
+    case 'bill-paidtoday':$('#bPaid').value=todayStr();updateBill();break;
+    case 'bill-save':saveBill();break;
+    case 'bill-del':var bid=B.id;askConfirm('刪除這張帳單？Delete this bill?',fmt(parseAmt(B.amountStr)||0)+' · '+periodLabel({start:B.start,months:B.months}),'刪除 Delete',true).then(function(ok){if(!ok)return;S.bills=S.bills.filter(function(x){return x.id!==bid;});save();B=null;closeModal();render();toast('帳單已刪除 Bill deleted');});break;
+    case 'add-wd':openWd(null);break;
+    case 'edit-wd':openWd(id);break;
+    case 'wd-reason':readWd();W.reason=v;$$('#wReasons .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});break;
+    case 'wd-save':saveWd(false);break;
+    case 'wd-del':var wid=W.id;askConfirm('刪除這筆取用？Delete this withdrawal?',fmt(parseAmt(W.amountStr)||0)+' · '+W.date+'\n存錢罐會加回來 The money goes back into the jar.','刪除 Delete',true).then(function(ok){if(!ok)return;S.withdrawals=S.withdrawals.filter(function(x){return x.id!==wid;});save();W=null;closeModal();render();toast('已刪除，存錢罐 jar '+fmt(jar().total));});break;
+    case 'ut-add':S.utilities.types.push({id:uid('U'),zh:'新帳單',en:'New bill',icon:'bill',cycle:1,est:0,included:false,since:curMonth(),custom:true});save();render();toast('已新增帳單種類 Bill type added ✓');break;
+    case 'ut-icon':var u0=utype(id);if(u0){u0.icon=v;save();render();}break;
+    case 'ut-del':var u1=utype(id),nb=S.bills.filter(function(b){return b.typeId===id;}).length;if(!u1)break;askConfirm('刪除帳單種類？Delete bill type?',u1.zh+' '+u1.en+(nb?'\n有 '+nb+' 張帳單 — they will show as “Other bill”.':''),'刪除 Delete',true).then(function(ok){if(!ok)return;S.utilities.types=S.utilities.types.filter(function(x){return x.id!==id;});save();render();toast('已刪除 Deleted');});break;
+    case 'ut-sync':var ln=findLine(ui.month,'L_util');if(ln){ln.amount=r2(setAsideTotal());touchTemplate(ui.month);save();render();toast('水電預算 Utilities budget → '+fmt(ln.amount));}break;
+  }
+});
+document.addEventListener('input',function(ev){var t=ev.target;if(!t.closest)return;if(B&&t.closest('.billsheet'))updateBill();else if(W&&t.closest('.wdsheet'))updateWd();});
+document.addEventListener('change',function(ev){var t=ev.target;if(!t.closest)return;
+  if(B&&t.closest('.billsheet')){updateBill();return;}if(W&&t.closest('.wdsheet')){updateWd();return;}
+  var uf=t.getAttribute('data-uf');if(!uf)return;var row=t.closest('[data-utid]'),u=utype(row.getAttribute('data-utid'));if(!u)return;
+  if(uf==='est'){var a=parseAmt(t.value);if(!(a>=0)){toast('金額無效 Invalid amount');t.value=u.est.toFixed(2);return;}u.est=r2(a);}
+  else if(uf==='cycle')u.cycle=+t.value||1;else if(uf==='included')u.included=t.checked;
+  else{var nm=t.value.trim();if(!nm&&uf==='zh'){t.value=u.zh;return;}u[uf]=nm;}
+  save();toast('已儲存 Saved ✓ '+u.zh+(uf==='cycle'?' · '+cycLabel(u.cycle):uf==='est'?' · '+fmt(u.est)+' → '+fmt(rateOf(u))+'/mo':''));setTimeout(render,0);});
+document.addEventListener('keydown',function(ev){if(ev.key!=='Enter')return;var id=ev.target.id;if(B&&(id==='bAmt'||id==='bNote')){ev.preventDefault();saveBill();}else if(W&&(id==='wAmt'||id==='wNote')){ev.preventDefault();saveWd(false);}else if(ev.target.getAttribute&&ev.target.getAttribute('data-uf')&&ev.target.tagName==='INPUT'&&ev.target.type!=='checkbox')ev.target.blur();});
+
+/* ===================== 私房錢 PRIVATE STASH (not part of any budget) ===================== */
+function hid(){return !!S.settings.hideMoney;}
+function hm(v){return hid()?'<span class="hidden-amt">$ •••••</span>':fmt(v);}
+function stashItem(x){var o=x.type==='out',r=o?(WR[x.src]||WR.other):(STS[x.src]||STS.other);
+  return '<li class="eitem" data-act="edit-stash" data-id="'+esc(x.id)+'"><div class="icw">'+ic(o?r.icon:r.icon,34)+'</div><div style="min-width:0"><div class="m">'+esc(r.zh)+' <span class="en">'+esc(r.en)+'</span> <span class="badge '+(o?'wd':'inc')+'">'+(o?'取出 Out':'存入 In')+'</span></div><div class="s">'+dLabel(x.date)+' '+x.date.slice(0,4)+(x.note?' · '+esc(x.note):'')+'</div></div><div class="a num '+(o?'neg':'pos')+'">'+(hid()?'•••':(o?'−':'+')+fmt(x.amount))+'</div></li>';}
+function renderMoneyCard(){
+  var J=jar(),st=stashBal(),tot=r2(J.total+st);
+  return '<section class="card moneycard" id="moneyCard"><h3>'+ic('stash',28)+' 我的總資產 My total money <button class="eyebtn right" data-act="toggle-hide" id="hideBtn" aria-pressed="'+hid()+'" aria-label="'+(hid()?'Show amounts':'Hide amounts')+'">'+(hid()?'🙈 顯示 Show':'👁 隱藏 Hide')+'</button></h3>'+
+   '<div class="moneyrows"><div class="mrow">'+ic('save',26)+'<span>存錢罐 Savings jar<small>每月剩下的 budget leftovers</small></span><b class="num" id="mJar">'+hm(J.total)+'</b></div>'+
+   '<div class="mrow">'+ic('stash',26)+'<span>私房錢 Private stash<small>不算在預算裡 not in any budget</small></span><b class="num" id="mStash">'+hm(st)+'</b></div>'+
+   '<div class="mrow tot"><span>合計 Total</span><b class="num" id="mTotal">'+hm(tot)+'</b></div></div>'+
+   '<div class="btnrow"><button class="btn sm pri" data-act="stash-add" data-v="in" id="stashIn">＋ 存入 Add to stash</button><button class="btn sm" data-act="stash-add" data-v="out" id="stashOut">－ 取出 Take out</button><button class="btn sm" data-act="nav" data-v="more" data-scroll="stashCard">紀錄 History →</button></div></section>';}
+function renderStashCard(){
+  var L=S.stash.slice().sort(function(a,b){return a.date===b.date?((b.createdAt||'')>(a.createdAt||'')?1:-1):(a.date<b.date?1:-1);}),ins=sum(S.stash.filter(function(x){return x.type==='in';}).map(function(x){return x.amount;})),outs=sum(S.stash.filter(function(x){return x.type==='out';}).map(function(x){return x.amount;}));
+  return '<section class="card" id="stashCard"><h3>'+ic('stash',28)+' 私房錢 Private stash <button class="eyebtn right" data-act="toggle-hide" aria-pressed="'+hid()+'">'+(hid()?'🙈 顯示 Show':'👁 隱藏 Hide')+'</button></h3><p class="small muted" style="margin-top:0">紅包、自己存的錢、銀行裡原本的存款… 完全獨立，不影響每月預算和存錢罐。A separate personal fund — never counted in the daily or monthly budget.</p>'+
+   '<div class="stats4"><div class="stat"><label>餘額 Balance</label><b class="num" id="stashBal">'+hm(r2(ins-outs))+'</b></div><div class="stat"><label>存入 In</label><b class="num pos">'+hm(ins)+'</b></div><div class="stat"><label>取出 Out</label><b class="num neg">'+hm(outs)+'</b></div><div class="stat"><label>筆數 Records</label><b class="num">'+L.length+'</b></div></div>'+
+   '<div class="btnrow" style="margin:8px 0"><button class="btn sm pri" data-act="stash-add" data-v="in">＋ 存入 Deposit</button><button class="btn sm" data-act="stash-add" data-v="out">－ 取出 Withdraw</button></div>'+
+   (L.length?'<ul class="elist" id="stashList">'+L.map(stashItem).join('')+'</ul>':'<div class="empty">還沒有私房錢紀錄 Nothing yet</div>')+
+   '<label class="check" style="margin-top:10px"><input type="checkbox" id="stashSum" '+(S.settings.stashInSummary?'checked':'')+'> 給爸爸的小結也顯示私房錢 Include stash in the summary for Dad (off by default)</label>'+
+   '<label class="check" style="margin-top:6px"><input type="checkbox" id="stashPdf" '+(S.settings.stashInPdf?'checked':'')+'> PDF 月報也顯示私房錢 Show stash in the PDF report (off by default)</label></section>';}
+var T=null;
+function openStash(id,type){
+  if(id){var x=S.stash.filter(function(s){return s.id===id;})[0];if(!x)return;T={id:x.id,type:x.type,amountStr:String(x.amount),date:x.date,src:x.src,note:x.note||'',createdAt:x.createdAt,orig:x.type==='out'?-x.amount:x.amount};}
+  else T={id:null,type:type==='out'?'out':'in',amountStr:'',date:todayStr(),src:type==='out'?'treat':'redpacket',note:'',orig:0};
+  renderStash();}
+function renderStash(){var edit=!!T.id,o=T.type==='out',list=o?WREASONS:STSRC;
+  var h='<div class="sh"><h2>'+ic('stash',30)+' 私房錢 '+(edit?'修改 Edit':o?'取出 Take out':'存入 Add')+'</h2><button class="xbtn" data-act="close-modal" aria-label="Close">×</button></div>'+
+   '<div class="seg" id="stMode"><button type="button" data-act="st-mode" data-v="in" class="'+(o?'':'on')+'">＋ 存入 In</button><button type="button" data-act="st-mode" data-v="out" class="'+(o?'on':'')+'">－ 取出 Out</button></div>'+
+   '<div class="field"><span>'+(o?'用途 Reason':'來源 Source')+'</span><div class="cgrid" id="stSrc">'+list.map(function(r){var k=r[0],icn=o?WR[k].icon:STS[k].icon;return '<button type="button" class="cchip'+(T.src===k?' on':'')+'" data-act="st-src" data-v="'+k+'">'+ic(icn,30)+'<span>'+esc(r[1])+'</span><small>'+esc(r[2])+'</small></button>';}).join('')+'</div></div>'+
+   '<div class="amtwrap"><span class="cur">$</span><input id="stAmt" inputmode="decimal" autocomplete="off" placeholder="0.00" value="'+esc(T.amountStr)+'" aria-label="Amount 金額"><span class="code">CAD</span></div><div id="stLive" class="live"></div>'+
+   '<div class="row2"><label class="field"><span>日期 Date</span><input type="date" class="inp" id="stDate" value="'+esc(T.date)+'"></label><label class="field"><span>備註 Note</span><input class="inp" id="stNote" maxlength="80" placeholder="'+(o?'e.g. concert ticket':'e.g. 過年紅包 from 外婆')+'" value="'+esc(T.note)+'"></label></div>'+
+   '<div class="err" id="stErr"></div><div class="foot">'+(edit?'<button class="btn danger" data-act="st-del" style="flex:0 0 auto">🗑 刪除</button>':'<button class="btn" data-act="close-modal">取消 Cancel</button>')+'<button class="btn pri" id="stSave" data-act="st-save">'+(edit?'儲存修改 Save':'儲存 Save')+'</button></div>';
+  openModal(h,'stashsheet');updateStash();setTimeout(function(){var a=$('#stAmt');if(a&&!edit)a.focus();},60);}
+function readStash(){if(!T||!$('#stAmt'))return;T.amountStr=$('#stAmt').value;T.date=$('#stDate').value||T.date;T.note=$('#stNote').value;}
+function updateStash(){readStash();if(!T)return false;var a=parseAmt(T.amountStr),ok=a>0,b=r2(stashBal()-T.orig),after=r2(b+(ok?(T.type==='out'?-a:a):0));
+  var L=$('#stLive');if(L)L.innerHTML='<div class="g"><div><label>私房錢現在 Stash now</label><b class="num" id="stBefore">'+hm(b)+'</b></div><div><label>之後 After</label><b class="num '+(after<0?'neg':'')+'" id="stAfter">'+hm(after)+'</b></div></div>'+(after<0?'<div class="status over" id="stWarn">⚠️ 私房錢不夠 This would take the stash below zero</div>':'')+'<div class="small muted" style="margin-top:6px">🔒 不會影響每月預算 Never affects your monthly budget</div>';
+  var e=$('#stErr');if(e)e.textContent=!ok&&T.amountStr.trim()?'請輸入有效金額 Enter a valid amount':'';var sv=$('#stSave');if(sv)sv.disabled=!ok;return ok;}
+function saveStash(force){if(!updateStash())return toast('請輸入金額 Enter an amount');
+  var a=r2(parseAmt(T.amountStr)),after=r2(stashBal()-T.orig+(T.type==='out'?-a:a));
+  if(after<0&&!force){var keep=clone(T);return askConfirm('⚠️ 私房錢不夠 Not enough','之後會是 '+fmt(after)+'. Save anyway?','還是儲存 Save anyway',true).then(function(ok){if(ok){T=keep;saveStash(true);}});}
+  var now=new Date().toISOString(),o={id:T.id||uid('s'),type:T.type,date:T.date,amount:a,src:T.src,note:T.note.trim(),createdAt:T.createdAt||now,updatedAt:now};
+  var i=S.stash.findIndex(function(x){return x.id===o.id;});if(i>=0)S.stash[i]=o;else S.stash.push(o);var wasNew=!T.id;if(!save())return;T=null;closeModal();render();
+  toast((wasNew?(o.type==='out'?'已取出 Taken out ':'已存入 Added '):'已更新 Updated ✓ ')+(hid()?'':fmt(a))+' · 私房錢 stash '+(hid()?'•••':fmt(stashBal())));}
+document.addEventListener('click',function(ev){var t=ev.target.closest&&ev.target.closest('[data-act]');if(!t)return;var act=t.getAttribute('data-act'),id=t.getAttribute('data-id'),v=t.getAttribute('data-v');
+  switch(act){
+    case 'toggle-hide':S.settings.hideMoney=!S.settings.hideMoney;save();render();toast(hid()?'金額已隱藏 Amounts hidden 🙈':'金額顯示 Amounts shown 👁');break;
+    case 'stash-add':openStash(null,v);break;
+    case 'edit-stash':openStash(id);break;
+    case 'st-mode':readStash();if(T.type!==v){T.type=v;T.src=v==='out'?'treat':'redpacket';}renderStash();break;
+    case 'st-src':readStash();T.src=v;$$('#stSrc .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});break;
+    case 'st-save':saveStash(false);break;
+    case 'st-del':var sid=T.id;askConfirm('刪除這筆私房錢紀錄？Delete this record?',(hid()?'':fmt(parseAmt(T.amountStr)||0)+' · ')+T.date,'刪除 Delete',true).then(function(ok){if(!ok)return;S.stash=S.stash.filter(function(x){return x.id!==sid;});save();T=null;closeModal();render();toast('已刪除 Deleted');});break;
+  }});
+document.addEventListener('input',function(ev){if(T&&ev.target.closest&&ev.target.closest('.stashsheet'))updateStash();});
+document.addEventListener('change',function(ev){var t=ev.target;if(T&&t.closest&&t.closest('.stashsheet')){updateStash();return;}
+  if(t.id==='stashSum'){S.settings.stashInSummary=t.checked;save();toast(t.checked?'小結會包含私房錢 Stash included in summary':'小結不含私房錢 Stash kept private 🔒');}
+  if(t.id==='stashPdf'){S.settings.stashInPdf=t.checked;save();render();toast(t.checked?'PDF 會顯示私房錢 Stash shown in PDF':'PDF 不含私房錢 Stash hidden from PDF 🔒');}});
+document.addEventListener('keydown',function(ev){if(ev.key==='Enter'&&T&&(ev.target.id==='stAmt'||ev.target.id==='stNote')){ev.preventDefault();saveStash(false);}});
 
 /* ===================== RENDER & EVENTS ===================== */
 function renderHeader(){
@@ -1090,10 +1445,12 @@ document.addEventListener('click',function(ev){
     case 'edit-inc':openEntry('inc',id);break;
     case 'close-modal':closeModal();break;
     case 'f-mode':readForm();F.mode=v;F.key=null;renderForm();break;
-    case 'f-key':readForm();var prevKey=F.key;F.key=t.getAttribute('data-k');$$('#catChips .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===F.key);});
-      if(!F.amountStr&&F.key==='boba'){var q=quickAmts('boba');if(q.length){F.amountStr=String(q[0]);$('#fAmt').value=F.amountStr;}}updateQuick();updateLive();var a=$('#fAmt');if(a&&prevKey!==F.key){a.focus();}break;
+    case 'f-key':if(t.getAttribute('data-k')==='L_util'&&!F.id){closeModal();openBill(null,null);break;}readForm();var prevKey=F.key;F.key=t.getAttribute('data-k');if((prevKey==='boba')!==(F.key==='boba')){renderForm();var a0=$('#fAmt');if(a0)a0.focus();break;}$$('#catChips .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===F.key);});
+      updateQuick();updateLive();var a=$('#fAmt');if(a&&prevKey!==F.key){a.focus();}break;
     case 'f-src':readForm();F.source=v;$$('#srcChips .cchip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});updateLive();break;
     case 'f-quick':$('#fAmt').value=v;updateLive();break;
+    case 'f-cups':readForm();F.cups=Math.max(1,Math.min(10,(F.cups||1)+(+v)));$('#fCups').textContent=F.cups;updateLive();break;
+    case 'f-shop':$('#fShop').value=v;readForm();$$('#shopChips .qa').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-v')===v);});break;
     case 'f-save':saveEntry();break;
     case 'f-del':var isInc=F.mode==='inc';askConfirm('刪除這筆？Delete this entry?',fmt(parseAmt(F.amountStr)||0)+' · '+F.date,'刪除 Delete',true).then(function(ok){if(!ok)return;if(isInc)S.incomes=S.incomes.filter(function(x){return x.id!==F.id;});else S.expenses=S.expenses.filter(function(x){return x.id!==F.id;});save();closeModal();render();toast('已刪除 Deleted');});break;
     case 'edit-allow':var c=calc(ui.month);promptAmount('💌 零用錢 Monthly allowance','爸爸每月給的零用錢 (CAD) — '+mLabel(ui.month),c.allowance).then(function(a){if(a==null)return;ensureMonth(ui.month).allowance=a;lineChanged('零用錢已更新 Allowance saved ✓ '+fmt(a));render();});break;
@@ -1118,7 +1475,7 @@ document.addEventListener('click',function(ev){
     case 'reset-all':askConfirm('全部重設？Reset everything?','所有記錄和設定都會刪除，請先備份！All entries & settings will be deleted.','重設 Reset',true).then(function(ok){if(!ok)return;S=freshData();save();ui.month=curMonth();go('home');toast('已重設 Reset ⟲');});break;
   }
 });
-document.addEventListener('input',function(ev){var t=ev.target;if(F&&t.closest&&t.closest('.entsheet')&&(t.id==='fAmt'||t.id==='fNote'))updateLive();});
+document.addEventListener('input',function(ev){var t=ev.target;if(F&&t.closest&&t.closest('.entsheet')&&(t.id==='fAmt'||t.id==='fNote'||t.id==='fShop'))updateLive();});
 document.addEventListener('change',function(ev){
   var t=ev.target;
   if(t.id==='monthPicker'&&t.value){setMonth(t.value);return;}
@@ -1137,7 +1494,7 @@ document.addEventListener('change',function(ev){
 document.addEventListener('keydown',function(ev){
   if(ev.key==='Escape'){if($('#confirmLayer').innerHTML)return;if($('#modalLayer').innerHTML)closeModal();return;}
   if(ev.key==='Enter'&&ev.target.getAttribute&&(ev.target.getAttribute('data-lf')||ev.target.getAttribute('data-mf'))){ev.target.blur();return;}
-  if(ev.key==='Enter'&&F&&(ev.target.id==='fAmt'||ev.target.id==='fNote')){ev.preventDefault();saveEntry();return;}
+  if(ev.key==='Enter'&&F&&(ev.target.id==='fAmt'||ev.target.id==='fNote'||ev.target.id==='fShop')){ev.preventDefault();saveEntry();return;}
   var tag=(ev.target.tagName||'').toLowerCase();if(tag==='input'||tag==='textarea'||tag==='select'||$('#modalLayer').innerHTML||$('#confirmLayer').innerHTML||ev.ctrlKey||ev.metaKey||ev.altKey)return;
   if(ev.key==='n'||ev.key==='a'){ev.preventDefault();openEntry('exp',null,null);}
   else if(ev.key==='b'){ev.preventDefault();openEntry('exp',null,'boba');}
@@ -1155,7 +1512,7 @@ S=load();ensureMonth(ui.month);save();
 initScene();
 [['navI1','heart'],['navI2','flex'],['navI3','book'],['navI4','star']].forEach(function(x){var el=document.getElementById(x[0]);if(el)el.innerHTML=Art.icon(x[1],26);});
 render();
-window.__app={get S(){return S;},calc:calc,jar:jar,summaryText:summaryText,validate:validate,ui:ui,buildDemo:buildDemo};
+window.__app={get S(){return S;},stashBal:stashBal,calc:calc,jar:jar,utilFor:utilFor,utilReminders:utilReminders,setAsideTotal:setAsideTotal,billShare:billShare,summaryText:summaryText,validate:validate,ui:ui,buildDemo:buildDemo};
 })();
 
 </script>
